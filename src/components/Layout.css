@@ -1,0 +1,19 @@
+.app-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.app-body {
+    display: flex;
+    flex: 1;
+    padding-top: var(--navbar-height);
+}
+
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    min-height: calc(100vh - var(--navbar-height));
+    overflow-y: auto;
+    background: var(--bg-primary);
+}

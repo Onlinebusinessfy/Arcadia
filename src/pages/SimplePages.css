@@ -1,0 +1,28 @@
+.simple-page {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 60vh;
+    gap: 16px;
+    color: var(--text-secondary);
+    text-align: center;
+    padding: 40px;
+}
+
+.page-icon {
+    color: var(--accent);
+    opacity: 0.6;
+}
+
+.simple-page h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 2rem;
+    color: var(--text-primary);
+}
+
+.simple-page p {
+    max-width: 400px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+}

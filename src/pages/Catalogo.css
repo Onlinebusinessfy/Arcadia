@@ -1,0 +1,100 @@
+.catalogo {
+    padding: 28px 24px;
+}
+
+.catalogo-header {
+    margin-bottom: 24px;
+}
+
+.catalogo-header h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+}
+
+.catalogo-header p {
+    color: var(--text-secondary);
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+
+.catalogo-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.cat-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.2s, border-color 0.2s;
+    cursor: pointer;
+}
+
+.cat-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--accent);
+}
+
+.cat-img {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #111420;
+}
+
+.cat-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s;
+}
+
+.cat-card:hover .cat-img img {
+    transform: scale(1.05);
+}
+
+.cat-info {
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.cat-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+}
+
+.cat-genre {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.cat-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 8px;
+}
+
+.cat-price {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.add-btn {
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 6px 14px;
+    border-radius: 7px;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+}
+
+.add-btn:hover {
+    background: var(--accent-hover);
+}
