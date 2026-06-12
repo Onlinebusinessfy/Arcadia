@@ -98,3 +98,14 @@
 .add-btn:hover {
     background: var(--accent-hover);
 }
+
+.add-btn.in-cart {
+    background: #22c55e;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+
+.add-btn.in-cart:hover {
+    background: #16a34a;
+}
