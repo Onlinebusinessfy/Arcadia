@@ -255,3 +255,31 @@
 .like-btn.liked {
     color: #f43f5e;
 }
+
+/* CARD ACTIONS */
+.card-actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.add-cart-btn {
+  background: var(--accent);
+  color: #fff;
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, transform 0.15s;
+}
+
+.add-cart-btn:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+}
+
+.add-cart-btn.in-cart {
+  background: #22c55e;
+}
