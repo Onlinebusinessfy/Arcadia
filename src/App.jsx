@@ -6,6 +6,7 @@ import Home from './pages/Home'
 import Catalogo from './pages/Catalogo'
 import Biblioteca from './pages/Biblioteca'
 import Acerca from './pages/Acerca'
+import Carrito from './pages/Carrito'
 import './components/Layout.css'
 
 function App() {
@@ -20,6 +21,7 @@ function App() {
             <Route path="/catalogo" element={<Catalogo />} />
             <Route path="/biblioteca" element={<Biblioteca />} />
             <Route path="/acerca" element={<Acerca />} />
+            <Route path="/carrito" element={<Carrito />} />
           </Routes>
         </main>
       </div>

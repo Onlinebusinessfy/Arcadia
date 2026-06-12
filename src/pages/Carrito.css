@@ -1,0 +1,236 @@
+/* CARRITO VACÍO */
+.carrito-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 70vh;
+  gap: 14px;
+  color: var(--text-muted);
+  text-align: center;
+  padding: 40px;
+}
+
+.carrito-empty h2 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.6rem;
+  color: var(--text-primary);
+}
+
+.carrito-empty p {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  max-width: 320px;
+}
+
+.go-catalog-btn {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent);
+  color: #fff;
+  padding: 12px 24px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 8px;
+  transition: background 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.go-catalog-btn:hover {
+  background: var(--accent-hover);
+}
+
+/* CARRITO PAGE */
+.carrito-page {
+  padding: 28px 24px;
+}
+
+.carrito-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.carrito-header h1 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.clear-btn {
+  background: none;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  padding: 8px 14px;
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  transition: color 0.15s, border-color 0.15s;
+  font-family: 'Inter', sans-serif;
+}
+
+.clear-btn:hover {
+  color: #f43f5e;
+  border-color: #f43f5e;
+}
+
+.carrito-layout {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 24px;
+  align-items: start;
+}
+
+@media (max-width: 900px) {
+  .carrito-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+.carrito-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.carrito-item {
+  display: grid;
+  grid-template-columns: 90px 1fr auto auto auto;
+  align-items: center;
+  gap: 16px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.carrito-item-img {
+  width: 90px;
+  height: 60px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: #111420;
+}
+
+.carrito-item-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.carrito-item-title {
+  font-size: 0.95rem;
+  font-weight: 600;
+}
+
+.carrito-item-genre {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-top: 3px;
+}
+
+.carrito-item-qty {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.carrito-item-qty button {
+  background: var(--bg-hover);
+  color: var(--text-primary);
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+}
+
+.carrito-item-qty button:hover {
+  background: var(--accent);
+}
+
+.carrito-item-qty span {
+  font-weight: 600;
+  font-size: 0.9rem;
+  min-width: 18px;
+  text-align: center;
+}
+
+.carrito-item-price {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--text-primary);
+  min-width: 70px;
+  text-align: right;
+}
+
+.carrito-item-remove {
+  background: none;
+  color: var(--text-muted);
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: color 0.15s, background 0.15s;
+}
+
+.carrito-item-remove:hover {
+  color: #f43f5e;
+  background: var(--bg-hover);
+}
+
+/* SUMMARY */
+.carrito-summary {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  position: sticky;
+  top: 16px;
+}
+
+.carrito-summary h3 {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.summary-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+}
+
+.summary-row.total {
+  border-top: 1px solid var(--border);
+  padding-top: 12px;
+  font-size: 1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.pay-btn {
+  background: var(--accent);
+  color: #fff;
+  padding: 12px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin-top: 6px;
+  transition: background 0.2s;
+  font-family: 'Inter', sans-serif;
+}
+
+.pay-btn:hover {
+  background: var(--accent-hover);
+}
