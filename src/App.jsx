@@ -2,10 +2,10 @@ import './App.css'
 import Navbar from './components/Navbar'
 import Sidebar from './components/Sidebar'
 import { Routes, Route } from 'react-router-dom'
-import Home from './pages/Home'
-import Catalogo from './pages/Catalogo'
-import Biblioteca from './pages/Biblioteca'
-import Acerca from './pages/Acerca'
+import Home from './pages/home/Home'
+import Catalogo from './pages/catalogo/Catalogo'
+import Biblioteca from './pages/biblioteca/Biblioteca'
+import Acerca from './pages/acerca-de/Acerca';
 import './components/Layout.css'
 
 function App() {
