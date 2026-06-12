@@ -2,7 +2,7 @@ import './Home.css'
 import { FiChevronLeft, FiChevronRight, FiHeart, FiArrowRight, FiPlus, FiCheck } from 'react-icons/fi'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useCart } from '../context/CartContext'
+import { useCart } from '../../context/CartContext'
 
 const featuredGames = [
   {

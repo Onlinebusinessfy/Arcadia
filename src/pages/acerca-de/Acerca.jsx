@@ -1,4 +1,3 @@
-import './SimplePages.css'
 import './Acerca.css'
 import { FiInfo } from 'react-icons/fi'
 

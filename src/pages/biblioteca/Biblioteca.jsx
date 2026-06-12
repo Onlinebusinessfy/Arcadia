@@ -1,4 +1,3 @@
-import './SimplePages.css'
 import './Biblioteca.css'
 
 const misJuegos = [
