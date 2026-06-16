@@ -1,5 +1,5 @@
 import './Sidebar.css'
-import { NavLink } from 'react-router-dom'
+import { NavLink, Link, useSearchParams } from 'react-router-dom'
 import {
     FiHome, FiGrid, FiBookOpen, FiInfo,
     FiZap, FiCompass, FiStar, FiTarget,
@@ -29,6 +29,8 @@ const categories = [
 export default function Sidebar() {
     const [showAll, setShowAll] = useState(false)
     const visibleCats = showAll ? categories : categories.slice(0, 6)
+    const [searchParams] = useSearchParams()
+    const activeCategory = searchParams.get('categoria')
 
     return (
         <aside className="sidebar">
@@ -38,7 +40,7 @@ export default function Sidebar() {
                         key={link.to}
                         to={link.to}
                         end={link.to === '/'}
-                        className={({ isActive }) => `sidebar-link ${isActive ? 'active' : ''}`}
+                        className={({ isActive }) => `sidebar-link ${isActive && !activeCategory ? 'active' : ''}`}
                     >
                         <span className="link-icon">{link.icon}</span>
                         <span>{link.label}</span>
@@ -50,10 +52,14 @@ export default function Sidebar() {
 
             <nav className="sidebar-cats">
                 {visibleCats.map(cat => (
-                    <button key={cat.label} className="sidebar-link cat-link">
+                    <Link
+                        key={cat.label}
+                        to={`/catalogo?categoria=${encodeURIComponent(cat.label)}`}
+                        className={`sidebar-link cat-link ${activeCategory === cat.label ? 'active' : ''}`}
+                    >
                         <span className="link-icon">{cat.icon}</span>
                         <span>{cat.label}</span>
-                    </button>
+                    </Link>
                 ))}
             </nav>
 

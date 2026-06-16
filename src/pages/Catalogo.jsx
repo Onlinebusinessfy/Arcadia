@@ -1,4 +1,5 @@
 import './Catalogo.css'
+import { useSearchParams } from 'react-router-dom'
 
 const allGames = [
     { id: 1, title: 'Elden Ring', genre: 'RPG • Acción', price: '$59.99', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg' },
@@ -12,14 +13,22 @@ const allGames = [
 ]
 
 export default function Catalogo() {
+    const [searchParams] = useSearchParams()
+    const categoria = searchParams.get('categoria')
+
+    const games = categoria
+        ? allGames.filter(game => game.genre.includes(categoria))
+        : allGames
+
     return (
+
         <div className="catalogo">
             <div className="catalogo-header">
                 <h1>Catálogo</h1>
-                <p>{allGames.length} juegos disponibles</p>
+                <p>{games.length} juegos disponibles</p>
             </div>
             <div className="catalogo-grid">
-                {allGames.map(game => (
+                {games.map(game => (
                     <div key={game.id} className="cat-card">
                         <div className="cat-img">
                             <img src={game.img} alt={game.title} />
