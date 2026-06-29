@@ -1,5 +1,12 @@
 import './Home.css'
-import { FiChevronLeft, FiChevronRight, FiHeart, FiArrowRight, FiPlus, FiCheck } from 'react-icons/fi'
+import {
+  FiChevronLeft,
+  FiChevronRight,
+  FiHeart,
+  FiArrowRight,
+  FiPlus,
+  FiCheck,
+} from 'react-icons/fi'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
@@ -95,15 +102,24 @@ function GameCard({ game }) {
   return (
     <div className="game-card">
       <div className="card-img-wrap">
-        <img src={game.img} alt={game.title} onError={e => { e.target.style.display = 'none' }} />
+        <img
+          src={game.img}
+          alt={game.title}
+          onError={(e) => {
+            e.target.style.display = 'none'
+          }}
+        />
       </div>
+
       <div className="card-info">
         <div>
           <p className="card-title">{game.title}</p>
           <p className="card-genre">{game.genre}</p>
         </div>
+
         <div className="card-bottom">
           <span className="card-price">{game.price}</span>
+
           <div className="card-actions">
             <button
               className={`like-btn ${liked ? 'liked' : ''}`}
@@ -111,6 +127,7 @@ function GameCard({ game }) {
             >
               <FiHeart size={15} />
             </button>
+
             <button
               className={`add-cart-btn ${inCart ? 'in-cart' : ''}`}
               onClick={() => addToCart(game)}
@@ -126,24 +143,32 @@ function GameCard({ game }) {
 
 function GameRow({ title, games }) {
   const navigate = useNavigate()
+
   return (
     <section className="game-row">
       <div className="row-header">
         <h2 className="row-title">{title}</h2>
-        <button className="ver-todos" onClick={() => navigate('/catalogo')}>
+
+        <button
+          className="ver-todos"
+          onClick={() => navigate('/catalogo')}
+        >
           Ver todos <FiArrowRight size={14} />
         </button>
       </div>
+
       <div className="row-scroll-wrap">
         <div className="row-cards">
-          {games.map(g => <GameCard key={g.id} game={g} />)}
+          {games.map((g) => (
+            <GameCard key={g.id} game={g} />
+          ))}
         </div>
       </div>
     </section>
   )
 }
 
-export default function Home() {
+export default function Home({ search = '' }) {
   const [slide, setSlide] = useState(0)
   const navigate = useNavigate()
   const total = heroSlides.length
@@ -151,39 +176,95 @@ export default function Home() {
   const prev = () => setSlide((slide - 1 + total) % total)
   const next = () => setSlide((slide + 1) % total)
 
+  const filteredFeatured = featuredGames.filter(
+    (game) =>
+      game.title.toLowerCase().includes(search.toLowerCase()) ||
+      game.genre.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const filteredNewReleases = newReleases.filter(
+    (game) =>
+      game.title.toLowerCase().includes(search.toLowerCase()) ||
+      game.genre.toLowerCase().includes(search.toLowerCase())
+  )
+
+  const noResults =
+    filteredFeatured.length === 0 &&
+    filteredNewReleases.length === 0
+
   return (
     <div className="home">
-      {/* HERO */}
-      <div className="hero" style={{ backgroundImage: `url(${heroSlides[slide].img})` }}>
+      <div
+        className="hero"
+        style={{
+          backgroundImage: `url(${heroSlides[slide].img})`,
+        }}
+      >
         <div className="hero-overlay" />
+
         <div className="hero-content">
-          <span className="hero-label">{heroSlides[slide].label}</span>
-          <h1 className="hero-title">{heroSlides[slide].title}</h1>
-          <p className="hero-desc">{heroSlides[slide].desc}</p>
-          <button className="hero-btn" onClick={() => navigate('/catalogo')}>
+          <span className="hero-label">
+            {heroSlides[slide].label}
+          </span>
+
+          <h1 className="hero-title">
+            {heroSlides[slide].title}
+          </h1>
+
+          <p className="hero-desc">
+            {heroSlides[slide].desc}
+          </p>
+
+          <button
+            className="hero-btn"
+            onClick={() => navigate('/catalogo')}
+          >
             Explorar catálogo <FiArrowRight size={16} />
           </button>
         </div>
 
         <div className="hero-nav">
-          <button className="hero-arrow" onClick={prev}><FiChevronLeft /></button>
+          <button className="hero-arrow" onClick={prev}>
+            <FiChevronLeft />
+          </button>
+
           <div className="hero-dots">
             {heroSlides.map((_, i) => (
               <button
                 key={i}
-                className={`dot ${i === slide ? 'active' : ''}`}
+                className={`dot ${
+                  i === slide ? 'active' : ''
+                }`}
                 onClick={() => setSlide(i)}
               />
             ))}
           </div>
-          <button className="hero-arrow" onClick={next}><FiChevronRight /></button>
+
+          <button className="hero-arrow" onClick={next}>
+            <FiChevronRight />
+          </button>
         </div>
       </div>
 
-      {/* GAME ROWS */}
       <div className="rows-container">
-        <GameRow title="Juegos destacados" games={featuredGames} />
-        <GameRow title="Nuevos lanzamientos" games={newReleases} />
+        {noResults ? (
+          <div className="no-results">
+            <h2>No se encontraron juegos</h2>
+            <p>Intenta con otra búsqueda.</p>
+          </div>
+        ) : (
+          <>
+            <GameRow
+              title="Juegos destacados"
+              games={filteredFeatured}
+            />
+
+            <GameRow
+              title="Nuevos lanzamientos"
+              games={filteredNewReleases}
+            />
+          </>
+        )}
       </div>
     </div>
   )

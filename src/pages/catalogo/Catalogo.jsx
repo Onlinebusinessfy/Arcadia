@@ -14,16 +14,20 @@ const allGames = [
   { id: 8, title: 'God of War', genre: 'Acción • Aventura', price: '$49.99', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/capsule_616x353.jpg' },
 ]
 
-export default function Catalogo() {
+export default function Catalogo({ search = '' }) {
   const { items, addToCart } = useCart()
-
 
   const [searchParams] = useSearchParams()
   const categoria = searchParams.get('categoria')
 
-  const games = categoria
+  let games = categoria
     ? allGames.filter(game => game.genre.includes(categoria))
     : allGames
+
+  games = games.filter(game =>
+    game.title.toLowerCase().includes(search.toLowerCase()) ||
+    game.genre.toLowerCase().includes(search.toLowerCase())
+  )
 
   return (
     <div className="catalogo">
@@ -31,24 +35,35 @@ export default function Catalogo() {
         <h1>Catálogo</h1>
         <p>{games.length} juegos disponibles</p>
       </div>
+
       <div className="catalogo-grid">
         {games.map(game => {
           const inCart = items.some(item => item.id === game.id)
+
           return (
             <div key={game.id} className="cat-card">
               <div className="cat-img">
                 <img src={game.img} alt={game.title} />
               </div>
+
               <div className="cat-info">
                 <p className="cat-title">{game.title}</p>
                 <p className="cat-genre">{game.genre}</p>
+
                 <div className="cat-footer">
                   <span className="cat-price">{game.price}</span>
+
                   <button
                     className={`add-btn ${inCart ? 'in-cart' : ''}`}
                     onClick={() => addToCart(game)}
                   >
-                    {inCart ? <><FiCheck size={14} /> Agregado</> : 'Agregar'}
+                    {inCart ? (
+                      <>
+                        <FiCheck size={14} /> Agregado
+                      </>
+                    ) : (
+                      'Agregar'
+                    )}
                   </button>
                 </div>
               </div>
@@ -56,6 +71,13 @@ export default function Catalogo() {
           )
         })}
       </div>
+
+      {games.length === 0 && (
+        <div className="no-results">
+          <h3>No se encontraron juegos</h3>
+          <p>Intenta con otra búsqueda.</p>
+        </div>
+      )}
     </div>
   )
 }
