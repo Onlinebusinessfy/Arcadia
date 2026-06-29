@@ -78,6 +78,13 @@ export default function Navbar({ search, setSearch }) {
       </div>
 
       <div className="navbar-actions">
+        <button className="nav-auth-btn" onClick={() => navigate('/login')}>
+          Iniciar sesión
+        </button>
+
+        <button className="nav-auth-btn accent" onClick={() => navigate('/register')}>
+          Registrarse
+        </button>
         <div className="cart-wrap" ref={cartRef}>
           <button
             className="icon-btn"
