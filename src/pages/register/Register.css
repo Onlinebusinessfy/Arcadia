@@ -1,0 +1,75 @@
+.register-page {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-primary);
+}
+
+.register-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 40px 36px;
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.register-card h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.register-form input {
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-primary);
+    font-size: 0.875rem;
+    font-family: 'Inter', sans-serif;
+    transition: border-color 0.2s;
+}
+
+.register-form input::placeholder {
+    color: var(--text-muted);
+}
+
+.register-form input:focus {
+    outline: none;
+    border-color: var(--accent);
+}
+
+.register-form button {
+    margin-top: 8px;
+    padding: 11px;
+    background: var(--accent);
+    color: white;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    transition: background 0.2s;
+}
+
+.register-form button:hover {
+    background: var(--accent-hover);
+}
+
+.register-message {
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    text-align: center;
+}

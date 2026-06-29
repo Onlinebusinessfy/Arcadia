@@ -1,5 +1,6 @@
 import { useState } from "react";
 import authService from "../../services/authService";
+import './Register.css'
 
 function Register() {
     const [formData, setFormData] = useState({
@@ -32,46 +33,47 @@ function Register() {
     };
 
     return (
-        <div>
-            <h1>Crear cuenta</h1>
+        <div className="register-page">
+            <div className="register-card">
+                <h1>Crear cuenta</h1>
 
-            <form onSubmit={handleRegister}>
+                <form className="register-form" onSubmit={handleRegister}>
 
-                <input
-                    name="username"
-                    placeholder="Usuario"
-                    onChange={handleChange}
-                />
+                    <input
+                        name="username"
+                        placeholder="Usuario"
+                        onChange={handleChange}
+                    />
 
-                <input
-                    name="email"
-                    type="email"
-                    placeholder="Correo"
-                    onChange={handleChange}
-                />
+                    <input
+                        name="email"
+                        type="email"
+                        placeholder="Correo"
+                        onChange={handleChange}
+                    />
 
-                <input
-                    name="password"
-                    type="password"
-                    placeholder="Contraseña"
-                    onChange={handleChange}
-                />
+                    <input
+                        name="password"
+                        type="password"
+                        placeholder="Contraseña"
+                        onChange={handleChange}
+                    />
 
-                <input
-                    name="confirm_password"
-                    type="password"
-                    placeholder="Confirmar contraseña"
-                    onChange={handleChange}
-                />
+                    <input
+                        name="confirm_password"
+                        type="password"
+                        placeholder="Confirmar contraseña"
+                        onChange={handleChange}
+                    />
 
-                <button type="submit">
-                    Registrarse
-                </button>
+                    <button type="submit">
+                        Registrarse
+                    </button>
 
-            </form>
+                </form>
 
-            <p>{message}</p>
-
+                <p className="register-message">{message}</p>
+            </div>
         </div>
     );
 }

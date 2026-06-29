@@ -1,5 +1,6 @@
 import { useState } from "react";
 import authService from "../../services/authService";
+import './Login.css'
 
 function Login() {
     const [username, setUsername] = useState("");
@@ -32,38 +33,40 @@ function Login() {
     };
 
     return (
-        <div>
-            <h1>Arcadia</h1>
+        <div className="login-page">
+            <div className="login-card">
+                <h1 className="login-title">Arcadia</h1>
 
-            <form onSubmit={handleLogin}>
+                <form className="login-form" onSubmit={handleLogin}>
 
-                <div>
-                    <label>Usuario</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
+                    <div className="login-field">
+                        <label>Usuario</label>
+                        <input
+                            type="text"
+                            value={username}
+                            onChange={(e) => setUsername(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                <div>
-                    <label>Contraseña</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
+                    <div className="login-field">
+                        <label>Contraseña</label>
+                        <input
+                            type="password"
+                            value={password}
+                            onChange={(e) => setPassword(e.target.value)}
+                            required
+                        />
+                    </div>
 
-                {error && <p>{error}</p>}
+                    {error && <p className="login-error">{error}</p>}
 
-                <button type="submit">
-                    Iniciar sesión
-                </button>
+                    <button type="submit">
+                        Iniciar sesión
+                    </button>
 
-            </form>
+                </form>
+            </div>
         </div>
     );
 }
