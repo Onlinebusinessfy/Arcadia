@@ -73,3 +73,104 @@
     font-size: 0.85rem;
     color: var(--text-secondary);
 }
+
+/* ================= TABLETS ================= */
+@media (max-width: 992px) {
+  .about-page {
+    padding: 24px 18px;
+  }
+
+  .about-header h1 {
+    font-size: 2rem;
+  }
+
+  .about-content {
+    padding: 28px;
+  }
+
+  .stat h2 {
+    font-size: 1.8rem;
+  }
+}
+
+/* ================= CELULARES GRANDES ================= */
+@media (max-width: 768px) {
+  .about-page {
+    padding: 20px 14px;
+  }
+
+  .about-header {
+    margin-bottom: 24px;
+  }
+
+  .about-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .about-content {
+    padding: 22px;
+  }
+
+  .about-content p {
+    font-size: 0.9rem;
+    line-height: 1.7;
+  }
+
+  .about-stats {
+    gap: 16px;
+  }
+
+  .stat h2 {
+    font-size: 1.6rem;
+  }
+
+  .stat span {
+    font-size: 0.8rem;
+  }
+}
+
+/* ================= CELULARES PEQUEÑOS ================= */
+@media (max-width: 480px) {
+  .about-page {
+    padding: 16px 10px;
+  }
+
+  .about-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .about-label {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+  }
+
+  .about-content {
+    padding: 18px;
+  }
+
+  .about-content p {
+    font-size: 0.85rem;
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+
+  /* Estadísticas una debajo de otra */
+  .about-stats {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .stat h2 {
+    font-size: 1.5rem;
+  }
+
+  .stat span {
+    font-size: 0.8rem;
+  }
+
+  .page-icon svg {
+    width: 42px;
+    height: 42px;
+  }
+}

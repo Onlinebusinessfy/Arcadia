@@ -283,3 +283,169 @@
 .add-cart-btn.in-cart {
   background: #22c55e;
 }
+
+/* ================= TABLETS ================= */
+@media (max-width: 992px) {
+  .hero {
+    height: 320px;
+    margin: 12px;
+  }
+
+  .hero-content {
+    max-width: 450px;
+    padding: 40px 35px;
+  }
+
+  .hero-title {
+    font-size: 2rem;
+  }
+
+  .hero-desc {
+    font-size: 0.9rem;
+  }
+
+  .game-card {
+    width: 220px;
+  }
+
+  .rows-container {
+    gap: 28px;
+  }
+}
+
+/* ================= CELULARES GRANDES ================= */
+@media (max-width: 768px) {
+  .hero {
+    height: 300px;
+    margin: 10px;
+    border-radius: 14px;
+  }
+
+  .hero-content {
+    padding: 30px 25px;
+    max-width: 100%;
+    gap: 12px;
+  }
+
+  .hero-title {
+    font-size: 1.8rem;
+  }
+
+  .hero-desc {
+    font-size: 0.85rem;
+    max-width: 100%;
+  }
+
+  .hero-btn {
+    padding: 10px 20px;
+    font-size: 0.85rem;
+  }
+
+  .hero-nav {
+    bottom: 15px;
+  }
+
+  .rows-container {
+    padding: 8px 10px;
+    gap: 24px;
+  }
+
+  .row-title {
+    font-size: 1rem;
+  }
+
+  .game-card {
+    width: 200px;
+  }
+
+  .card-title {
+    font-size: 0.85rem;
+  }
+
+  .card-price {
+    font-size: 0.85rem;
+  }
+}
+
+/* ================= CELULARES PEQUEÑOS ================= */
+@media (max-width: 480px) {
+  .hero {
+    height: 260px;
+    margin: 8px;
+    border-radius: 12px;
+  }
+
+  .hero-content {
+    padding: 22px 18px;
+    gap: 10px;
+  }
+
+  .hero-label {
+    font-size: 0.65rem;
+    letter-spacing: 1px;
+  }
+
+  .hero-title {
+    font-size: 1.45rem;
+    line-height: 1.2;
+  }
+
+  .hero-desc {
+    font-size: 0.8rem;
+    line-height: 1.5;
+  }
+
+  .hero-btn {
+    padding: 9px 16px;
+    font-size: 0.8rem;
+  }
+
+  .hero-arrow {
+    width: 24px;
+    height: 24px;
+  }
+
+  .dot {
+    width: 7px;
+    height: 7px;
+  }
+
+  .row-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+  }
+
+  .row-title {
+    font-size: 0.95rem;
+  }
+
+  .ver-todos {
+    font-size: 0.8rem;
+  }
+
+  .game-card {
+    width: 180px;
+  }
+
+  .card-info {
+    padding: 10px;
+  }
+
+  .card-title {
+    font-size: 0.8rem;
+  }
+
+  .card-genre {
+    font-size: 0.7rem;
+  }
+
+  .card-price {
+    font-size: 0.8rem;
+  }
+
+  .add-cart-btn {
+    width: 26px;
+    height: 26px;
+  }
+}

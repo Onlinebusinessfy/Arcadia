@@ -7,13 +7,19 @@ import {
   FiX,
   FiPlus,
   FiMinus,
-  FiTrash2
+  FiTrash2,
+  FiMenu
 } from 'react-icons/fi'
 import { useRef, useEffect, useState } from 'react'
 import { useCart } from '../context/CartContext'
 import { useNavigate } from 'react-router-dom'
 
-export default function Navbar({ search, setSearch }) {
+export default function Navbar({
+  search,
+  setSearch,
+  sidebarOpen,
+  setSidebarOpen
+}) {
   const [cartOpen, setCartOpen] = useState(false)
   const cartRef = useRef(null)
   const navigate = useNavigate()
@@ -37,12 +43,23 @@ export default function Navbar({ search, setSearch }) {
     document.addEventListener('mousedown', handleClickOutside)
 
     return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
+      document.removeEventListener(
+        'mousedown',
+        handleClickOutside
+      )
     }
   }, [])
 
   return (
     <nav className="navbar">
+      {/* BOTÓN HAMBURGUESA */}
+      <button
+        className="menu-btn"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        <FiMenu size={22} />
+      </button>
+
       <div className="navbar-logo">
         <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
           <polygon
@@ -63,7 +80,9 @@ export default function Navbar({ search, setSearch }) {
           />
         </svg>
 
-        <span className="navbar-brand">ARCADIA</span>
+        <span className="navbar-brand">
+          ARCADIA
+        </span>
       </div>
 
       <div className="navbar-search">
@@ -71,17 +90,24 @@ export default function Navbar({ search, setSearch }) {
 
         <input
           type="text"
-          placeholder="Buscar juegos, géneros, etiquetas..."
+          placeholder="Buscar juegos..."
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={(e) =>
+            setSearch(e.target.value)
+          }
         />
       </div>
 
       <div className="navbar-actions">
-        <div className="cart-wrap" ref={cartRef}>
+        <div
+          className="cart-wrap"
+          ref={cartRef}
+        >
           <button
             className="icon-btn"
-            onClick={() => setCartOpen(!cartOpen)}
+            onClick={() =>
+              setCartOpen(!cartOpen)
+            }
           >
             <FiShoppingCart size={20} />
 
@@ -99,7 +125,9 @@ export default function Navbar({ search, setSearch }) {
 
                 <button
                   className="close-cart"
-                  onClick={() => setCartOpen(false)}
+                  onClick={() =>
+                    setCartOpen(false)
+                  }
                 >
                   <FiX size={16} />
                 </button>
@@ -108,7 +136,9 @@ export default function Navbar({ search, setSearch }) {
               {items.length === 0 ? (
                 <div className="cart-empty">
                   <FiShoppingCart size={32} />
-                  <p>Tu carrito está vacío</p>
+                  <p>
+                    Tu carrito está vacío
+                  </p>
                 </div>
               ) : (
                 <>
@@ -143,7 +173,9 @@ export default function Navbar({ search, setSearch }) {
                               <FiMinus size={12} />
                             </button>
 
-                            <span>{item.qty}</span>
+                            <span>
+                              {item.qty}
+                            </span>
 
                             <button
                               onClick={() =>
@@ -172,7 +204,8 @@ export default function Navbar({ search, setSearch }) {
                       <span>Total</span>
 
                       <span className="cart-total-price">
-                        ${totalPrice.toFixed(2)}
+                        $
+                        {totalPrice.toFixed(2)}
                       </span>
                     </div>
 

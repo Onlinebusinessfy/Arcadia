@@ -16,4 +16,33 @@
     min-height: calc(100vh - var(--navbar-height));
     overflow-y: auto;
     background: var(--bg-primary);
+    transition: margin-left 0.3s ease;
+}
+
+/* ================= TABLETS ================= */
+@media (max-width: 992px) {
+    .main-content {
+        margin-left: 220px;
+    }
+}
+
+/* ================= CELULARES ================= */
+@media (max-width: 768px) {
+    .app-body {
+        display: block;
+    }
+
+    .main-content {
+        margin-left: 0;
+        width: 100%;
+        min-height: calc(100vh - var(--navbar-height));
+        padding-bottom: 16px;
+    }
+}
+
+/* ================= CELULARES PEQUEÑOS ================= */
+@media (max-width: 480px) {
+    .main-content {
+        padding-bottom: 20px;
+    }
 }
