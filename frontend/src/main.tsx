@@ -5,14 +5,9 @@ import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import App from './App'
 
-<<<<<<< HEAD:src/main.jsx
-import { CartProvider } from './context/CartContext.jsx'
-import { AuthProvider } from './context/AuthContext.jsx'
-import { NotificationProvider } from './context/NotificationContext.jsx'
-=======
 import { CartProvider } from './context/CartContext'
 import { AuthProvider } from './context/AuthContext'
->>>>>>> 0b354db887501e1984837c7dab2589bb540910ab:frontend/src/main.tsx
+import { NotificationProvider } from './context/NotificationContext'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
