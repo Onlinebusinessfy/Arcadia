@@ -1,8 +1,39 @@
 const API_URL = import.meta.env.VITE_API_URL;
 
-const authService = {
+export interface User {
+    id: number;
+    username: string;
+    email: string;
+    profile_picture: string | null;
+    bio: string;
+    status: "online" | "away" | "busy" | "offline";
+    created_at: string;
+}
 
-    async register(userData: { username: string; email: string; password: string; confirm_password: string; }): Promise<{ message: string, user: { id: number, username: string, email: string } }> {
+export interface RegisterData {
+    username: string;
+    email: string;
+    password: string;
+    confirm_password: string;
+}
+
+export interface LoginData {
+    username: string;
+    password: string;
+}
+
+export interface LoginResponse {
+    access: string;
+    refresh: string;
+}
+
+export interface RegisterResponse {
+    message: string;
+    user: User;
+}
+
+const authService = {
+    async register(userData: RegisterData): Promise<RegisterResponse> {
         const response = await fetch(`${API_URL}register/`, {
             method: "POST",
             headers: {
@@ -11,7 +42,7 @@ const authService = {
             body: JSON.stringify(userData),
         });
 
-        const data = await response.json();
+        const data: RegisterResponse = await response.json();
 
         if (!response.ok) {
             throw data;
@@ -20,7 +51,7 @@ const authService = {
         return data;
     },
 
-    async login(credentials: { username: string; password: string; }): Promise<{ access: string, refresh: string, user: string }> {
+    async login(credentials: LoginData): Promise<LoginResponse> {
         const response = await fetch(`${API_URL}login/`, {
             method: "POST",
             headers: {
@@ -29,7 +60,7 @@ const authService = {
             body: JSON.stringify(credentials),
         });
 
-        const data = await response.json();
+        const data: LoginResponse = await response.json();
 
         if (!response.ok) {
             throw data;
@@ -38,14 +69,14 @@ const authService = {
         return data;
     },
 
-    async getMe(token: string): Promise<{ id: number, username: string, email: string, profile_picture: null, bio: string, status: string, created_at: string }> {
+    async getMe(token: string): Promise<User> {
         const response = await fetch(`${API_URL}me/`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
 
-        const data = await response.json();
+        const data: User = await response.json();
 
         if (!response.ok) {
             throw data;
@@ -65,7 +96,7 @@ const authService = {
             }),
         });
 
-        const data = await response.json();
+        const data: { access: string } = await response.json();
 
         if (!response.ok) {
             throw data;
