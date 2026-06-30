@@ -1,8 +1,14 @@
-import { useState, type ReactElement } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
-import './Login.css'
+import { useAuth } from "../../context/AuthContext.tsx";
 
-export default function Login(): ReactElement {
+import "../auth/Auth.css";
+
+function Login() {
+    const navigate = useNavigate();
+    const { login } = useAuth() as { login: (data: any) => Promise<void> };
+
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
@@ -16,15 +22,9 @@ export default function Login(): ReactElement {
                 password,
             });
 
-            localStorage.setItem("access", data.access);
-            localStorage.setItem("refresh", data.refresh);
+            await login(data);
 
-            console.log("Usuario:", data.user);
-
-            alert("Inicio de sesión exitoso");
-
-            // Más adelante aquí haremos la redirección
-            // navigate("/home");
+            navigate("/");
 
         } catch (error) {
             setError("Usuario o contraseña incorrectos.");
@@ -33,40 +33,58 @@ export default function Login(): ReactElement {
     };
 
     return (
-        <div className="login-page">
-            <div className="login-card">
-                <h1 className="login-title">Arcadia</h1>
+        <div className="auth-page">
+            <div className="auth-card">
 
-                <form className="login-form" onSubmit={handleLogin}>
+                <h1 className="auth-title">Arcadia</h1>
+                <p className="auth-subtitle">
+                    Inicia sesión para continuar
+                </p>
 
-                    <div className="login-field">
+                <form className="auth-form" onSubmit={handleLogin}>
+
+                    <div className="auth-group">
                         <label>Usuario</label>
                         <input
                             type="text"
+                            placeholder="Ingresa tu usuario"
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             required
                         />
                     </div>
 
-                    <div className="login-field">
+                    <div className="auth-group">
                         <label>Contraseña</label>
                         <input
                             type="password"
+                            placeholder="Ingresa tu contraseña"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             required
                         />
                     </div>
 
-                    {error && <p className="login-error">{error}</p>}
+                    {error && (
+                        <div className="auth-error">
+                            {error}
+                        </div>
+                    )}
 
-                    <button type="submit">
+                    <button className="auth-button" type="submit">
                         Iniciar sesión
                     </button>
 
                 </form>
+
+                <div className="auth-link">
+                    ¿No tienes una cuenta?{" "}
+                    <Link to="/register">Regístrate</Link>
+                </div>
+
             </div>
         </div>
     );
 }
+
+export default Login;

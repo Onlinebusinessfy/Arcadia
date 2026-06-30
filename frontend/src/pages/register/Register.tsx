@@ -1,79 +1,145 @@
-import { useState, type ReactElement } from "react";
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/authService";
-import './Register.css'
+import "../auth/Auth.css";
+import { useAuth } from "../../context/AuthContext";
 
-export default function Register(): ReactElement {
-    const [formData, setFormData] = useState<{ username: string, email: string, password: string, confirm_password: string }>({
+function Register() {
+
+    const navigate = useNavigate();
+    const { login } = useAuth() as { login: (data: any) => Promise<any> };
+    const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: "",
         confirm_password: "",
     });
 
-    const [message, setMessage] = useState("");
+    const [message] = useState("");
+    const [error, setError] = useState("");
 
-    const handleChange = (e: { target: { name: string; value: string; }; }) => {
+    const handleChange = (e: { target: { name: any; value: any; }; }) => {
         setFormData({
             ...formData,
             [e.target.name]: e.target.value,
         });
     };
 
-    const handleRegister = async (e: { preventDefault: () => void }) => {
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
 
         try {
-            const data = await authService.register(formData);
+            // Registrar usuario
+            await authService.register(formData);
 
-            setMessage(data.message);
+            // Iniciar sesión automáticamente
+            const loginData = await authService.login({
+                username: formData.username,
+                password: formData.password,
+            });
 
-        } catch (error) {
-            console.error(error);
+            // Guardar sesión usando AuthContext
+            await login(loginData);
+
+            // Ir al Home
+            navigate("/");
+
+        } catch (err: any) {
+            console.error(err);
+
+            if (err?.username) {
+                setError(err.username[0]);
+            } else if (err?.email) {
+                setError(err.email[0]);
+            } else if (err?.confirm_password) {
+                setError(err.confirm_password[0]);
+            } else {
+                setError("No fue posible crear la cuenta.");
+            }
         }
     };
 
     return (
-        <div className="register-page">
-            <div className="register-card">
-                <h1>Crear cuenta</h1>
+        <div className="auth-page">
+            <div className="auth-card">
 
-                <form className="register-form" onSubmit={handleRegister}>
+                <h1 className="auth-title">Crear cuenta</h1>
 
-                    <input
-                        name="username"
-                        placeholder="Usuario"
-                        onChange={handleChange}
-                    />
+                <p className="auth-subtitle">
+                    Únete a Arcadia
+                </p>
 
-                    <input
-                        name="email"
-                        type="email"
-                        placeholder="Correo"
-                        onChange={handleChange}
-                    />
+                <form className="auth-form" onSubmit={handleRegister}>
 
-                    <input
-                        name="password"
-                        type="password"
-                        placeholder="Contraseña"
-                        onChange={handleChange}
-                    />
+                    <div className="auth-group">
+                        <label>Usuario</label>
+                        <input
+                            name="username"
+                            placeholder="Usuario"
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                    <input
-                        name="confirm_password"
-                        type="password"
-                        placeholder="Confirmar contraseña"
-                        onChange={handleChange}
-                    />
+                    <div className="auth-group">
+                        <label>Correo</label>
+                        <input
+                            name="email"
+                            type="email"
+                            placeholder="Correo electrónico"
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
 
-                    <button type="submit">
-                        Registrarse
+                    <div className="auth-group">
+                        <label>Contraseña</label>
+                        <input
+                            name="password"
+                            type="password"
+                            placeholder="Contraseña"
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    <div className="auth-group">
+                        <label>Confirmar contraseña</label>
+                        <input
+                            name="confirm_password"
+                            type="password"
+                            placeholder="Confirmar contraseña"
+                            onChange={handleChange}
+                            required
+                        />
+                    </div>
+
+                    {error && (
+                        <div className="auth-error">
+                            {error}
+                        </div>
+                    )}
+
+                    {message && (
+                        <div className="auth-success">
+                            {message}
+                        </div>
+                    )}
+
+                    <button className="auth-button" type="submit">
+                        Crear cuenta
                     </button>
 
                 </form>
 
-                <p className="register-message">{message}</p>
+                <div className="auth-link">
+                    ¿Ya tienes una cuenta?{" "}
+                    <Link to="/login">Inicia sesión</Link>
+                </div>
+
             </div>
         </div>
     );
 }
+
+export default Register;
