@@ -443,39 +443,26 @@ svg {
 }
 
 @media (max-width: 768px) {
-  .navbar {
-    justify-content: space-between;
-  }
 
-  .navbar-logo {
-    display: none;
+  .navbar-search {
+    min-width: 0;
   }
 
   .navbar-actions {
-    gap: 4px;
-    margin-left: auto;
-  }
-
-  .navbar-search {
-    flex: 1;
-    max-width: 420px;
-    margin: 0 auto;
+    flex-shrink: 0;
   }
 
   .cart-wrap {
-    position: static;
+    flex-shrink: 0;
   }
 
   .cart-dropdown {
     position: fixed;
-    top: 70px;
-    right: 10px;
+    top: var(--navbar-height);
     left: 10px;
-
+    right: 10px;
     width: auto;
     max-width: none;
-
-    z-index: 9999;
   }
 }
 
