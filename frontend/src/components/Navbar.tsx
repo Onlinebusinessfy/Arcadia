@@ -12,11 +12,24 @@ import {
 import { useRef, useEffect, useState, type ReactElement } from 'react'
 import { useCart } from '../context/CartContext'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../context/AuthContext'
 
-export default function Navbar({ search, setSearch }: { search: string, setSearch: (query: string) => void }): ReactElement {
-  const [cartOpen, setCartOpen] = useState<boolean>(false)
-  const cartRef = useRef<HTMLDivElement>(null)
+
+export default function Navbar({ search, setSearch }) {
+  const [cartOpen, setCartOpen] = useState(false)
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const cartRef = useRef(null)
   const navigate = useNavigate()
+  const {user, logout} = useAuth()
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
+  const handleProfile = () => {
+    setUserMenuOpen(false);
+    navigate("/perfil");
+  };
+  const userMenuRef = useRef(null);
 
   const {
     items,
@@ -31,6 +44,12 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
     function handleClickOutside(e: MouseEvent) {
       if (cartRef.current && !cartRef.current.contains(e.target as Node)) {
         setCartOpen(false)
+      }
+      if (
+          userMenuRef.current &&
+          !userMenuRef.current.contains(e.target)
+      ) {
+          setUserMenuOpen(false);
       }
     }
 
@@ -203,7 +222,7 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
           <FiBell size={20} />
         </button>
 
-        <div className="user-pill">
+        <div className="user-pill" onClick={() => setUserMenuOpen(!userMenuOpen)} ref={userMenuRef}>
           <div className="user-avatar">
             <span>J</span>
             <div className="online-dot" />
@@ -211,11 +230,11 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
 
           <div className="user-info">
             <span className="user-name">
-              Jugador
+              {user?.username ?? "Invitado"}
             </span>
 
             <span className="user-level">
-              Nivel 12
+              {user?.status ?? "offline"}
             </span>
           </div>
 
@@ -223,6 +242,23 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
             size={14}
             className="chevron"
           />
+          {userMenuOpen && (
+                <div className="user-dropdown">
+
+                    <button
+                        onClick={handleProfile}
+                    >
+                        Ver perfil
+                    </button>
+
+                    <button
+                        onClick={handleLogout}
+                    >
+                        Cerrar sesión
+                    </button>
+
+                </div>
+            )}
         </div>
       </div>
     </nav>

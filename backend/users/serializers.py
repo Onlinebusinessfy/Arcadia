@@ -5,29 +5,30 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 
 class RegisterSerializer(serializers.ModelSerializer):
+
     password = serializers.CharField(write_only=True, min_length=8)
     confirm_password = serializers.CharField(write_only=True)
 
     class Meta:
         model = CustomUser
-        fields = [
+        fields = (
             "username",
             "email",
             "password",
-            "confirm_password"
-        ]
+            "confirm_password",
+        )
 
     def validate_username(self, value):
         if CustomUser.objects.filter(username__iexact=value).exists():
             raise serializers.ValidationError(
-                "Este nombre de usuario ya está en uso."
+                "Este nombre de usuario ya existe."
             )
         return value
 
     def validate_email(self, value):
         if CustomUser.objects.filter(email__iexact=value).exists():
             raise serializers.ValidationError(
-                "Este correo electrónico ya está registrado."
+                "Este correo ya está registrado."
             )
         return value
 
@@ -36,7 +37,6 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 "confirm_password": "Las contraseñas no coinciden."
             })
-
         return data
 
     def create(self, validated_data):
@@ -45,9 +45,9 @@ class RegisterSerializer(serializers.ModelSerializer):
         return CustomUser.objects.create_user(
             username=validated_data["username"],
             email=validated_data["email"],
-            password=validated_data["password"]
+            password=validated_data["password"],
         )
-    
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)

@@ -14,6 +14,7 @@ import Carrito from './pages/carrito/Carrito'
 
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
+import Perfil from './pages/perfil/Perfil'
 
 export default function App(): ReactElement {
   const [search, setSearch] = useState<string>('')
@@ -44,6 +45,7 @@ export default function App(): ReactElement {
             <Route path="/biblioteca" element={<Biblioteca search={search} />} />
             <Route path="/acerca" element={<Acerca />} />
             <Route path="/carrito" element={<Carrito />} />
+            <Route path="/perfil" element={<Perfil />} />
           </Routes>
         </main>
       </div>

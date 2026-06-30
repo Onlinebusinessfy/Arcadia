@@ -15,6 +15,7 @@ class RegisterView(APIView):
         serializer = RegisterSerializer(data=request.data)
 
         if serializer.is_valid():
+
             user = serializer.save()
 
             return Response(
@@ -24,15 +25,19 @@ class RegisterView(APIView):
                         "id": user.id,
                         "username": user.username,
                         "email": user.email,
+                        "bio": user.bio,
+                        "status": user.status,
+                        "profile_picture": (
+                            user.profile_picture.url
+                            if user.profile_picture
+                            else None
+                        ),
                     }
                 },
                 status=status.HTTP_201_CREATED
             )
 
-        return Response(
-            serializer.errors,
-            status=status.HTTP_400_BAD_REQUEST
-        )
+        return Response(serializer.errors, status=400)
 
 class LoginView(APIView):
 
