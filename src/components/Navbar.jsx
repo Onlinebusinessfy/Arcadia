@@ -11,12 +11,16 @@ import {
 } from 'react-icons/fi'
 import { useRef, useEffect, useState } from 'react'
 import { useCart } from '../context/CartContext'
+import { useNotifications } from '../context/NotificationContext'
 import { useNavigate } from 'react-router-dom'
 
 export default function Navbar({ search, setSearch }) {
   const [cartOpen, setCartOpen] = useState(false)
   const cartRef = useRef(null)
   const navigate = useNavigate()
+  const [notifOpen, setNotifOpen] = useState(false)
+  const notifRef = useRef(null)
+  const { notifications, markAsRead, markAllAsRead, unreadCount } = useNotifications()
 
   const {
     items,
@@ -31,6 +35,10 @@ export default function Navbar({ search, setSearch }) {
     function handleClickOutside(e) {
       if (cartRef.current && !cartRef.current.contains(e.target)) {
         setCartOpen(false)
+      }
+
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setNotifOpen(false)
       }
     }
 
@@ -199,11 +207,68 @@ export default function Navbar({ search, setSearch }) {
           )}
         </div>
 
-        <button className="icon-btn">
-          <FiBell size={20} />
-        </button>
+        <div className="notif-wrap" ref={notifRef}>
+          <button
+            className="icon-btn"
+            onClick={() => setNotifOpen(!notifOpen)}
+          >
+            <FiBell size={20} />
 
-        <div className="user-pill">
+            {unreadCount > 0 && (
+              <span className="cart-badge">
+                {unreadCount}
+              </span>
+            )}
+          </button>
+
+          {notifOpen && (
+            <div className="notif-dropdown">
+              <div className="cart-header">
+                <h3>Notificaciones</h3>
+
+                <button
+                  className="close-cart"
+                  onClick={() => setNotifOpen(false)}
+                >
+                  <FiX size={16} />
+                </button>
+              </div>
+
+              {notifications.length === 0 ? (
+                <div className="cart-empty">
+                  <FiBell size={32} />
+                  <p>No tienes notificaciones</p>
+                </div>
+              ) : (
+                <>
+                  <div className="notif-items">
+                    {notifications.map(n => (
+                      <div
+                        key={n.id}
+                        className={`notif-item ${n.read ? '' : 'unread'}`}
+                        onClick={() => markAsRead(n.id)}
+                      >
+                        <p className="notif-text">{n.text}</p>
+                        <p className="notif-time">{n.time}</p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="cart-footer">
+                    <button
+                      className="checkout-btn"
+                      onClick={markAllAsRead}
+                    >
+                      Marcar todas como leídas
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+
+        <div className="user-pill" onClick={() => navigate('/perfil')} style={{ cursor: 'pointer' }}>
           <div className="user-avatar">
             <span>J</span>
             <div className="online-dot" />

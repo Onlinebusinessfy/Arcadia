@@ -405,3 +405,67 @@
 .nav-auth-btn.accent:hover {
   background: var(--accent-hover);
 }
+
+/* Notificaciones */
+.notif-wrap {
+  position: relative;
+}
+
+.notif-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 320px;
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  overflow: hidden;
+  animation: cart-fade 0.15s ease;
+}
+
+.notif-items {
+  max-height: 320px;
+  overflow-y: auto;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.notif-item {
+  padding: 10px 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.notif-item:hover {
+  background: var(--bg-hover);
+}
+
+.notif-item.unread {
+  background: rgba(108, 94, 246, 0.08);
+}
+
+.notif-item.unread .notif-text::before {
+  content: '';
+  display: inline-block;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 6px;
+}
+
+.notif-text {
+  font-size: 0.82rem;
+  color: var(--text-primary);
+}
+
+.notif-time {
+  margin-top: 4px;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}

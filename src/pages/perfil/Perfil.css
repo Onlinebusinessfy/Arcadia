@@ -1,0 +1,87 @@
+.perfil-page {
+    padding: 28px 24px;
+}
+
+.perfil-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-bottom: 36px;
+}
+
+.perfil-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    background: var(--accent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: white;
+    flex-shrink: 0;
+}
+
+.perfil-info h1 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--text-primary);
+}
+
+.perfil-info p {
+    margin-top: 4px;
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+}
+
+.perfil-section h2 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    color: var(--text-primary);
+}
+
+.perfil-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 16px;
+}
+
+.perfil-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.perfil-card-img {
+    aspect-ratio: 16/9;
+    overflow: hidden;
+    background: #111420;
+}
+
+.perfil-card-img img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.perfil-card-info {
+    padding: 14px;
+}
+
+.perfil-card-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.perfil-card-genre {
+    margin-top: 4px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}

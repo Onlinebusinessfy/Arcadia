@@ -15,6 +15,8 @@ import Carrito from './pages/carrito/Carrito'
 import Login from './pages/login/Login'
 import Register from './pages/register/Register'
 
+import Perfil from './pages/perfil/Perfil'
+
 function App() {
   const [search, setSearch] = useState('')
 
@@ -44,6 +46,7 @@ function App() {
             <Route path="/biblioteca" element={<Biblioteca search={search} />} />
             <Route path="/acerca" element={<Acerca />} />
             <Route path="/carrito" element={<Carrito />} />
+            <Route path="/perfil" element={<Perfil />} />
           </Routes>
         </main>
       </div>
