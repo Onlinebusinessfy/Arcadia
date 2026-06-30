@@ -65,6 +65,10 @@ export default function Navbar({
       ) {
         setUserMenuOpen(false);
       }
+
+      if (notifRef.current && !notifRef.current.contains(e.target)) {
+        setNotifOpen(false)
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
