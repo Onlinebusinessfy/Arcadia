@@ -29,6 +29,16 @@
 /* ================= CELULARES ================= */
 @media (max-width: 768px) {
 
+  .app-body {
+    display: block;
+  }
+
+  .main-content {
+    margin-left: 0;
+    width: 100%;
+    min-height: calc(100vh - var(--navbar-height));
+  }
+
   .navbar-search {
     min-width: 0;
   }
@@ -39,6 +49,7 @@
 
   .cart-wrap {
     flex-shrink: 0;
+    position: relative;
   }
 
   .cart-dropdown {
@@ -48,6 +59,7 @@
     right: 10px;
     width: auto;
     max-width: none;
+    z-index: 9999;
   }
 }
 
