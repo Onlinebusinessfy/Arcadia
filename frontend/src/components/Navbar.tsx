@@ -1,4 +1,4 @@
-import './Navbar.css'
+import "./Navbar.css";
 import {
   FiShoppingCart,
   FiBell,
@@ -7,20 +7,39 @@ import {
   FiX,
   FiPlus,
   FiMinus,
-  FiTrash2
-} from 'react-icons/fi'
-import { useRef, useEffect, useState, type ReactElement } from 'react'
-import { useCart } from '../context/CartContext'
-import { useNotifications } from '../context/NotificationContext'
-import { useNavigate } from 'react-router-dom'
+  FiTrash2,
+} from "react-icons/fi";
 
-export default function Navbar({ search, setSearch }: { search: string, setSearch: (query: string) => void }): ReactElement {
-  const [cartOpen, setCartOpen] = useState<boolean>(false)
-  const cartRef = useRef<HTMLDivElement>(null)
-  const navigate = useNavigate()
-  const [notifOpen, setNotifOpen] = useState(false)
-  const notifRef = useRef(null)
-  const { notifications, markAsRead, markAllAsRead, unreadCount } = useNotifications()
+import {
+  useRef,
+  useEffect,
+  useState,
+  type ReactElement,
+} from "react";
+
+import { useNavigate } from "react-router-dom";
+
+import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
+
+interface NavbarProps {
+  search: string;
+  setSearch: (query: string) => void;
+}
+
+export default function Navbar({
+  search,
+  setSearch,
+}: NavbarProps): ReactElement {
+  const navigate = useNavigate();
+
+  const { user, logout } = useAuth();
+
+  const [cartOpen, setCartOpen] = useState(false);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  const cartRef = useRef<HTMLDivElement>(null);
+  const userRef = useRef<HTMLDivElement>(null);
 
   const {
     items,
@@ -29,12 +48,22 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
     decreaseQty,
     totalItems,
     totalPrice,
-  } = useCart()
+  } = useCart();
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
-      if (cartRef.current && !cartRef.current.contains(e.target as Node)) {
-        setCartOpen(false)
+      if (
+        cartRef.current &&
+        !cartRef.current.contains(e.target as Node)
+      ) {
+        setCartOpen(false);
+      }
+
+      if (
+        userRef.current &&
+        !userRef.current.contains(e.target as Node)
+      ) {
+        setUserMenuOpen(false);
       }
 
       if (notifRef.current && !notifRef.current.contains(e.target)) {
@@ -42,12 +71,19 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
       }
     }
 
-    document.addEventListener('mousedown', handleClickOutside)
+    document.addEventListener("mousedown", handleClickOutside);
 
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside)
-    }
-  }, [])
+    return () =>
+      document.removeEventListener(
+        "mousedown",
+        handleClickOutside
+      );
+  }, []);
+
+  const handleLogout = () => {
+    logout();
+    navigate("/login");
+  };
 
   return (
     <nav className="navbar">
@@ -60,11 +96,13 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
             stroke="#6c5ef6"
             strokeWidth="1.5"
           />
+
           <polygon
             points="16,7 25,12 25,20 16,25 7,20 7,12"
             fill="#6c5ef6"
             opacity="0.3"
           />
+
           <polygon
             points="16,12 21,15 21,19 16,22 11,19 11,15"
             fill="#6c5ef6"
@@ -79,24 +117,102 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
 
         <input
           type="text"
-          placeholder="Buscar juegos, géneros, etiquetas..."
+          placeholder="Buscar juegos..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
       </div>
 
       <div className="navbar-actions">
-        <button className="nav-auth-btn" onClick={() => navigate('/login')}>
-          Iniciar sesión
-        </button>
+        {!user ? (
+          <>
+            <button
+              className="nav-auth-btn"
+              onClick={() => navigate("/login")}
+            >
+              Iniciar sesión
+            </button>
 
-        <button className="nav-auth-btn accent" onClick={() => navigate('/register')}>
-          Registrarse
-        </button>
-        <div className="cart-wrap" ref={cartRef}>
+            <button
+              className="nav-auth-btn accent"
+              onClick={() => navigate("/register")}
+            >
+              Registrarse
+            </button>
+          </>
+        ) : (
+          <div
+            className="user-menu-wrapper"
+            ref={userRef}
+          >
+            <div
+              className="user-pill"
+              onClick={() =>
+                setUserMenuOpen(!userMenuOpen)
+              }
+            >
+              <div className="user-avatar">
+                {user.profile_picture ? (
+                  <img
+                    src={user.profile_picture}
+                    alt={user.username}
+                  />
+                ) : (
+                  <span>
+                    {user.username
+                      .charAt(0)
+                      .toUpperCase()}
+                  </span>
+                )}
+
+                <div className="online-dot" />
+              </div>
+
+              <div className="user-info">
+                <span className="user-name">
+                  {user.username}
+                </span>
+
+                <span className="user-level">
+                  {user.status}
+                </span>
+              </div>
+
+              <FiChevronDown
+                className="chevron"
+              />
+            </div>
+
+            {userMenuOpen && (
+              <div className="user-dropdown">
+                <button
+                  onClick={() => {
+                    navigate("/perfil");
+                    setUserMenuOpen(false);
+                  }}
+                >
+                  Ver perfil
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                >
+                  Cerrar sesión
+                </button>
+              </div>
+            )}
+          </div>
+        )}
+
+        <div
+          className="cart-wrap"
+          ref={cartRef}
+        >
           <button
             className="icon-btn"
-            onClick={() => setCartOpen(!cartOpen)}
+            onClick={() =>
+              setCartOpen(!cartOpen)
+            }
           >
             <FiShoppingCart size={20} />
 
@@ -114,7 +230,9 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
 
                 <button
                   className="close-cart"
-                  onClick={() => setCartOpen(false)}
+                  onClick={() =>
+                    setCartOpen(false)
+                  }
                 >
                   <FiX size={16} />
                 </button>
@@ -123,12 +241,14 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
               {items.length === 0 ? (
                 <div className="cart-empty">
                   <FiShoppingCart size={32} />
-                  <p>Tu carrito está vacío</p>
+                  <p>
+                    Tu carrito está vacío
+                  </p>
                 </div>
               ) : (
                 <>
                   <div className="cart-items">
-                    {items.map(item => (
+                    {items.map((item) => (
                       <div
                         key={item.id}
                         className="cart-item"
@@ -187,15 +307,20 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
                       <span>Total</span>
 
                       <span className="cart-total-price">
-                        ${totalPrice.toFixed(2)}
+                        $
+                        {totalPrice.toFixed(
+                          2
+                        )}
                       </span>
                     </div>
 
                     <button
                       className="checkout-btn"
                       onClick={() => {
-                        setCartOpen(false)
-                        navigate('/carrito')
+                        setCartOpen(false);
+                        navigate(
+                          "/carrito"
+                        );
                       }}
                     >
                       Ir al carrito
@@ -207,89 +332,10 @@ export default function Navbar({ search, setSearch }: { search: string, setSearc
           )}
         </div>
 
-        <div className="notif-wrap" ref={notifRef}>
-          <button
-            className="icon-btn"
-            onClick={() => setNotifOpen(!notifOpen)}
-          >
-            <FiBell size={20} />
-
-            {unreadCount > 0 && (
-              <span className="cart-badge">
-                {unreadCount}
-              </span>
-            )}
-          </button>
-
-          {notifOpen && (
-            <div className="notif-dropdown">
-              <div className="cart-header">
-                <h3>Notificaciones</h3>
-
-                <button
-                  className="close-cart"
-                  onClick={() => setNotifOpen(false)}
-                >
-                  <FiX size={16} />
-                </button>
-              </div>
-
-              {notifications.length === 0 ? (
-                <div className="cart-empty">
-                  <FiBell size={32} />
-                  <p>No tienes notificaciones</p>
-                </div>
-              ) : (
-                <>
-                  <div className="notif-items">
-                    {notifications.map(n => (
-                      <div
-                        key={n.id}
-                        className={`notif-item ${n.read ? '' : 'unread'}`}
-                        onClick={() => markAsRead(n.id)}
-                      >
-                        <p className="notif-text">{n.text}</p>
-                        <p className="notif-time">{n.time}</p>
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className="cart-footer">
-                    <button
-                      className="checkout-btn"
-                      onClick={markAllAsRead}
-                    >
-                      Marcar todas como leídas
-                    </button>
-                  </div>
-                </>
-              )}
-            </div>
-          )}
-        </div>
-
-        <div className="user-pill" onClick={() => navigate('/perfil')} style={{ cursor: 'pointer' }}>
-          <div className="user-avatar">
-            <span>J</span>
-            <div className="online-dot" />
-          </div>
-
-          <div className="user-info">
-            <span className="user-name">
-              Jugador
-            </span>
-
-            <span className="user-level">
-              Nivel 12
-            </span>
-          </div>
-
-          <FiChevronDown
-            size={14}
-            className="chevron"
-          />
-        </div>
+        <button className="icon-btn">
+          <FiBell size={20} />
+        </button>
       </div>
     </nav>
-  )
+  );
 }
