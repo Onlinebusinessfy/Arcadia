@@ -43,7 +43,7 @@ export default function Register(): ReactElement {
     };
 
     const handleRegister = async (
-        e: React.FormEvent<HTMLFormElement>
+        e: React.SubmitEvent<HTMLFormElement>
     ) => {
         e.preventDefault();
 
