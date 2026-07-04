@@ -22,24 +22,24 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
-interface NavbarProps {
-  search: string;
-  setSearch: (query: string) => void;
-}
-
 export default function Navbar({
   search,
   setSearch,
-}: NavbarProps): ReactElement {
+}: {
+  search: string;
+  setSearch: (query: string) => void;
+}): ReactElement {
   const navigate = useNavigate();
 
   const { user, logout } = useAuth();
 
-  const [cartOpen, setCartOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false);
-
+  const [cartOpen, setCartOpen] = useState<boolean>(false);
+  const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
+  const [notifOpen, setNotifOpen] = useState<boolean>(false);
+  
   const cartRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
+  const notifRef = useRef<HTMLDivElement>(null);
 
   const {
     items,
@@ -66,7 +66,7 @@ export default function Navbar({
         setUserMenuOpen(false);
       }
 
-      if (notifRef.current && !notifRef.current.contains(e.target)) {
+      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
         setNotifOpen(false)
       }
     }

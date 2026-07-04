@@ -28,8 +28,8 @@ export default function Register(): ReactElement {
         confirm_password: "",
     });
 
-    const [error, setError] = useState("");
-    const [message, setMessage] = useState("");
+    const [error, setError] = useState<string>("");
+    const [message, setMessage] = useState<string>("");
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement>

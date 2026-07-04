@@ -10,9 +10,9 @@ export default function Login(): ReactElement {
     const navigate = useNavigate();
     const { login } = useAuth();
 
-    const [username, setUsername] = useState("");
-    const [password, setPassword] = useState("");
-    const [error, setError] = useState("");
+    const [username, setUsername] = useState<string>("");
+    const [password, setPassword] = useState<string>("");
+    const [error, setError] = useState<string>("");
 
     const handleLogin = async (
         e: React.SubmitEvent<HTMLFormElement>
