@@ -10,7 +10,7 @@ import {
 import { useState, type ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
-import type Game from '../../models/game'
+import type Game from '../../types/game'
 
 const featuredGames: Game[] = [
   {
