@@ -1,6 +1,6 @@
 import type { ReactElement } from 'react'
 import './Biblioteca.css'
-import type Game from '../../models/game'
+import type Game from '../../types/game'
 
 const misJuegos: Game[] = [
   {

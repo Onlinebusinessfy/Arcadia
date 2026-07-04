@@ -10,7 +10,7 @@ import {
 import { useState, type ReactElement } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
-import type Game from '../../models/game'
+import type Game from '../../types/game'
 
 const featuredGames: Game[] = [
   {
@@ -96,7 +96,7 @@ const heroSlides: { label: string, title: string, desc: string, img: string }[] 
 ]
 
 function GameCard({ game }: { game: Game }): ReactElement {
-  const [liked, setLiked] = useState(false)
+  const [liked, setLiked] = useState<boolean>(false)
   const { items, addToCart } = useCart()
   const inCart = items.some(item => item.id === game.id)
 
@@ -170,7 +170,7 @@ function GameRow({ title, games }: { title: string, games: Game[] }): ReactEleme
 }
 
 export default function Home({ search = '' }: { search: string }): ReactElement {
-  const [slide, setSlide] = useState(0)
+  const [slide, setSlide] = useState<number>(0)
   const navigate = useNavigate()
   const total = heroSlides.length
 

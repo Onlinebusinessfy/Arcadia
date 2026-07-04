@@ -1,5 +1,5 @@
 import { createContext, useContext, useState, type ReactElement, type ReactNode } from 'react'
-import type Game from '../models/game'
+import type Game from '../types/game'
 
 export type CartItem = Game & { qty: number };
 

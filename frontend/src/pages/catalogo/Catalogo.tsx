@@ -3,7 +3,7 @@ import { useCart } from '../../context/CartContext'
 import { FiCheck } from 'react-icons/fi'
 import { useSearchParams } from 'react-router-dom'
 import type { ReactElement } from 'react'
-import type Game from '../../models/game'
+import type Game from '../../types/game'
 
 const allGames: Game[] = [
   { id: 1, title: 'Elden Ring', genre: 'RPG • Acción', price: '$59.99', img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg' },
