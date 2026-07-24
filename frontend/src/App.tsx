@@ -25,6 +25,8 @@ export default function App(): ReactElement {
       <Navbar
         search={search}
         setSearch={setSearch}
+        // sidebarOpen={sidebarOpen}
+        // setSidebarOpen={setSidebarOpen}
       />
 
       <div className="app-body">
