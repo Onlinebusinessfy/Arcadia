@@ -12,3 +12,5 @@ wheels/
 .cache
 
 db.sqlite3
+
+.history/
