@@ -1,9 +1,10 @@
-export default interface User {
+export interface User {
     id: number;
     username: string;
     email: string;
+    bio: string | null;
     profile_picture: string | null;
-    bio: string;
-    status: "online" | "away" | "busy" | "offline";
+    status: string;
     created_at: string;
+    username_last_changed: string | null;
 }
