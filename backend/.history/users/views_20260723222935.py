@@ -1,23 +1,13 @@
-import os
-
-import stripe
-from django.conf import settings
-import requests
-import environ
-
 from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer
-
-stripe.api_key = getattr(settings, "STRIPE_SECRET_KEY", None) or os.getenv("STRIPE_SECRET_KEY")
+import requests
+import environ
 from django.conf import settings
 
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
-
-env = environ.Env()
 
 
 class RegisterView(APIView):
@@ -45,7 +35,6 @@ class RegisterView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
 
 class LoginView(APIView):
 
@@ -75,53 +64,16 @@ class LoginView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
-
+    
 class MeView(APIView):
 
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         serializer = UserSerializer(request.user)
+
         return Response(serializer.data)
 
-
-class CheckoutSessionView(APIView):
-    def post(self, request):
-        items = request.data.get("items", [])
-
-        if not items:
-            return Response({"error": "El carrito está vacío."}, status=status.HTTP_400_BAD_REQUEST)
-
-        line_items = []
-        for item in items:
-            price_value = float(str(item.get("price", "$0")).replace("$", ""))
-            quantity = int(item.get("qty", 1))
-            line_items.append(
-                {
-                    "price_data": {
-                        "currency": "mxn",
-                        "product_data": {
-                            "name": item.get("title", "Juego Arcadia"),
-                        },
-                        "unit_amount": int(price_value * 100),
-                    },
-                    "quantity": quantity,
-                }
-            )
-
-        try:
-            session = stripe.checkout.Session.create(
-                payment_method_types=["card"],
-                line_items=line_items,
-                mode="payment",
-                success_url=request.data.get("successUrl", settings.CHECKOUT_SUCCESS_URL),
-                cancel_url=request.data.get("cancelUrl", settings.CHECKOUT_CANCEL_URL),
-            )
-        except Exception as exc:  # pragma: no cover - defensive branch
-            return Response({"error": str(exc)}, status=status.HTTP_400_BAD_REQUEST)
-
-        return Response({"id": session.id, "url": session.url})
 class GamesView(APIView):
 
     def get(self, request):
@@ -129,7 +81,7 @@ class GamesView(APIView):
         url = "https://api.rawg.io/api/games"
 
         params = {
-            "key": env("RAWG_API_KEY"),
+            "key": settings.env("RAWG_API_KEY"),
             "page_size": 20
         }
 
@@ -137,9 +89,7 @@ class GamesView(APIView):
 
         if response.status_code != 200:
             return Response(
-                {
-                    "error": "No fue posible obtener los videojuegos desde RAWG."
-                },
+                {"error": "No fue posible obtener los videojuegos."},
                 status=response.status_code
             )
 

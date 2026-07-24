@@ -6,51 +6,28 @@ import { useSearchParams } from 'react-router-dom'
 import type { ReactElement } from 'react'
 import type Game from '../../types/game'
 
-const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
+// Usamos la variable de entorno correcta para Vite
+const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY || '0042f77aff0c46219df55d55a2be2b7c'
 
 export default function Catalogo({ search = '' }: { search: string }): ReactElement {
   const { items, addToCart } = useCart()
   const [searchParams] = useSearchParams()
   const categoria = searchParams.get('categoria')
 
+  // Estados para la API
   const [games, setGames] = useState<Game[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
-
-  // Mapeo de categorías en español a los slugs oficiales de la API de RAWG
-  const mapCategoryToSlug = (cat: string | null) => {
-    if (!cat) return ''
-    const clean = cat.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-    
-    switch (clean) {
-      case 'accion': return 'action'
-      case 'aventura': return 'adventure'
-      case 'estrategia': return 'strategy'
-      case 'deportes': return 'sports'
-      case 'carreras': return 'racing'
-      case 'simulacion': return 'simulation'
-      case 'indie': return 'indie'
-      case 'rpg':
-      case 'rol': return 'role-playing-games-rpg'
-      default: return clean
-    }
-  }
 
   useEffect(() => {
     const fetchGames = async () => {
       try {
         setLoading(true)
         
-        // El máximo permitido por RAWG es page_size=40
-        let url = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=40`
-        
-        // Si hay una categoría seleccionada, la pedimos directamente a RAWG
-        const genreSlug = mapCategoryToSlug(categoria)
-        if (genreSlug) {
-          url += `&genres=${genreSlug}`
-        }
-
-        const response = await fetch(url)
+        // Pedimos 40 juegos (page_size=40) para poblar bien todas las categorías
+        const response = await fetch(
+          `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=40`
+        )
         
         if (!response.ok) {
           throw new Error('Error al conectar con la API de RAWG')
@@ -75,11 +52,34 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
     }
 
     fetchGames()
-  }, [categoria]) // Se vuelve a ejecutar cada vez que cambias de categoría
+  }, [])
 
-  // Filtrado adicional solo por el buscador de texto
-  const filteredGames = games.filter(game =>
-    game.title.toLowerCase().includes(search.toLowerCase())
+  // Función helper para remover tildes/acentos y minúsculas 
+  const normalizeText = (text: string) =>
+    text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
+
+  // Filtrado por categoría (URL)
+  let filteredGames = games
+
+  if (categoria) {
+    const catClean = normalizeText(categoria)
+    filteredGames = games.filter(game => {
+      const genreClean = normalizeText(game.genre)
+      
+      // Traducción/Mapeo de las categorías del menú (Español -> Inglés de la API)
+      if (catClean === 'accion') return genreClean.includes('action')
+      if (catClean === 'aventura') return genreClean.includes('adventure')
+      if (catClean === 'estrategia') return genreClean.includes('strategy')
+      if (catClean === 'deportes') return genreClean.includes('sports')
+      
+      return genreClean.includes(catClean)
+    })
+  }
+
+  // Filtrado por búsqueda de texto (Props)
+  filteredGames = filteredGames.filter(game =>
+    normalizeText(game.title).includes(normalizeText(search)) ||
+    normalizeText(game.genre).includes(normalizeText(search))
   )
 
   if (loading) {

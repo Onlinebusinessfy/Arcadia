@@ -8,11 +8,6 @@
 .env.production.local
 **/.env
 **/.env.*
-# Entorno virtual de Python
-venv/
-.venv/
-env/
-ENV/
 
 # ==========================================
 # 2. DEPENDENCIAS (Node.js)
