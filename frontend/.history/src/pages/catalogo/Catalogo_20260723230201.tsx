@@ -6,7 +6,7 @@ import { useSearchParams } from 'react-router-dom'
 import type { ReactElement } from 'react'
 import type Game from '../../types/game'
 
-const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
+const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY || '0042f77aff0c46219df55d55a2be2b7c'
 
 export default function Catalogo({ search = '' }: { search: string }): ReactElement {
   const { items, addToCart } = useCart()
