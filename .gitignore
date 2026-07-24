@@ -53,6 +53,7 @@ out/
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
+.history/
 
 # JetBrains (WebStorm, IntelliJ, etc.)
 .idea/

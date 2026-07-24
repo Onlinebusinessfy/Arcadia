@@ -59,6 +59,9 @@
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
+  /* Antes no tenía flex, por eso no se repartía bien el espacio dentro de form-row */
+  flex: 1;
+  min-width: 0;
 }
 
 .form-group label {
@@ -74,11 +77,23 @@
   padding: 10px 12px;
   color: #ffffff;
   outline: none;
-  width: 12vw;
+  /* Antes: width: 12vw, causaba desalineación según el tamaño de pantalla */
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group input:focus {
   border-color: #6366f1;
+}
+
+.form-group input.input-error {
+  border-color: #ef4444;
+}
+
+.error-text {
+  color: #ef4444;
+  font-size: 0.75rem;
+  margin-top: 5px;
 }
 
 .form-row {
@@ -101,6 +116,11 @@
 
 .submit-pay-btn:hover {
   background-color: #4f46e5;
+}
+
+.submit-pay-btn:disabled {
+  background-color: #3a3d4d;
+  cursor: not-allowed;
 }
 
 /* Vista de éxito */
