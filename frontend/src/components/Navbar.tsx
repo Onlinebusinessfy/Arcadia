@@ -35,11 +35,9 @@ export default function Navbar({
 
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
-  const [notifOpen, setNotifOpen] = useState<boolean>(false);
   
   const cartRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
-  const notifRef = useRef<HTMLDivElement>(null);
 
   const {
     items,
@@ -66,9 +64,6 @@ export default function Navbar({
         setUserMenuOpen(false);
       }
 
-      if (notifRef.current && !notifRef.current.contains(e.target as Node)) {
-        setNotifOpen(false)
-      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);

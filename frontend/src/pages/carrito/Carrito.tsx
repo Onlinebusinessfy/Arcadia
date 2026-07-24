@@ -2,11 +2,50 @@ import './Carrito.css'
 import { useCart } from '../../context/CartContext'
 import { FiPlus, FiMinus, FiTrash2, FiShoppingCart, FiArrowRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
-import type { ReactElement } from 'react'
+import { useState, type ReactElement } from 'react'
+import { PaymentModal } from '../payment-modal/PaymentModal'
+
+const API_URL = import.meta.env.VITE_API_URL
 
 export default function Carrito(): ReactElement {
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { items, increaseQty, decreaseQty, removeFromCart, clearCart, totalPrice } = useCart()
   const navigate = useNavigate()
+
+  const handleCheckout = async () => {
+    try {
+      const access = localStorage.getItem("access");
+
+      const response = await fetch(`${API_URL}checkout-session/`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${access}`,
+        },
+        body: JSON.stringify({
+          items: items.map(item => ({
+            id: item.id,
+            title: item.title,
+            price: item.price,
+            qty: item.qty,
+          })),
+        }),
+      })
+
+      const data = await response.json()
+
+      if (!response.ok) {
+        throw new Error(data.error || 'No se pudo iniciar el pago')
+      }
+
+      if (data.url) {
+        window.location.assign(data.url)
+      }
+    } catch (error) {
+      console.error(error)
+      alert(error instanceof Error ? error.message : 'No se pudo iniciar el pago')
+    }
+  }
 
   if (items.length === 0) {
     return (
@@ -72,9 +111,16 @@ export default function Carrito(): ReactElement {
             <span>Total</span>
             <span>${(totalPrice * 1.16).toFixed(2)}</span>
           </div>
-          <button className="pay-btn">Proceder al pago</button>
+          {/* <button className="pay-btn" onClick={handleCheckout}>Proceder al pago</button> */}
+          <button className="pay-btn" onClick={() => setIsModalOpen(true)}>Proceder al pago</button>
         </div>
       </div>
+
+      <PaymentModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+        totalAmount={(totalPrice * 1.16).toFixed(2)}
+      />
     </div>
   )
 }

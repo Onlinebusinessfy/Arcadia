@@ -1,0 +1,123 @@
+/* Fondo oscuro translúcido para cubrir la pantalla */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+/* Contenedor principal del modal */
+.modal-container {
+  background-color: #1a1d29;
+  border: 1px solid #2a2e3d;
+  border-radius: 12px;
+  padding: 30px;
+  width: 100%;
+  max-width: 420px;
+  color: #ffffff;
+  position: relative;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+.close-btn {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  color: #8a8f9d;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.close-btn:hover {
+  color: #ffffff;
+}
+
+.payment-form h2 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.total-display {
+  color: #8a8f9d;
+  margin-bottom: 20px;
+}
+
+.total-display span {
+  color: #ffffff;
+  font-weight: bold;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+}
+
+.form-group label {
+  font-size: 0.85rem;
+  color: #8a8f9d;
+  margin-bottom: 6px;
+}
+
+.form-group input {
+  background-color: #0f111a;
+  border: 1px solid #2a2e3d;
+  border-radius: 6px;
+  padding: 10px 12px;
+  color: #ffffff;
+  outline: none;
+  width: 12vw;
+}
+
+.form-group input:focus {
+  border-color: #6366f1;
+}
+
+.form-row {
+  display: flex;
+  gap: 15px;
+}
+
+.submit-pay-btn {
+  width: 100%;
+  background-color: #6366f1;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 10px;
+  transition: background-color 0.2s;
+}
+
+.submit-pay-btn:hover {
+  background-color: #4f46e5;
+}
+
+/* Vista de éxito */
+.success-message {
+  text-align: center;
+  padding: 10px 0;
+}
+
+.success-icon {
+  width: 50px;
+  height: 50px;
+  background-color: #22c55e;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  margin: 0 auto 15px auto;
+}
