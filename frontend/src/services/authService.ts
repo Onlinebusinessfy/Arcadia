@@ -104,6 +104,27 @@ const authService = {
 
         return data;
     },
+    async updateProfile(
+        token: string,
+        formData: FormData
+    ): Promise<User> {
+
+        const response = await fetch(`${API_URL}profile/update/`, {
+            method: "PATCH",
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+            body: formData,
+        });
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            throw data;
+        }
+
+        return data;
+    },
 };
 
 export default authService;
