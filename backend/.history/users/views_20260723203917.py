@@ -1,16 +1,11 @@
-import requests
-import environ
-
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
-from django.conf import settings
+
 
 from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
-
-env = environ.Env()
 
 
 class RegisterView(APIView):
@@ -38,7 +33,6 @@ class RegisterView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
 
 class LoginView(APIView):
 
@@ -68,36 +62,12 @@ class LoginView(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
-
-
+    
 class MeView(APIView):
 
     permission_classes = [IsAuthenticated]
 
     def get(self, request):
         serializer = UserSerializer(request.user)
+
         return Response(serializer.data)
-
-
-class GamesView(APIView):
-
-    def get(self, request):
-
-        url = "https://api.rawg.io/api/games"
-
-        params = {
-            "key": env("RAWG_API_KEY"),
-            "page_size": 20
-        }
-
-        response = requests.get(url, params=params)
-
-        if response.status_code != 200:
-            return Response(
-                {
-                    "error": "No fue posible obtener los videojuegos desde RAWG."
-                },
-                status=response.status_code
-            )
-
-        return Response(response.json())

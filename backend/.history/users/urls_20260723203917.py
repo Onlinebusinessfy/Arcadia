@@ -1,11 +1,9 @@
 from django.urls import path
 
-from .views import MeView, RegisterView, LoginView, GamesView
+from .views import MeView, RegisterView, LoginView
 
 urlpatterns = [
     path("register/", RegisterView.as_view(), name="register"),
     path("login/", LoginView.as_view(), name="login"),
     path("me/", MeView.as_view(), name="me"),
-    path("games/", GamesView.as_view(), name="games"),
-
 ]
