@@ -14,6 +14,9 @@ import type {
 
 interface AuthContextType {
     user: User | null;
+    setUser: React.Dispatch<
+        React.SetStateAction<User | null>
+    >;
     loading: boolean;
     login: (data: LoginResponse) => Promise<void>;
     logout: () => void;
@@ -72,6 +75,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         <AuthContext.Provider
             value={{
                 user,
+                setUser,
                 loading,
                 login,
                 logout,

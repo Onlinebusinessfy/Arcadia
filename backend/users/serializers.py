@@ -83,3 +83,63 @@ class UserSerializer(serializers.ModelSerializer):
             "status",
             "created_at",
         ]
+
+from datetime import timedelta
+from django.utils import timezone
+from rest_framework import serializers
+from .models import CustomUser
+
+class UpdateProfileSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = CustomUser
+        fields = [
+            "username",
+            "bio",
+            "profile_picture",
+        ]
+
+    def validate_username(self, value):
+        user = self.instance
+
+        if value != user.username:
+
+            if CustomUser.objects.filter(
+                username__iexact=value
+            ).exclude(id=user.id).exists():
+                raise serializers.ValidationError(
+                    "Ese nombre ya está en uso."
+                )
+
+            next_change = (
+                user.username_last_changed +
+                timedelta(days=30)
+            )
+
+            if timezone.now() < next_change:
+                raise serializers.ValidationError(
+                    f"Podrás cambiar tu nombre nuevamente el {next_change.date()}."
+                )
+
+        return value
+
+    def update(self, instance, validated_data):
+
+        if (
+            "username" in validated_data and
+            validated_data["username"] != instance.username
+        ):
+            instance.username = validated_data["username"]
+            instance.username_last_changed = timezone.now()
+
+        instance.bio = validated_data.get(
+            "bio",
+            instance.bio
+        )
+
+        if "profile_picture" in validated_data:
+            instance.profile_picture = validated_data["profile_picture"]
+
+        instance.save()
+
+        return instance
