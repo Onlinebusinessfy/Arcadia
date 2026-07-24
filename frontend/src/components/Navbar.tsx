@@ -396,10 +396,13 @@ export default function Navbar({
                     {notifications.map(n => (
                       <div
                         key={n.id}
+                        role="button"
                         className={`notif-item ${n.read ? '' : 'unread'
                           }`}
-                        onClick={() =>
-                          markAsRead(n.id)
+                        onClick={() => {
+                          markAsRead(n.id);
+                          navigate('/catalogo', { state: { search: n.target_game || '' } });
+                        }
                         }
                       >
                         <p className="notif-text">

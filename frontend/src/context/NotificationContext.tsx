@@ -11,8 +11,8 @@ interface NotificationContextType {
 const NotificationContext = createContext<NotificationContextType | undefined>(undefined);
 
 const defaultNotifications: NotificationType[] = [
-    { id: 1, type: 'oferta', text: 'Cyberpunk 2077 tiene 30% de descuento', time: 'Hace 2 horas', read: false },
-    { id: 2, type: 'actualizacion', text: 'Nueva actualización disponible para Elden Ring', time: 'Hace 5 horas', read: false },
+    { id: 1, type: 'oferta', text: 'Cyberpunk 2077 tiene 30% de descuento', time: 'Hace 2 horas', read: false, target_game: 'Cyberpunk 2077' },
+    { id: 2, type: 'actualizacion', text: 'Nueva actualización disponible para Rocket League', time: 'Hace 5 horas', read: false, target_game: 'Rocket League' },
     { id: 3, type: 'sistema', text: 'Bienvenido a Arcadia', time: 'Hace 1 día', read: true },
 ]
 
