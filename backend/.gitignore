@@ -13,4 +13,5 @@ wheels/
 
 db.sqlite3
 
-.history/
+media/*
+!.media/.gitkeep
