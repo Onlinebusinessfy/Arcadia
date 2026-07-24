@@ -49,6 +49,12 @@ export default function Navbar({
   const userRef = useRef<HTMLDivElement>(null);
   const notifRef = useRef<HTMLDivElement>(null);
 
+  const profileImage = user?.profile_picture
+    ? user.profile_picture.startsWith("http")
+      ? user.profile_picture
+      : `http://127.0.0.1:8000${user.profile_picture}`
+    : null;
+
   const {
     items,
     removeFromCart,
@@ -164,20 +170,20 @@ export default function Navbar({
               }
             >
               <div className="user-avatar">
-                {user.profile_picture ? (
+
+                {profileImage ? (
                   <img
-                    src={user.profile_picture}
+                    src={profileImage}
                     alt={user.username}
                   />
                 ) : (
                   <span>
-                    {user.username
-                      .charAt(0)
-                      .toUpperCase()}
+                    {user.username.charAt(0).toUpperCase()}
                   </span>
                 )}
 
                 <div className="online-dot" />
+
               </div>
 
               <div className="user-info">
@@ -345,82 +351,81 @@ export default function Navbar({
         </div>
 
         <div
-        className="notif-wrap"
-        ref={notifRef}
-      >
-        <button
-          type="button"
-          className="icon-btn"
-          onClick={() =>
-            setNotifOpen(prev => !prev)
-          }
+          className="notif-wrap"
+          ref={notifRef}
         >
-          <FiBell size={20} />
+          <button
+            type="button"
+            className="icon-btn"
+            onClick={() =>
+              setNotifOpen(prev => !prev)
+            }
+          >
+            <FiBell size={20} />
 
-          {unreadCount > 0 && (
-            <span className="cart-badge">
-              {unreadCount}
-            </span>
-          )}
-        </button>
-
-        {notifOpen && (
-          <div className="notif-dropdown">
-            <div className="cart-header">
-              <h3>Notificaciones</h3>
-
-              <button
-                className="close-cart"
-                onClick={() =>
-                  setNotifOpen(false)
-                }
-              >
-                <FiX size={16} />
-              </button>
-            </div>
-
-            {notifications.length === 0 ? (
-              <div className="cart-empty">
-                <FiBell size={32} />
-                <p>No tienes notificaciones</p>
-              </div>
-            ) : (
-              <>
-                <div className="notif-items">
-                  {notifications.map(n => (
-                    <div
-                      key={n.id}
-                      className={`notif-item ${
-                        n.read ? '' : 'unread'
-                      }`}
-                      onClick={() =>
-                        markAsRead(n.id)
-                      }
-                    >
-                      <p className="notif-text">
-                        {n.text}
-                      </p>
-
-                      <p className="notif-time">
-                        {n.time}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-
-                <div className="cart-footer">
-                  <button
-                    className="checkout-btn"
-                    onClick={markAllAsRead}
-                  >
-                    Marcar todas como leídas
-                  </button>
-                </div>
-              </>
+            {unreadCount > 0 && (
+              <span className="cart-badge">
+                {unreadCount}
+              </span>
             )}
-          </div>
-        )}
-      </div>
+          </button>
+
+          {notifOpen && (
+            <div className="notif-dropdown">
+              <div className="cart-header">
+                <h3>Notificaciones</h3>
+
+                <button
+                  className="close-cart"
+                  onClick={() =>
+                    setNotifOpen(false)
+                  }
+                >
+                  <FiX size={16} />
+                </button>
+              </div>
+
+              {notifications.length === 0 ? (
+                <div className="cart-empty">
+                  <FiBell size={32} />
+                  <p>No tienes notificaciones</p>
+                </div>
+              ) : (
+                <>
+                  <div className="notif-items">
+                    {notifications.map(n => (
+                      <div
+                        key={n.id}
+                        className={`notif-item ${n.read ? '' : 'unread'
+                          }`}
+                        onClick={() =>
+                          markAsRead(n.id)
+                        }
+                      >
+                        <p className="notif-text">
+                          {n.text}
+                        </p>
+
+                        <p className="notif-time">
+                          {n.time}
+                        </p>
+                      </div>
+                    ))}
+                  </div>
+
+                  <div className="cart-footer">
+                    <button
+                      className="checkout-btn"
+                      onClick={markAllAsRead}
+                    >
+                      Marcar todas como leídas
+                    </button>
+                  </div>
+                </>
+              )}
+            </div>
+          )}
+        </div>
       </div>
     </nav>
   );
