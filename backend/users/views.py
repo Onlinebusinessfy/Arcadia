@@ -159,12 +159,49 @@ class UpdateProfileView(APIView):
         )
 
         if serializer.is_valid():
+            user = serializer.save()
 
-            serializer.save()
+            return Response(UserSerializer(user).data)
 
-            return Response(serializer.data)
+        print(serializer.errors)   # <-- Agrega esto
 
         return Response(
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
+        )
+    
+class UpdateStatusView(APIView):
+
+    permission_classes = [IsAuthenticated]
+
+    def patch(self, request):
+
+        status_value = request.data.get("status")
+
+        allowed = [
+            "online",
+            "invisible",
+            "away",
+            "busy"
+        ]
+
+        if status_value not in allowed:
+            return Response(
+                {
+                    "error": "Estado inválido."
+                },
+                status=400
+            )
+
+
+        request.user.status = status_value
+        request.user.save()
+
+
+        serializer = UserSerializer(
+            request.user
+        )
+
+        return Response(
+            serializer.data
         )

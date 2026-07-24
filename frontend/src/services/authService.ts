@@ -125,6 +125,39 @@ const authService = {
 
         return data;
     },
+
+    async updateStatus(
+        token:string,
+        status:string
+    ){
+
+        const response = await fetch(
+            "http://127.0.0.1:8000/api/profile/status/",
+            {
+                method:"PATCH",
+
+                headers:{
+                    "Authorization":`Bearer ${token}`,
+                    "Content-Type":"application/json"
+                },
+
+                body:JSON.stringify({
+                    status
+                })
+            }
+        );
+
+
+        if(!response.ok){
+            throw new Error(
+                "No se pudo actualizar el estado"
+            );
+        }
+
+
+        return await response.json();
+
+    }
 };
 
 export default authService;

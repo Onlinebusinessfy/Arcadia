@@ -14,15 +14,16 @@ class CustomUser(AbstractUser):
 
     STATUS_CHOICES = [
         ("online", "Online"),
-        ("away", "Away"),
-        ("busy", "Busy"),
-        ("offline", "Offline"),
+        ("away", "Ausente"),
+        ("busy", "Ocupado"),
+        ("invisible", "Invisible"),
     ]
 
+
     status = models.CharField(
-        max_length=10,
+        max_length=20,
         choices=STATUS_CHOICES,
-        default="offline"
+        default="online"
     )
 
     created_at = models.DateTimeField(auto_now_add=True)
@@ -30,6 +31,9 @@ class CustomUser(AbstractUser):
     # Nuevo
     username_last_changed = models.DateTimeField(
         auto_now_add=True
+    )
+    has_changed_username = models.BooleanField(
+        default=False
     )
 
     def __str__(self):

@@ -72,16 +72,18 @@ class LoginSerializer(serializers.Serializer):
         }
     
 class UserSerializer(serializers.ModelSerializer):
+
     class Meta:
         model = CustomUser
         fields = [
             "id",
             "username",
             "email",
-            "profile_picture",
             "bio",
+            "profile_picture",
             "status",
             "created_at",
+            "username_last_changed",
         ]
 
 from datetime import timedelta
@@ -97,9 +99,11 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             "username",
             "bio",
             "profile_picture",
+            "status",
         ]
 
     def validate_username(self, value):
+
         user = self.instance
 
         if value != user.username:
@@ -107,21 +111,27 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             if CustomUser.objects.filter(
                 username__iexact=value
             ).exclude(id=user.id).exists():
+
                 raise serializers.ValidationError(
                     "Ese nombre ya está en uso."
                 )
 
-            next_change = (
-                user.username_last_changed +
-                timedelta(days=30)
-            )
 
-            if timezone.now() < next_change:
-                raise serializers.ValidationError(
-                    f"Podrás cambiar tu nombre nuevamente el {next_change.date()}."
+            # Si nunca lo ha cambiado permite editarlo
+            if user.username_last_changed:
+
+                next_change = (
+                    user.username_last_changed +
+                    timedelta(days=30)
                 )
 
+                if timezone.now() < next_change:
+                    raise serializers.ValidationError(
+                        f"Podrás cambiar tu nombre nuevamente el {next_change.date()}."
+                    )
+
         return value
+
 
     def update(self, instance, validated_data):
 
@@ -129,16 +139,26 @@ class UpdateProfileSerializer(serializers.ModelSerializer):
             "username" in validated_data and
             validated_data["username"] != instance.username
         ):
+
             instance.username = validated_data["username"]
             instance.username_last_changed = timezone.now()
+
 
         instance.bio = validated_data.get(
             "bio",
             instance.bio
         )
 
+
+        instance.status = validated_data.get(
+            "status",
+            instance.status
+        )
+
+
         if "profile_picture" in validated_data:
             instance.profile_picture = validated_data["profile_picture"]
+
 
         instance.save()
 
