@@ -4,4 +4,5 @@ export default interface NotificationType {
     text: string,
     time: string,
     read: boolean,
+    target_game?: string,
 }

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import './Catalogo.css'
 import { useCart } from '../../context/CartContext'
 import { FiCheck } from 'react-icons/fi'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useSearchParams } from 'react-router-dom'
 import type { ReactElement } from 'react'
 import type Game from '../../types/game'
 
@@ -16,6 +16,9 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
   const [games, setGames] = useState<Game[]>([])
   const [loading, setLoading] = useState<boolean>(true)
   const [error, setError] = useState<string | null>(null)
+
+  const location = useLocation()
+  const searchTerm = location.state?.search || search;
 
   // Mapeo de categorías en español a los slugs oficiales de la API de RAWG
   const mapCategoryToSlug = (cat: string | null) => {
@@ -79,7 +82,7 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
 
   // Filtrado adicional solo por el buscador de texto
   const filteredGames = games.filter(game =>
-    game.title.toLowerCase().includes(search.toLowerCase())
+    game.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
 
   if (loading) {
