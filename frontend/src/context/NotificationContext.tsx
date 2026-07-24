@@ -37,12 +37,6 @@ export function NotificationProvider({ children }: { children: ReactNode }): Rea
             prev.map(n => n.id === id ? { ...n, read: true } : n)
         )
 
-        const markAsRead = (id: number) => {
-            console.log('markAsRead llamado con id:', id)
-            setNotifications(prev =>
-                prev.map(n => n.id === id ? { ...n, read: true } : n)
-            )
-        }
     }
 
     const markAllAsRead = () => {
