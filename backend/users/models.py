@@ -1,8 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from django.utils import timezone
-
 class CustomUser(AbstractUser):
     profile_picture = models.ImageField(
         upload_to="profiles/",
@@ -19,7 +17,6 @@ class CustomUser(AbstractUser):
         ("invisible", "Invisible"),
     ]
 
-
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
@@ -28,13 +25,19 @@ class CustomUser(AbstractUser):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    # Nuevo
     username_last_changed = models.DateTimeField(
         auto_now_add=True
     )
+
     has_changed_username = models.BooleanField(
         default=False
     )
+
+    def save(self, *args, **kwargs):
+        if self.profile_picture:
+            self.profile_picture.name = f"pfp_{self.id}.{self.profile_picture.name.split('.')[-1]}"
+        
+        return super().save(*args, **kwargs)
 
     def __str__(self):
         return self.username

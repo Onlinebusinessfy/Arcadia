@@ -20,6 +20,9 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
+const API_URL = import.meta.env.VITE_API_URL;
+const API_HOST = new URL(API_URL).origin;
+
 export default function Navbar({
   search,
   setSearch,
@@ -135,7 +138,7 @@ export default function Navbar({
               <div className="user-avatar">
                 {user.profile_picture ? (
                   <img
-                    src={user.profile_picture}
+                    src={API_HOST + user.profile_picture}
                     alt={user.username}
                   />
                 ) : (

@@ -8,6 +8,7 @@ export interface User {
     bio: string;
     status: "online" | "away" | "busy" | "offline";
     created_at: string;
+    username_last_changed: string;
 }
 
 export interface RegisterData {
@@ -132,7 +133,7 @@ const authService = {
     ){
 
         const response = await fetch(
-            "http://127.0.0.1:8000/api/profile/status/",
+            `${API_URL}profile/status/`,
             {
                 method:"PATCH",
 
