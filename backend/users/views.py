@@ -1,22 +1,23 @@
 import os
 
+import environ
+import requests
 import stripe
 from django.conf import settings
-import requests
-import environ
-
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-
-from .serializers import LoginSerializer, RegisterSerializer, UserSerializer, UpdateProfileSerializer
+from .serializers import (
+    LoginSerializer,
+    RegisterSerializer,
+    UpdateProfileSerializer,
+    UserSerializer,
+)
 
 stripe.api_key = getattr(settings, "STRIPE_SECRET_KEY", None) or os.getenv("STRIPE_SECRET_KEY")
 from django.conf import settings
-
-from .serializers import RegisterSerializer, LoginSerializer, UserSerializer
 
 env = environ.Env()
 
