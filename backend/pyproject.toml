@@ -13,3 +13,19 @@ dependencies = [
     "pillow>=12.2.0",
     "stripe>=12.0.0",
 ]
+
+[dependency-groups]
+dev = [
+    "ruff>=0.16.0",
+]
+
+[tool.ruff]
+exclude = [
+    "**/migrations/*.py",
+]
+
+[tool.ruff.lint]
+ignore = [
+    "RUF012",
+    "BLE001",
+]

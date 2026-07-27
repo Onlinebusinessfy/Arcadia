@@ -1,7 +1,8 @@
-from rest_framework import serializers
-from .models import CustomUser
 from django.contrib.auth import authenticate
+from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
+
+from .models import CustomUser
 
 
 class RegisterSerializer(serializers.ModelSerializer):
@@ -87,9 +88,12 @@ class UserSerializer(serializers.ModelSerializer):
         ]
 
 from datetime import timedelta
+
 from django.utils import timezone
 from rest_framework import serializers
+
 from .models import CustomUser
+
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
 
