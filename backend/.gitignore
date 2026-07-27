@@ -1,17 +1,57 @@
-# Python-generated files
+# Node / React / Vite
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Archivos de ejecución y caché de Python
 __pycache__/
-*.py[oc]
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.coverage
+htmlcov/
+.mypy_cache/
+
+# Entornos virtuales
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Base de datos local
+db.sqlite3
+*.sqlite3
+
+# Archivos multimedia subidos por usuarios (Frontend y Backend)
+media/
+backend/media/
+!media/.gitkeep
+!backend/media/.gitkeep
+
+# Archivos de empaquetado de Python
 build/
 dist/
 wheels/
-*.egg-info
+*.egg-info/
 
-# Virtual environments
-.venv
+# Logs y variables de entorno
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
 .env
-.cache
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
 
-db.sqlite3
-
-media/*
-!.media/.gitkeep
+# Editor, historial y sistema operativo
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+.history/

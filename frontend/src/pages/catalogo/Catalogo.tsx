@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import './Catalogo.css'
 import { useCart } from '../../context/CartContext'
-import { FiCheck } from 'react-icons/fi'
+import { FiCheck, FiShoppingCart } from 'react-icons/fi'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import type { ReactElement } from 'react'
 import type Game from '../../types/game'
@@ -20,7 +20,6 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
   const location = useLocation()
   const searchTerm = location.state?.search || search;
 
-  // Mapeo de categorías en español a los slugs oficiales de la API de RAWG
   const mapCategoryToSlug = (cat: string | null) => {
     if (!cat) return ''
     const clean = cat.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
@@ -44,10 +43,8 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
       try {
         setLoading(true)
         
-        // El máximo permitido por RAWG es page_size=40
         let url = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=40`
         
-        // Si hay una categoría seleccionada, la pedimos directamente a RAWG
         const genreSlug = mapCategoryToSlug(categoria)
         if (genreSlug) {
           url += `&genres=${genreSlug}`
@@ -78,9 +75,8 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
     }
 
     fetchGames()
-  }, [categoria]) // Se vuelve a ejecutar cada vez que cambias de categoría
+  }, [categoria])
 
-  // Filtrado adicional solo por el buscador de texto
   const filteredGames = games.filter(game =>
     game.title.toLowerCase().includes(searchTerm.toLowerCase())
   )
@@ -127,14 +123,17 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
 
                   <button
                     className={`add-btn ${inCart ? 'in-cart' : ''}`}
-                    onClick={() => addToCart(game)}
+                    onClick={() => !inCart && addToCart(game)}
+                    disabled={inCart}
                   >
                     {inCart ? (
                       <>
                         <FiCheck size={14} /> Agregado
                       </>
                     ) : (
-                      'Agregar'
+                      <>
+                        <FiShoppingCart size={14} /> Agregar
+                      </>
                     )}
                   </button>
                 </div>

@@ -1,6 +1,6 @@
 import './Carrito.css'
 import { useCart } from '../../context/CartContext'
-import { FiPlus, FiMinus, FiTrash2, FiShoppingCart, FiArrowRight } from 'react-icons/fi'
+import { FiTrash2, FiShoppingCart, FiArrowRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { useState, type ReactElement } from 'react'
 import { PaymentModal } from '../payment-modal/PaymentModal'
@@ -9,7 +9,7 @@ const API_URL = import.meta.env.VITE_API_URL
 
 export default function Carrito(): ReactElement {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
-  const { items, increaseQty, decreaseQty, removeFromCart, clearCart, totalPrice } = useCart()
+  const { items, removeFromCart, clearCart, totalPrice } = useCart()
   const navigate = useNavigate()
 
   const handleCheckout = async () => {
@@ -27,7 +27,7 @@ export default function Carrito(): ReactElement {
             id: item.id,
             title: item.title,
             price: item.price,
-            qty: item.qty,
+            qty: 1,
           })),
         }),
       })
@@ -74,22 +74,21 @@ export default function Carrito(): ReactElement {
               <div className="carrito-item-img">
                 <img src={item.img} alt={item.title} />
               </div>
+
               <div className="carrito-item-info">
                 <p className="carrito-item-title">{item.title}</p>
                 <p className="carrito-item-genre">{item.genre}</p>
               </div>
+
+              {/* Cantidad fija a 1 unidad por juego */}
               <div className="carrito-item-qty">
-                <button onClick={() => decreaseQty(item.id)}>
-                  <FiMinus size={14} />
-                </button>
-                <span>{item.qty}</span>
-                <button onClick={() => increaseQty(item.id)}>
-                  <FiPlus size={14} />
-                </button>
+                <span>Cant: 1</span>
               </div>
+
               <div className="carrito-item-price">
-                ${(parseFloat(item.price.replace('$', '')) * item.qty).toFixed(2)}
+                ${parseFloat(item.price.replace('$', '')).toFixed(2)}
               </div>
+
               <button className="carrito-item-remove" onClick={() => removeFromCart(item.id)}>
                 <FiTrash2 size={17} />
               </button>
@@ -111,14 +110,17 @@ export default function Carrito(): ReactElement {
             <span>Total</span>
             <span>${(totalPrice * 1.16).toFixed(2)}</span>
           </div>
-          {/* <button className="pay-btn" onClick={handleCheckout}>Proceder al pago</button> */}
-          <button className="pay-btn" onClick={() => setIsModalOpen(true)}>Proceder al pago</button>
+
+          <button className="pay-btn" onClick={() => setIsModalOpen(true)}>
+            Proceder al pago
+          </button>
         </div>
       </div>
 
       <PaymentModal 
         isOpen={isModalOpen} 
         onClose={() => setIsModalOpen(false)} 
+        onSuccess={clearCart}
         totalAmount={(totalPrice * 1.16).toFixed(2)}
       />
     </div>
