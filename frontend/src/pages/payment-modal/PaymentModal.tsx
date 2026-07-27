@@ -1,43 +1,44 @@
 import React, { useState } from 'react';
-import './PaymentModal.css'; // Estilos del modal
+import './PaymentModal.css';
 
 interface PaymentModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void; // <-- Nueva prop opcional
   totalAmount: string;
 }
 
-// Detecta si la tarjeta es Amex (empieza con 34 o 37) para saber si el CVC es de 4 dígitos
 const esAmex = (numeroTarjeta: string): boolean => {
   const soloNumeros = numeroTarjeta.replace(/\s/g, '');
   return /^3[47]/.test(soloNumeros);
 };
 
-// Agrega espacios cada 4 dígitos: 1234 5678 9101 1121
 const formatearNumeroTarjeta = (valor: string): string => {
   const soloNumeros = valor.replace(/\D/g, '').slice(0, 16);
   return soloNumeros.replace(/(.{4})/g, '$1 ').trim();
 };
 
-// Formatea como MM/AA mientras el usuario escribe
 const formatearExpiracion = (valor: string): string => {
   const soloNumeros = valor.replace(/\D/g, '').slice(0, 4);
   if (soloNumeros.length <= 2) return soloNumeros;
   return `${soloNumeros.slice(0, 2)}/${soloNumeros.slice(2)}`;
 };
 
-export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, totalAmount }) => {
+export const PaymentModal: React.FC<PaymentModalProps> = ({ 
+  isOpen, 
+  onClose, 
+  onSuccess, 
+  totalAmount 
+}) => {
   const [isSuccess, setIsSuccess] = useState<boolean>(false);
   const [cardNumber, setCardNumber] = useState<string>('');
   const [expiry, setExpiry] = useState<string>('');
   const [cvc, setCvc] = useState<string>('');
 
-  // Mensajes de error por campo
   const [errorTarjeta, setErrorTarjeta] = useState<string>('');
   const [errorExpiracion, setErrorExpiracion] = useState<string>('');
   const [errorCvc, setErrorCvc] = useState<string>('');
 
-  // Si el modal no debe mostrarse, no renderizamos nada
   if (!isOpen) return null;
 
   const cvcMaximo = esAmex(cardNumber) ? 4 : 3;
@@ -53,7 +54,6 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
       setErrorTarjeta('');
     }
 
-    // Si cambia el tipo de tarjeta, revalidamos el CVC actual
     const nuevoMaximo = /^3[47]/.test(soloNumeros) ? 4 : 3;
     if (cvc.length > 0 && cvc.length !== nuevoMaximo) {
       setErrorCvc(`El CVC debe tener ${nuevoMaximo} dígitos`);
@@ -102,7 +102,6 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
     }
   };
 
-  // El formulario es válido solo si todos los campos están llenos y sin errores
   const formularioValido =
     cardNumber.replace(/\s/g, '').length >= 13 &&
     expiry.length === 5 &&
@@ -114,11 +113,15 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!formularioValido) return;
-    // Simulación de pago exitoso
     setIsSuccess(true);
   };
 
   const handleClose = () => {
+    // Si la transacción fue exitosa, vaciamos el carrito al cerrar
+    if (isSuccess && onSuccess) {
+      onSuccess();
+    }
+
     setIsSuccess(false);
     setCardNumber('');
     setExpiry('');
@@ -131,14 +134,13 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
 
   return (
     <div className="modal-overlay" onClick={handleClose}>
-      {/* stopPropagation evita que el modal se cierre al hacer clic dentro de él */}
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
         <button className="close-btn" onClick={handleClose}>&times;</button>
 
         {!isSuccess ? (
           <form onSubmit={handleSubmit} className="payment-form">
             <h2>Detalles de Pago</h2>
-            <p className="total-display">Total a pagar: <span>{totalAmount}</span></p>
+            <p className="total-display">Total a pagar: <span>${totalAmount}</span></p>
 
             <div className="form-group">
               <label>Número de Tarjeta</label>
@@ -185,7 +187,7 @@ export const PaymentModal: React.FC<PaymentModalProps> = ({ isOpen, onClose, tot
             </div>
 
             <button type="submit" className="submit-pay-btn" disabled={!formularioValido}>
-              Pagar {totalAmount}
+              Pagar ${totalAmount}
             </button>
           </form>
         ) : (
