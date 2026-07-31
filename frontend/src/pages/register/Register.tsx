@@ -9,6 +9,8 @@ import { useAuth } from "../../context/AuthContext";
 
 import "./Register.css";
 
+import { IonContent, IonPage } from '@ionic/react'
+
 interface RegisterError {
     username?: string[];
     email?: string[];
@@ -86,78 +88,82 @@ export default function Register(): ReactElement {
     };
 
     return (
-        <div className="register-page">
-            <div className="register-card">
+        <IonPage>
+            <IonContent className='ion-padding'>
+                <div className="register-page">
+                    <div className="register-card">
 
-                <h1>Crear cuenta</h1>
+                        <h1>Crear cuenta</h1>
 
-                <form
-                    className="register-form"
-                    onSubmit={handleRegister}
-                >
+                        <form
+                            className="register-form"
+                            onSubmit={handleRegister}
+                        >
 
-                    <input
-                        type="text"
-                        name="username"
-                        placeholder="Usuario"
-                        value={formData.username}
-                        onChange={handleChange}
-                        required
-                    />
+                            <input
+                                type="text"
+                                name="username"
+                                placeholder="Usuario"
+                                value={formData.username}
+                                onChange={handleChange}
+                                required
+                            />
 
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Correo"
-                        value={formData.email}
-                        onChange={handleChange}
-                        required
-                    />
+                            <input
+                                type="email"
+                                name="email"
+                                placeholder="Correo"
+                                value={formData.email}
+                                onChange={handleChange}
+                                required
+                            />
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Contraseña"
-                        value={formData.password}
-                        onChange={handleChange}
-                        required
-                    />
+                            <input
+                                type="password"
+                                name="password"
+                                placeholder="Contraseña"
+                                value={formData.password}
+                                onChange={handleChange}
+                                required
+                            />
 
-                    <input
-                        type="password"
-                        name="confirm_password"
-                        placeholder="Confirmar contraseña"
-                        value={formData.confirm_password}
-                        onChange={handleChange}
-                        required
-                    />
+                            <input
+                                type="password"
+                                name="confirm_password"
+                                placeholder="Confirmar contraseña"
+                                value={formData.confirm_password}
+                                onChange={handleChange}
+                                required
+                            />
 
-                    {error && (
-                        <p className="register-error">
-                            {error}
-                        </p>
-                    )}
+                            {error && (
+                                <p className="register-error">
+                                    {error}
+                                </p>
+                            )}
 
-                    {message && (
-                        <p className="register-message">
-                            {message}
-                        </p>
-                    )}
+                            {message && (
+                                <p className="register-message">
+                                    {message}
+                                </p>
+                            )}
 
-                    <button type="submit">
-                        Registrarse
-                    </button>
+                            <button type="submit">
+                                Registrarse
+                            </button>
 
-                </form>
+                        </form>
 
-                <div className="register-footer">
-                    ¿Ya tienes una cuenta?{" "}
-                    <Link to="/login">
-                        Inicia sesión
-                    </Link>
+                        <div className="register-footer">
+                            ¿Ya tienes una cuenta?{" "}
+                            <Link to="/login">
+                                Inicia sesión
+                            </Link>
+                        </div>
+
+                    </div>
                 </div>
-
-            </div>
-        </div>
+            </IonContent>
+        </IonPage>
     );
 }

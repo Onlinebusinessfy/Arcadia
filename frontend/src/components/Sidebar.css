@@ -11,7 +11,11 @@
     flex-direction: column;
     gap: 4px;
     overflow-y: auto;
-    z-index: 50;
+    /* z-index: 50; */
+    bottom: 0;
+    z-index: 100; 
+  
+    isolation: isolate;
 }
 
 .sidebar-nav {
@@ -87,4 +91,72 @@
 
 .see-more-btn:hover {
     color: var(--text-primary);
+}
+
+/* ================= TABLETS ================= */
+@media (max-width: 992px) {
+  .sidebar {
+    width: 220px;
+  }
+
+  .sidebar-link {
+    padding: 10px;
+    font-size: 0.82rem;
+  }
+}
+
+/* ================= CELULARES ================= */
+@media (max-width: 768px) {
+  .sidebar {
+    width: 260px;
+    left: -260px;
+    top: var(--navbar-height);
+    height: calc(100vh - var(--navbar-height));
+    z-index: 1000;
+    transition: left 0.3s ease;
+    box-shadow: 6px 0 20px rgba(0, 0, 0, 0.45);
+  }
+
+  .sidebar.open {
+    left: 0;
+  }
+
+  .sidebar-nav,
+  .sidebar-cats {
+    width: 100%;
+  }
+
+  .sidebar-link {
+    padding: 12px 14px;
+    font-size: 0.9rem;
+  }
+
+  .link-icon {
+    font-size: 1.1rem;
+  }
+
+  .sidebar-section-label {
+    font-size: 0.7rem;
+    padding: 12px 14px 8px;
+  }
+
+  .see-more-btn {
+    padding: 12px 14px;
+    font-size: 0.85rem;
+  }
+
+  .sidebar-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.55);
+    z-index: 999;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s;
+  }
+
+  .sidebar-overlay.show {
+    opacity: 1;
+    pointer-events: all;
+  }
 }

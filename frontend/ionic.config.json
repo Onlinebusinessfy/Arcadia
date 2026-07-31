@@ -1,0 +1,7 @@
+{
+  "name": "arcadia",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react-vite"
+}

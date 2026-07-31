@@ -17,41 +17,48 @@ import Register from './pages/register/Register'
 
 import Perfil from './pages/perfil/Perfil'
 
+import { IonApp, setupIonicReact } from '@ionic/react';
+import '@ionic/react/css/core.css';
+
+setupIonicReact();
+
+
 export default function App(): ReactElement {
   const [search, setSearch] = useState<string>('')
 
   return (
-    <div className="app-wrapper">
-      <Navbar
-        search={search}
-        setSearch={setSearch}
-        // sidebarOpen={sidebarOpen}
-        // setSidebarOpen={setSidebarOpen}
-      />
+    <IonApp>
+      <div className="app-wrapper">
+        <Navbar
+          search={search}
+          setSearch={setSearch}
+          // sidebarOpen={sidebarOpen}
+          // setSidebarOpen={setSidebarOpen}
+        />
 
-      <div className="app-body">
-        <Sidebar />
+        <div className="app-body">
+          <Sidebar />
 
-        <main className="main-content">
-          <Routes>
-            <Route path="/" element={<Home search={search} />} />
+          <main className="main-content">
+            <Routes>
+              <Route path="/" element={<Home search={search} />} />
 
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
 
-            <Route
-              path="/catalogo"
-              element={<Catalogo search={search} />}
-            />
+              <Route
+                path="/catalogo"
+                element={<Catalogo search={search} />}
+              />
 
-            <Route path="/" element={<Home search={search} />} />
-            <Route path="/biblioteca" element={<Biblioteca search={search} />} />
-            <Route path="/acerca" element={<Acerca />} />
-            <Route path="/carrito" element={<Carrito />} />
-            <Route path="/perfil" element={<Perfil />} />
-          </Routes>
-        </main>
+              <Route path="/biblioteca" element={<Biblioteca search={search} />} />
+              <Route path="/acerca" element={<Acerca />} />
+              <Route path="/carrito" element={<Carrito />} />
+              <Route path="/perfil" element={<Perfil />} />
+            </Routes>
+          </main>
+        </div>
       </div>
-    </div>
+    </IonApp>
   )
 }
