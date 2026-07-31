@@ -12,6 +12,8 @@ import { useNavigate } from 'react-router-dom'
 import { useCart } from '../../context/CartContext'
 import type Game from '../../types/game'
 
+import { IonContent, IonPage } from '@ionic/react'
+
 const featuredGames: Game[] = [
   {
     id: 1,
@@ -194,79 +196,83 @@ export default function Home({ search = '' }: { search: string }): ReactElement 
     filteredNewReleases.length === 0
 
   return (
-    <div className="home">
-      <div
-        className="hero"
-        style={{
-          backgroundImage: `url(${heroSlides[slide].img})`,
-        }}
-      >
-        <div className="hero-overlay" />
-
-        <div className="hero-content">
-          <span className="hero-label">
-            {heroSlides[slide].label}
-          </span>
-
-          <h1 className="hero-title">
-            {heroSlides[slide].title}
-          </h1>
-
-          <p className="hero-desc">
-            {heroSlides[slide].desc}
-          </p>
-
-          <button
-            className="hero-btn"
-            onClick={() => navigate('/catalogo')}
+    <IonPage>
+        <IonContent className='ion-padding'>
+        <div className="home">
+          <div
+            className="hero"
+            style={{
+              backgroundImage: `url(${heroSlides[slide].img})`,
+            }}
           >
-            Explorar catálogo <FiArrowRight size={16} />
-          </button>
-        </div>
+            <div className="hero-overlay" />
 
-        <div className="hero-nav">
-          <button className="hero-arrow" onClick={prev}>
-            <FiChevronLeft />
-          </button>
+            <div className="hero-content">
+              <span className="hero-label">
+                {heroSlides[slide].label}
+              </span>
 
-          <div className="hero-dots">
-            {heroSlides.map((_, i) => (
+              <h1 className="hero-title">
+                {heroSlides[slide].title}
+              </h1>
+
+              <p className="hero-desc">
+                {heroSlides[slide].desc}
+              </p>
+
               <button
-                key={i}
-                className={`dot ${
-                  i === slide ? 'active' : ''
-                }`}
-                onClick={() => setSlide(i)}
-              />
-            ))}
+                className="hero-btn"
+                onClick={() => navigate('/catalogo')}
+              >
+                Explorar catálogo <FiArrowRight size={16} />
+              </button>
+            </div>
+
+            <div className="hero-nav">
+              <button className="hero-arrow" onClick={prev}>
+                <FiChevronLeft />
+              </button>
+
+              <div className="hero-dots">
+                {heroSlides.map((_, i) => (
+                  <button
+                    key={i}
+                    className={`dot ${
+                      i === slide ? 'active' : ''
+                    }`}
+                    onClick={() => setSlide(i)}
+                  />
+                ))}
+              </div>
+
+              <button className="hero-arrow" onClick={next}>
+                <FiChevronRight />
+              </button>
+            </div>
           </div>
 
-          <button className="hero-arrow" onClick={next}>
-            <FiChevronRight />
-          </button>
+          <div className="rows-container">
+            {noResults ? (
+              <div className="no-results">
+                <h2>No se encontraron juegos</h2>
+                <p>Intenta con otra búsqueda.</p>
+              </div>
+            ) : (
+              <>
+                <GameRow
+                  title="Juegos destacados"
+                  games={filteredFeatured}
+                />
+
+                <GameRow
+                  title="Nuevos lanzamientos"
+                  games={filteredNewReleases}
+                />
+              </>
+            )}
+          </div>
         </div>
-      </div>
-
-      <div className="rows-container">
-        {noResults ? (
-          <div className="no-results">
-            <h2>No se encontraron juegos</h2>
-            <p>Intenta con otra búsqueda.</p>
-          </div>
-        ) : (
-          <>
-            <GameRow
-              title="Juegos destacados"
-              games={filteredFeatured}
-            />
-
-            <GameRow
-              title="Nuevos lanzamientos"
-              games={filteredNewReleases}
-            />
-          </>
-        )}
-      </div>
-    </div>
+      </IonContent>
+    </IonPage>
   )
 }

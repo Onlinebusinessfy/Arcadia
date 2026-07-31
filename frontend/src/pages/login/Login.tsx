@@ -4,6 +4,8 @@ import { useNavigate, Link } from "react-router-dom";
 import authService from "../../services/authService";
 import { useAuth } from "../../context/AuthContext";
 
+import { IonContent, IonPage } from '@ionic/react'
+
 import "./Login.css";
 
 export default function Login(): ReactElement {
@@ -38,64 +40,68 @@ export default function Login(): ReactElement {
     };
 
     return (
-        <div className="login-page">
-            <div className="login-card">
+        <IonPage>
+            <IonContent className='ion-padding'>
+                <div className="login-page">
+                    <div className="login-card">
 
-                <h1 className="login-title">
-                    Arcadia
-                </h1>
+                        <h1 className="login-title">
+                            Arcadia
+                        </h1>
 
-                <form
-                    className="login-form"
-                    onSubmit={handleLogin}
-                >
+                        <form
+                            className="login-form"
+                            onSubmit={handleLogin}
+                        >
 
-                    <div className="login-field">
-                        <label>Usuario</label>
+                            <div className="login-field">
+                                <label>Usuario</label>
 
-                        <input
-                            type="text"
-                            value={username}
-                            onChange={(e) =>
-                                setUsername(e.target.value)
-                            }
-                            required
-                        />
+                                <input
+                                    type="text"
+                                    value={username}
+                                    onChange={(e) =>
+                                        setUsername(e.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+
+                            <div className="login-field">
+                                <label>Contraseña</label>
+
+                                <input
+                                    type="password"
+                                    value={password}
+                                    onChange={(e) =>
+                                        setPassword(e.target.value)
+                                    }
+                                    required
+                                />
+                            </div>
+
+                            {error && (
+                                <p className="login-error">
+                                    {error}
+                                </p>
+                            )}
+
+                            <button type="submit">
+                                Iniciar sesión
+                            </button>
+
+                        </form>
+
+                        <div className="login-footer">
+                            ¿No tienes una cuenta?{" "}
+                            <Link to="/register">
+                                Regístrate
+                            </Link>
+                        </div>
+
                     </div>
-
-                    <div className="login-field">
-                        <label>Contraseña</label>
-
-                        <input
-                            type="password"
-                            value={password}
-                            onChange={(e) =>
-                                setPassword(e.target.value)
-                            }
-                            required
-                        />
-                    </div>
-
-                    {error && (
-                        <p className="login-error">
-                            {error}
-                        </p>
-                    )}
-
-                    <button type="submit">
-                        Iniciar sesión
-                    </button>
-
-                </form>
-
-                <div className="login-footer">
-                    ¿No tienes una cuenta?{" "}
-                    <Link to="/register">
-                        Regístrate
-                    </Link>
                 </div>
-
-            </div>
-        </div>
+            </IonContent>
+        </IonPage>
     );
 }

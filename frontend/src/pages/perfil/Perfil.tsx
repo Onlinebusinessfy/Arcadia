@@ -4,6 +4,8 @@ import { useAuth } from "../../context/AuthContext";
 import authService from "../../services/authService";
 import "./Perfil.css";
 
+import { IonContent, IonPage } from '@ionic/react'
+
 const API_URL = import.meta.env.VITE_API_URL;
 const API_HOST = new URL(API_URL).origin;
 
@@ -126,157 +128,161 @@ export default function Perfil(): ReactElement {
   };
 
   return (
-    <div className="perfil-page">
-      <div className="perfil-header">
-        <div className="perfil-avatar">
-          {profileImage ? (
-            <img src={profileImage} alt={user.username} />
-          ) : (
-            <span>{user.username.charAt(0).toUpperCase()}</span>
-          )}
-        </div>
+    <IonPage>
+      <IonContent className="ion-padding">
+        <div className="perfil-page">
+          <div className="perfil-header">
+            <div className="perfil-avatar">
+              {profileImage ? (
+                <img src={profileImage} alt={user.username} />
+              ) : (
+                <span>{user.username.charAt(0).toUpperCase()}</span>
+              )}
+            </div>
 
-        <div className="perfil-info">
-          <h1>{user.username}</h1>
+            <div className="perfil-info">
+              <h1>{user.username}</h1>
 
-          <p>{user.email}</p>
+              <p>{user.email}</p>
 
-          {user.bio && <p>{user.bio}</p>}
+              {user.bio && <p>{user.bio}</p>}
 
-          <div className={`perfil-status ${getStatusClass(user.status)}`}>
-            <span></span>
+              <div className={`perfil-status ${getStatusClass(user.status)}`}>
+                <span></span>
 
-            {getStatusText(user.status)}
-          </div>
-        </div>
+                {getStatusText(user.status)}
+              </div>
+            </div>
 
-        <button className="edit-profile-btn" onClick={() => setEditing(true)}>
-          Editar perfil
-        </button>
-      </div>
-
-      <div className="perfil-section">
-        <div className="section-title">
-          <h2>Información de la cuenta</h2>
-
-          <span>Datos públicos de tu perfil</span>
-        </div>
-
-        <div className="info-grid">
-          <div className="info-card">
-            <span>Usuario</span>
-
-            <strong>{user.username}</strong>
+            <button className="edit-profile-btn" onClick={() => setEditing(true)}>
+              Editar perfil
+            </button>
           </div>
 
-          <div className="info-card">
-            <span>Correo</span>
+          <div className="perfil-section">
+            <div className="section-title">
+              <h2>Información de la cuenta</h2>
 
-            <strong>{user.email}</strong>
-          </div>
+              <span>Datos públicos de tu perfil</span>
+            </div>
 
-          <div className="info-card status-card">
-            <span className="info-card-label">Estado</span>
+            <div className="info-grid">
+              <div className="info-card">
+                <span>Usuario</span>
 
-            <div className={`status-indicator ${getStatusClass(user.status)}`}>
-              <span></span>
+                <strong>{user.username}</strong>
+              </div>
 
-              {getStatusText(user.status)}
+              <div className="info-card">
+                <span>Correo</span>
+
+                <strong>{user.email}</strong>
+              </div>
+
+              <div className="info-card status-card">
+                <span className="info-card-label">Estado</span>
+
+                <div className={`status-indicator ${getStatusClass(user.status)}`}>
+                  <span></span>
+
+                  {getStatusText(user.status)}
+                </div>
+              </div>
+
+              <div className="info-card">
+                <span>Miembro desde</span>
+
+                <strong>{new Date(user.created_at).toLocaleDateString()}</strong>
+              </div>
             </div>
           </div>
 
-          <div className="info-card">
-            <span>Miembro desde</span>
-
-            <strong>{new Date(user.created_at).toLocaleDateString()}</strong>
-          </div>
-        </div>
-      </div>
-
-      {editing && (
-        <div className="edit-modal-overlay">
-          <div className="edit-modal">
-            <div className="edit-modal-header">
-              <h2>Editar perfil</h2>
-            </div>
-
-            <div className="edit-modal-body">
-              <div className="avatar-upload">
-                <div className="avatar-preview">
-                  {currentImage ? (
-                    <img src={currentImage} alt="Avatar preview" />
-                  ) : (
-                    <span>{username.charAt(0).toUpperCase()}</span>
-                  )}
+          {editing && (
+            <div className="edit-modal-overlay">
+              <div className="edit-modal">
+                <div className="edit-modal-header">
+                  <h2>Editar perfil</h2>
                 </div>
 
-                <label className="upload-btn">
-                  Cambiar foto
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => {
-                      if (e.target.files && e.target.files[0]) {
-                        setImage(e.target.files[0]);
-                      }
-                    }}
-                  />
-                </label>
-              </div>
+                <div className="edit-modal-body">
+                  <div className="avatar-upload">
+                    <div className="avatar-preview">
+                      {currentImage ? (
+                        <img src={currentImage} alt="Avatar preview" />
+                      ) : (
+                        <span>{username.charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
 
-              <div className="form-group">
-                <label>Nombre de usuario</label>
+                    <label className="upload-btn">
+                      Cambiar foto
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={(e) => {
+                          if (e.target.files && e.target.files[0]) {
+                            setImage(e.target.files[0]);
+                          }
+                        }}
+                      />
+                    </label>
+                  </div>
 
-                <input
-                  value={username}
-                  disabled={!canEditUsername()}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </div>
+                  <div className="form-group">
+                    <label>Nombre de usuario</label>
 
-              <div className="username-warning">
-                El nombre de usuario solo puede cambiarse cada 30 días.
-              </div>
+                    <input
+                      value={username}
+                      disabled={!canEditUsername()}
+                      onChange={(e) => setUsername(e.target.value)}
+                    />
+                  </div>
 
-              <div className="form-group">
-                <label>Biografía</label>
+                  <div className="username-warning">
+                    El nombre de usuario solo puede cambiarse cada 30 días.
+                  </div>
 
-                <textarea
-                  value={bio}
-                  onChange={(e) => setBio(e.target.value)}
-                />
-              </div>
+                  <div className="form-group">
+                    <label>Biografía</label>
 
-              <div className="form-group">
-                <label>Estado</label>
+                    <textarea
+                      value={bio}
+                      onChange={(e) => setBio(e.target.value)}
+                    />
+                  </div>
 
-                <select
-                  value={status}
-                  onChange={(e) => setStatus(e.target.value)}
-                >
-                  <option value="online">🟢 Online</option>
+                  <div className="form-group">
+                    <label>Estado</label>
 
-                  <option value="away">🟡 Ausente</option>
+                    <select
+                      value={status}
+                      onChange={(e) => setStatus(e.target.value)}
+                    >
+                      <option value="online">🟢 Online</option>
 
-                  <option value="busy">🔴 Ocupado</option>
+                      <option value="away">🟡 Ausente</option>
 
-                  <option value="invisible">⚫ Invisible</option>
-                </select>
+                      <option value="busy">🔴 Ocupado</option>
+
+                      <option value="invisible">⚫ Invisible</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="edit-modal-footer">
+                  <button className="cancel-btn" onClick={handleCancel}>
+                    Cancelar
+                  </button>
+
+                  <button className="save-btn" onClick={handleSave}>
+                    Guardar cambios
+                  </button>
+                </div>
               </div>
             </div>
-
-            <div className="edit-modal-footer">
-              <button className="cancel-btn" onClick={handleCancel}>
-                Cancelar
-              </button>
-
-              <button className="save-btn" onClick={handleSave}>
-                Guardar cambios
-              </button>
-            </div>
-          </div>
+          )}
         </div>
-      )}
-    </div>
+      </IonContent>
+    </IonPage>
   );
 }

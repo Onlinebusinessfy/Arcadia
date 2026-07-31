@@ -5,6 +5,8 @@ import { useNavigate } from 'react-router-dom'
 import { useState, type ReactElement } from 'react'
 import { PaymentModal } from '../payment-modal/PaymentModal'
 
+import { IonContent, IonPage } from '@ionic/react'
+
 const API_URL = import.meta.env.VITE_API_URL
 
 export default function Carrito(): ReactElement {
@@ -61,68 +63,72 @@ export default function Carrito(): ReactElement {
   }
 
   return (
-    <div className="carrito-page">
-      <div className="carrito-header">
-        <h1>Tu carrito</h1>
-        <button className="clear-btn" onClick={clearCart}>Vaciar carrito</button>
-      </div>
+    <IonPage>
+      <IonContent className='ion-padding'>
+        <div className="carrito-page">
+          <div className="carrito-header">
+            <h1>Tu carrito</h1>
+            <button className="clear-btn" onClick={clearCart}>Vaciar carrito</button>
+          </div>
 
-      <div className="carrito-layout">
-        <div className="carrito-list">
-          {items.map(item => (
-            <div key={item.id} className="carrito-item">
-              <div className="carrito-item-img">
-                <img src={item.img} alt={item.title} />
+          <div className="carrito-layout">
+            <div className="carrito-list">
+              {items.map(item => (
+                <div key={item.id} className="carrito-item">
+                  <div className="carrito-item-img">
+                    <img src={item.img} alt={item.title} />
+                  </div>
+
+                  <div className="carrito-item-info">
+                    <p className="carrito-item-title">{item.title}</p>
+                    <p className="carrito-item-genre">{item.genre}</p>
+                  </div>
+
+                  {/* Cantidad fija a 1 unidad por juego */}
+                  <div className="carrito-item-qty">
+                    <span>Cant: 1</span>
+                  </div>
+
+                  <div className="carrito-item-price">
+                    ${parseFloat(item.price.replace('$', '')).toFixed(2)}
+                  </div>
+
+                  <button className="carrito-item-remove" onClick={() => removeFromCart(item.id)}>
+                    <FiTrash2 size={17} />
+                  </button>
+                </div>
+              ))}
+            </div>
+
+            <div className="carrito-summary">
+              <h3>Resumen</h3>
+              <div className="summary-row">
+                <span>Subtotal</span>
+                <span>${totalPrice.toFixed(2)}</span>
+              </div>
+              <div className="summary-row">
+                <span>Impuestos</span>
+                <span>${(totalPrice * 0.16).toFixed(2)}</span>
+              </div>
+              <div className="summary-row total">
+                <span>Total</span>
+                <span>${(totalPrice * 1.16).toFixed(2)}</span>
               </div>
 
-              <div className="carrito-item-info">
-                <p className="carrito-item-title">{item.title}</p>
-                <p className="carrito-item-genre">{item.genre}</p>
-              </div>
-
-              {/* Cantidad fija a 1 unidad por juego */}
-              <div className="carrito-item-qty">
-                <span>Cant: 1</span>
-              </div>
-
-              <div className="carrito-item-price">
-                ${parseFloat(item.price.replace('$', '')).toFixed(2)}
-              </div>
-
-              <button className="carrito-item-remove" onClick={() => removeFromCart(item.id)}>
-                <FiTrash2 size={17} />
+              <button className="pay-btn" onClick={() => setIsModalOpen(true)}>
+                Proceder al pago
               </button>
             </div>
-          ))}
+          </div>
+
+          <PaymentModal 
+            isOpen={isModalOpen} 
+            onClose={() => setIsModalOpen(false)} 
+            onSuccess={clearCart}
+            totalAmount={(totalPrice * 1.16).toFixed(2)}
+          />
         </div>
-
-        <div className="carrito-summary">
-          <h3>Resumen</h3>
-          <div className="summary-row">
-            <span>Subtotal</span>
-            <span>${totalPrice.toFixed(2)}</span>
-          </div>
-          <div className="summary-row">
-            <span>Impuestos</span>
-            <span>${(totalPrice * 0.16).toFixed(2)}</span>
-          </div>
-          <div className="summary-row total">
-            <span>Total</span>
-            <span>${(totalPrice * 1.16).toFixed(2)}</span>
-          </div>
-
-          <button className="pay-btn" onClick={() => setIsModalOpen(true)}>
-            Proceder al pago
-          </button>
-        </div>
-      </div>
-
-      <PaymentModal 
-        isOpen={isModalOpen} 
-        onClose={() => setIsModalOpen(false)} 
-        onSuccess={clearCart}
-        totalAmount={(totalPrice * 1.16).toFixed(2)}
-      />
-    </div>
+      </IonContent>
+    </IonPage>
   )
 }

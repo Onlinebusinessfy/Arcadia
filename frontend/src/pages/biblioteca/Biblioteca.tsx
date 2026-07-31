@@ -2,6 +2,8 @@ import type { ReactElement } from 'react'
 import './Biblioteca.css'
 import type Game from '../../types/game'
 
+import { IonContent, IonPage } from '@ionic/react'
+
 const misJuegos: Game[] = [
   {
     id: 1,
@@ -41,37 +43,41 @@ export default function Biblioteca({ search = '' }: { search: string }): ReactEl
   )
 
   return (
-    <div className="library-page">
-      <div className="library-header">
-        <h1>Mi Biblioteca</h1>
-        <p>{juegosFiltrados.length} juegos en tu colección</p>
-      </div>
+    <IonPage>
+      <IonContent className='ion-padding'>
+        <div className="library-page">
+          <div className="library-header">
+            <h1>Mi Biblioteca</h1>
+            <p>{juegosFiltrados.length} juegos en tu colección</p>
+          </div>
 
-      {juegosFiltrados.length === 0 ? (
-        <div className="no-results">
-          <h2>No se encontraron juegos</h2>
-          <p>Intenta con otra búsqueda.</p>
-        </div>
-      ) : (
-        <div className="library-grid">
-          {juegosFiltrados.map(game => (
-            <div key={game.id} className="library-card">
-              <div className="library-img">
-                <img src={game.img} alt={game.title} />
-              </div>
-
-              <div className="library-info">
-                <h3>{game.title}</h3>
-                <p>{game.genre}</p>
-
-                <button className="play-btn">
-                  Jugar
-                </button>
-              </div>
+          {juegosFiltrados.length === 0 ? (
+            <div className="no-results">
+              <h2>No se encontraron juegos</h2>
+              <p>Intenta con otra búsqueda.</p>
             </div>
-          ))}
+          ) : (
+            <div className="library-grid">
+              {juegosFiltrados.map(game => (
+                <div key={game.id} className="library-card">
+                  <div className="library-img">
+                    <img src={game.img} alt={game.title} />
+                  </div>
+
+                  <div className="library-info">
+                    <h3>{game.title}</h3>
+                    <p>{game.genre}</p>
+
+                    <button className="play-btn">
+                      Jugar
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </IonContent>
+    </IonPage>
   )
 }

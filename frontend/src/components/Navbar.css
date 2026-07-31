@@ -10,7 +10,7 @@
   align-items: center;
   gap: 20px;
   padding: 0 20px;
-  z-index: 100;
+  z-index: 110;
 }
 
 .navbar-logo {

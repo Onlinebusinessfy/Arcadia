@@ -6,6 +6,8 @@ import { useLocation, useSearchParams } from 'react-router-dom'
 import type { ReactElement } from 'react'
 import type Game from '../../types/game'
 
+import { IonContent, IonPage } from '@ionic/react'
+
 const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
 export default function Catalogo({ search = '' }: { search: string }): ReactElement {
@@ -98,57 +100,61 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
   }
 
   return (
-    <div className="catalogo">
-      <div className="catalogo-header">
-        <h1>Catálogo</h1>
-        <p>{filteredGames.length} juegos disponibles</p>
-      </div>
+    <IonPage>
+        <IonContent className='ion-padding'>
+        <div className="catalogo">
+          <div className="catalogo-header">
+            <h1>Catálogo</h1>
+            <p>{filteredGames.length} juegos disponibles</p>
+          </div>
 
-      <div className="catalogo-grid">
-        {filteredGames.map(game => {
-          const inCart = items.some(item => item.id === game.id)
+          <div className="catalogo-grid">
+            {filteredGames.map(game => {
+              const inCart = items.some(item => item.id === game.id)
 
-          return (
-            <div key={game.id} className="cat-card">
-              <div className="cat-img">
-                <img src={game.img} alt={game.title} />
-              </div>
+              return (
+                <div key={game.id} className="cat-card">
+                  <div className="cat-img">
+                    <img src={game.img} alt={game.title} />
+                  </div>
 
-              <div className="cat-info">
-                <p className="cat-title">{game.title}</p>
-                <p className="cat-genre">{game.genre}</p>
+                  <div className="cat-info">
+                    <p className="cat-title">{game.title}</p>
+                    <p className="cat-genre">{game.genre}</p>
 
-                <div className="cat-footer">
-                  <span className="cat-price">{game.price}</span>
+                    <div className="cat-footer">
+                      <span className="cat-price">{game.price}</span>
 
-                  <button
-                    className={`add-btn ${inCart ? 'in-cart' : ''}`}
-                    onClick={() => !inCart && addToCart(game)}
-                    disabled={inCart}
-                  >
-                    {inCart ? (
-                      <>
-                        <FiCheck size={14} /> Agregado
-                      </>
-                    ) : (
-                      <>
-                        <FiShoppingCart size={14} /> Agregar
-                      </>
-                    )}
-                  </button>
+                      <button
+                        className={`add-btn ${inCart ? 'in-cart' : ''}`}
+                        onClick={() => !inCart && addToCart(game)}
+                        disabled={inCart}
+                      >
+                        {inCart ? (
+                          <>
+                            <FiCheck size={14} /> Agregado
+                          </>
+                        ) : (
+                          <>
+                            <FiShoppingCart size={14} /> Agregar
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  </div>
                 </div>
-              </div>
-            </div>
-          )
-        })}
-      </div>
+              )
+            })}
+          </div>
 
-      {filteredGames.length === 0 && (
-        <div className="no-results">
-          <h3>No se encontraron juegos</h3>
-          <p>Intenta con otra búsqueda o categoría.</p>
+          {filteredGames.length === 0 && (
+            <div className="no-results">
+              <h3>No se encontraron juegos</h3>
+              <p>Intenta con otra búsqueda o categoría.</p>
+            </div>
+          )}
         </div>
-      )}
-    </div>
+      </IonContent>
+    </IonPage>
   )
 }
