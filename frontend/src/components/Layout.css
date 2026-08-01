@@ -17,3 +17,16 @@
     overflow-y: auto;
     background: var(--bg-primary);
 }
+
+/* ===========================
+        RESPONSIVE
+=========================== */
+
+@media (max-width:768px){
+
+    .main-content{
+        margin-left:0;
+        width:100%;
+    }
+
+}

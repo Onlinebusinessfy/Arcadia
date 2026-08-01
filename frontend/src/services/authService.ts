@@ -35,7 +35,8 @@ export interface RegisterResponse {
 
 const authService = {
     async register(userData: RegisterData): Promise<RegisterResponse> {
-        const response = await fetch(`${API_URL}register/`, {
+        //  CORREGIDO: Agregar /api/
+        const response = await fetch(`${API_URL}/api/register/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -53,7 +54,8 @@ const authService = {
     },
 
     async login(credentials: LoginData): Promise<LoginResponse> {
-        const response = await fetch(`${API_URL}login/`, {
+        //  CORREGIDO: Agregar /api/
+        const response = await fetch(`${API_URL}/api/login/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -71,7 +73,8 @@ const authService = {
     },
 
     async getMe(token: string): Promise<User> {
-        const response = await fetch(`${API_URL}me/`, {
+        //  CORREGIDO: Agregar /api/
+        const response = await fetch(`${API_URL}/api/me/`, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -87,7 +90,8 @@ const authService = {
     },
 
     async refreshToken(refresh: string): Promise<{ access: string }> {
-        const response = await fetch(`${API_URL}refresh/`, {
+        //  CORREGIDO: Agregar /api/
+        const response = await fetch(`${API_URL}/api/refresh/`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
@@ -105,12 +109,13 @@ const authService = {
 
         return data;
     },
+
     async updateProfile(
         token: string,
         formData: FormData
     ): Promise<User> {
-
-        const response = await fetch(`${API_URL}profile/update/`, {
+        //  CORREGIDO: Agregar /api/
+        const response = await fetch(`${API_URL}/api/profile/update/`, {
             method: "PATCH",
             headers: {
                 Authorization: `Bearer ${token}`,
@@ -128,36 +133,31 @@ const authService = {
     },
 
     async updateStatus(
-        token:string,
-        status:string
-    ){
-
+        token: string,
+        status: string
+    ) {
+        //  CORREGIDO: Agregar /api/
         const response = await fetch(
-            `${API_URL}profile/status/`,
+            `${API_URL}/api/profile/status/`,
             {
-                method:"PATCH",
-
-                headers:{
-                    "Authorization":`Bearer ${token}`,
-                    "Content-Type":"application/json"
+                method: "PATCH",
+                headers: {
+                    "Authorization": `Bearer ${token}`,
+                    "Content-Type": "application/json"
                 },
-
-                body:JSON.stringify({
+                body: JSON.stringify({
                     status
                 })
             }
         );
 
-
-        if(!response.ok){
+        if (!response.ok) {
             throw new Error(
                 "No se pudo actualizar el estado"
             );
         }
 
-
         return await response.json();
-
     }
 };
 
