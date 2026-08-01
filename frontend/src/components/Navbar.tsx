@@ -26,10 +26,6 @@ import { useAuth } from "../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const API_HOST = API_URL && API_URL.startsWith('http') 
-  ? new URL(API_URL).origin 
-  : 'http://localhost:8000';
-
 export default function Navbar({
   search,
   setSearch,
@@ -174,7 +170,7 @@ export default function Navbar({
               <div className="user-avatar">
                 {user.profile_picture ? (
                   <img
-                    src={user.profile_picture}
+                    src={API_URL + user.profile_picture}
                     alt={user.username}
                   />
                 ) : (
@@ -257,7 +253,7 @@ export default function Navbar({
               <div className="mobile-avatar-wrapper">
                 <div className="mobile-avatar-small">
                   {user.profile_picture ? (
-                    <img src={user.profile_picture} alt={user.username} />
+                    <img src={API_URL + user.profile_picture} alt={user.username} />
                   ) : (
                     <span>{user.username.charAt(0).toUpperCase()}</span>
                   )}
@@ -299,7 +295,7 @@ export default function Navbar({
                   <div className="mobile-dropdown-user">
                     <div className="mobile-dropdown-avatar">
                       {user.profile_picture ? (
-                        <img src={user.profile_picture} alt={user.username} />
+                        <img src={API_URL + user.profile_picture} alt={user.username} />
                       ) : (
                         <span>{user.username.charAt(0).toUpperCase()}</span>
                       )}
