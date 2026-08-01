@@ -4,10 +4,12 @@ import { useAuth } from "../../context/AuthContext";
 import authService from "../../services/authService";
 import "./Perfil.css";
 
-import { IonContent, IonPage } from '@ionic/react'
+import { IonContent, IonPage } from '@ionic/react';
 
 const API_URL = import.meta.env.VITE_API_URL;
-const API_HOST = new URL(API_URL).origin;
+const API_HOST = API_URL && API_URL.startsWith('http') 
+  ? new URL(API_URL).origin 
+  : 'http://localhost:8000';
 
 export default function Perfil(): ReactElement {
   const { user, setUser } = useAuth();
@@ -51,9 +53,7 @@ export default function Perfil(): ReactElement {
     }
 
     const lastChange = new Date(user.username_last_changed);
-
     const nextChange = new Date(lastChange);
-
     nextChange.setDate(nextChange.getDate() + 30);
 
     return new Date() >= nextChange;
@@ -67,28 +67,16 @@ export default function Perfil(): ReactElement {
 
   const getStatusText = (value: string) => {
     switch (value) {
-      case "online":
-        return "Online";
-
-      case "away":
-        return "Ausente";
-
-      case "busy":
-        return "Ocupado";
-
-      case "invisible":
-        return "Offline";
-
-      default:
-        return "Offline";
+      case "online": return "Online";
+      case "away": return "Ausente";
+      case "busy": return "Ocupado";
+      case "invisible": return "Offline";
+      default: return "Offline";
     }
   };
 
   const getStatusClass = (value: string) => {
-    if (value === "invisible") {
-      return "offline";
-    }
-
+    if (value === "invisible") return "offline";
     return value;
   };
 
@@ -110,7 +98,6 @@ export default function Perfil(): ReactElement {
       }
 
       formData.append("bio", bio);
-
       formData.append("status", status);
 
       if (image) {
@@ -118,9 +105,7 @@ export default function Perfil(): ReactElement {
       }
 
       const updatedUser = await authService.updateProfile(token!, formData);
-
       setUser(updatedUser);
-
       setEditing(false);
     } catch (error) {
       console.error("Error actualizando perfil:", error);
@@ -131,6 +116,7 @@ export default function Perfil(): ReactElement {
     <IonPage>
       <IonContent className="ion-padding">
         <div className="perfil-page">
+          {/* HEADER */}
           <div className="perfil-header">
             <div className="perfil-avatar">
               {profileImage ? (
@@ -142,14 +128,11 @@ export default function Perfil(): ReactElement {
 
             <div className="perfil-info">
               <h1>{user.username}</h1>
-
               <p>{user.email}</p>
-
               {user.bio && <p>{user.bio}</p>}
 
               <div className={`perfil-status ${getStatusClass(user.status)}`}>
                 <span></span>
-
                 {getStatusText(user.status)}
               </div>
             </div>
@@ -159,47 +142,49 @@ export default function Perfil(): ReactElement {
             </button>
           </div>
 
+          {/* INFO DE CUENTA */}
           <div className="perfil-section">
             <div className="section-title">
               <h2>Información de la cuenta</h2>
-
               <span>Datos públicos de tu perfil</span>
             </div>
 
             <div className="info-grid">
               <div className="info-card">
-                <span>Usuario</span>
-
-                <strong>{user.username}</strong>
+                <span className="info-card-label">Usuario</span>
+                <span className="info-card-value">{user.username}</span>
               </div>
 
               <div className="info-card">
-                <span>Correo</span>
-
-                <strong>{user.email}</strong>
+                <span className="info-card-label">Correo</span>
+                <span className="info-card-value">{user.email}</span>
               </div>
 
-              <div className="info-card status-card">
+              <div className="info-card">
                 <span className="info-card-label">Estado</span>
-
                 <div className={`status-indicator ${getStatusClass(user.status)}`}>
                   <span></span>
-
                   {getStatusText(user.status)}
                 </div>
               </div>
 
               <div className="info-card">
-                <span>Miembro desde</span>
-
-                <strong>{new Date(user.created_at).toLocaleDateString()}</strong>
+                <span className="info-card-label">Miembro desde</span>
+                <span className="info-card-value">
+                  {new Date(user.created_at).toLocaleDateString('es-ES', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </span>
               </div>
             </div>
           </div>
 
+          {/* MODAL EDITAR */}
           {editing && (
-            <div className="edit-modal-overlay">
-              <div className="edit-modal">
+            <div className="edit-modal-overlay" onClick={handleCancel}>
+              <div className="edit-modal" onClick={(e) => e.stopPropagation()}>
                 <div className="edit-modal-header">
                   <h2>Editar perfil</h2>
                 </div>
@@ -230,7 +215,6 @@ export default function Perfil(): ReactElement {
 
                   <div className="form-group">
                     <label>Nombre de usuario</label>
-
                     <input
                       value={username}
                       disabled={!canEditUsername()}
@@ -244,7 +228,6 @@ export default function Perfil(): ReactElement {
 
                   <div className="form-group">
                     <label>Biografía</label>
-
                     <textarea
                       value={bio}
                       onChange={(e) => setBio(e.target.value)}
@@ -253,17 +236,13 @@ export default function Perfil(): ReactElement {
 
                   <div className="form-group">
                     <label>Estado</label>
-
                     <select
                       value={status}
                       onChange={(e) => setStatus(e.target.value)}
                     >
                       <option value="online">🟢 Online</option>
-
                       <option value="away">🟡 Ausente</option>
-
                       <option value="busy">🔴 Ocupado</option>
-
                       <option value="invisible">⚫ Invisible</option>
                     </select>
                   </div>
@@ -273,7 +252,6 @@ export default function Perfil(): ReactElement {
                   <button className="cancel-btn" onClick={handleCancel}>
                     Cancelar
                   </button>
-
                   <button className="save-btn" onClick={handleSave}>
                     Guardar cambios
                   </button>

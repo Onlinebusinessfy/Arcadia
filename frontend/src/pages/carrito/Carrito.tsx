@@ -84,11 +84,6 @@ export default function Carrito(): ReactElement {
                     <p className="carrito-item-genre">{item.genre}</p>
                   </div>
 
-                  {/* Cantidad fija a 1 unidad por juego */}
-                  <div className="carrito-item-qty">
-                    <span>Cant: 1</span>
-                  </div>
-
                   <div className="carrito-item-price">
                     ${parseFloat(item.price.replace('$', '')).toFixed(2)}
                   </div>

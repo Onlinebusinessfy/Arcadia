@@ -1,8 +1,13 @@
+/* =====================================================
+   REGISTER PAGE
+===================================================== */
 .register-page {
-    min-height: 100vh;
+    min-height: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 24px;
+    padding-top: 30px;
     background: var(--bg-primary);
 }
 
@@ -15,61 +20,258 @@
     max-width: 420px;
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 28px;
 }
 
-.register-card h1 {
+/* =====================================================
+   HEADER
+===================================================== */
+.register-header {
+    text-align: center;
+}
+
+.register-title {
     font-family: 'Rajdhani', sans-serif;
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--accent);
+    letter-spacing: 3px;
+    margin-bottom: 4px;
 }
 
+.register-subtitle {
+    color: var(--text-muted);
+    font-size: 0.9rem;
+}
+
+/* =====================================================
+   FORM
+===================================================== */
 .register-form {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 16px;
 }
 
-.register-form input {
-    width: 100%;
-    padding: 10px 14px;
+.register-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.register-field label {
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.register-field input {
+    padding: 12px 16px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: 8px;
     color: var(--text-primary);
-    font-size: 0.875rem;
+    font-size: 0.9rem;
     font-family: 'Inter', sans-serif;
     transition: border-color 0.2s;
 }
 
-.register-form input::placeholder {
+.register-field input::placeholder {
     color: var(--text-muted);
 }
 
-.register-form input:focus {
+.register-field input:focus {
     outline: none;
     border-color: var(--accent);
 }
 
-.register-form button {
-    margin-top: 8px;
-    padding: 11px;
-    background: var(--accent);
-    color: white;
+.register-error {
+    font-size: 0.85rem;
+    color: #f43f5e;
+    text-align: center;
+    background: rgba(244, 63, 94, 0.1);
+    padding: 10px;
     border-radius: 8px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    font-family: 'Inter', sans-serif;
-    transition: background 0.2s;
-}
-
-.register-form button:hover {
-    background: var(--accent-hover);
+    border: 1px solid rgba(244, 63, 94, 0.2);
 }
 
 .register-message {
     font-size: 0.85rem;
-    color: var(--text-secondary);
+    color: #22c55e;
     text-align: center;
+    background: rgba(34, 197, 94, 0.1);
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(34, 197, 94, 0.2);
+}
+
+.register-form button {
+    margin-top: 4px;
+    padding: 14px;
+    background: var(--accent);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.register-form button:hover:not(:disabled) {
+    background: var(--accent-hover);
+}
+
+.register-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+/* =====================================================
+   FOOTER
+===================================================== */
+.register-footer {
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    padding-top: 16px;
+    border-top: 1px solid var(--border);
+}
+
+.register-footer a {
+    color: var(--accent);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.register-footer a:hover {
+    color: var(--accent-hover);
+    text-decoration: underline;
+}
+
+/* =====================================================
+   RESPONSIVE - TABLET
+===================================================== */
+@media (max-width: 768px) {
+    .register-page {
+        padding: 20px;
+        padding-top: 25px;
+    }
+
+    .register-card {
+        padding: 32px 28px;
+        border-radius: 14px;
+    }
+
+    .register-title {
+        font-size: 1.75rem;
+    }
+
+    .register-field input {
+        padding: 11px 14px;
+        font-size: 0.85rem;
+    }
+
+    .register-form button {
+        padding: 12px;
+        font-size: 0.9rem;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE - MÓVIL
+===================================================== */
+@media (max-width: 480px) {
+    .register-page {
+        padding: 16px;
+        padding-top: 20px;
+    }
+
+    .register-card {
+        padding: 24px 20px;
+        border-radius: 12px;
+        gap: 20px;
+    }
+
+    .register-title {
+        font-size: 1.5rem;
+        letter-spacing: 2px;
+    }
+
+    .register-subtitle {
+        font-size: 0.8rem;
+    }
+
+    .register-field label {
+        font-size: 0.8rem;
+    }
+
+    .register-field input {
+        padding: 10px 12px;
+        font-size: 0.85rem;
+    }
+
+    .register-form {
+        gap: 14px;
+    }
+
+    .register-form button {
+        padding: 11px;
+        font-size: 0.85rem;
+    }
+
+    .register-error,
+    .register-message {
+        font-size: 0.8rem;
+        padding: 8px;
+    }
+
+    .register-footer {
+        font-size: 0.85rem;
+        padding-top: 14px;
+    }
+}
+
+/* =====================================================
+   RESPONSIVE - MÓVIL MUY PEQUEÑO
+===================================================== */
+@media (max-width: 360px) {
+    .register-page {
+        padding: 12px;
+        padding-top: 15px;
+    }
+
+    .register-card {
+        padding: 20px 16px;
+    }
+
+    .register-title {
+        font-size: 1.3rem;
+    }
+
+    .register-field input {
+        padding: 9px 10px;
+        font-size: 0.8rem;
+    }
+
+    .register-form button {
+        padding: 10px;
+        font-size: 0.8rem;
+    }
+}
+
+/* =====================================================
+   IONIC OVERRIDES
+===================================================== */
+.ion-page {
+    --background: var(--bg-primary) !important;
+}
+
+.ion-padding {
+    --padding-start: 0 !important;
+    --padding-end: 0 !important;
+    --padding-top: 0 !important;
+    --padding-bottom: 0 !important;
 }

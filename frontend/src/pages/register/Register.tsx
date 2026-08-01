@@ -7,9 +7,9 @@ import authService, {
 
 import { useAuth } from "../../context/AuthContext";
 
-import "./Register.css";
+import { IonContent, IonPage } from '@ionic/react';
 
-import { IonContent, IonPage } from '@ionic/react'
+import "./Register.css";
 
 interface RegisterError {
     username?: string[];
@@ -32,25 +32,18 @@ export default function Register(): ReactElement {
 
     const [error, setError] = useState<string>("");
     const [message, setMessage] = useState<string>("");
+    const [loading, setLoading] = useState<boolean>(false);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement>
-    ) => {
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+        setFormData((prev) => ({ ...prev, [name]: value }));
     };
 
-    const handleRegister = async (
-        e: React.SubmitEvent<HTMLFormElement>
-    ) => {
+    const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-
         setError("");
         setMessage("");
+        setLoading(true);
 
         try {
             await authService.register(formData);
@@ -61,14 +54,10 @@ export default function Register(): ReactElement {
             });
 
             await login(loginData);
-
             setMessage("Cuenta creada correctamente.");
-
             navigate("/");
-
         } catch (err) {
             const error = err as RegisterError;
-
             console.error(error);
 
             if (error.username) {
@@ -84,83 +73,86 @@ export default function Register(): ReactElement {
             } else {
                 setError("No fue posible crear la cuenta.");
             }
+        } finally {
+            setLoading(false);
         }
     };
 
     return (
         <IonPage>
-            <IonContent className='ion-padding'>
+            <IonContent 
+                className="ion-padding" 
+                scrollY={false}
+                fullscreen={true}
+            >
                 <div className="register-page">
                     <div className="register-card">
+                        <div className="register-header">
+                            <h1 className="register-title">ARCADIA</h1>
+                            <p className="register-subtitle">Crea tu cuenta</p>
+                        </div>
 
-                        <h1>Crear cuenta</h1>
+                        <form className="register-form" onSubmit={handleRegister}>
+                            <div className="register-field">
+                                <label>Usuario</label>
+                                <input
+                                    type="text"
+                                    name="username"
+                                    placeholder="Elige un nombre de usuario"
+                                    value={formData.username}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
 
-                        <form
-                            className="register-form"
-                            onSubmit={handleRegister}
-                        >
+                            <div className="register-field">
+                                <label>Correo electrónico</label>
+                                <input
+                                    type="email"
+                                    name="email"
+                                    placeholder="Ingresa tu correo electrónico"
+                                    value={formData.email}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
 
-                            <input
-                                type="text"
-                                name="username"
-                                placeholder="Usuario"
-                                value={formData.username}
-                                onChange={handleChange}
-                                required
-                            />
+                            <div className="register-field">
+                                <label>Contraseña</label>
+                                <input
+                                    type="password"
+                                    name="password"
+                                    placeholder="Crea una contraseña segura"
+                                    value={formData.password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
 
-                            <input
-                                type="email"
-                                name="email"
-                                placeholder="Correo"
-                                value={formData.email}
-                                onChange={handleChange}
-                                required
-                            />
+                            <div className="register-field">
+                                <label>Confirmar contraseña</label>
+                                <input
+                                    type="password"
+                                    name="confirm_password"
+                                    placeholder="Repite tu contraseña"
+                                    value={formData.confirm_password}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </div>
 
-                            <input
-                                type="password"
-                                name="password"
-                                placeholder="Contraseña"
-                                value={formData.password}
-                                onChange={handleChange}
-                                required
-                            />
+                            {error && <p className="register-error">{error}</p>}
+                            {message && <p className="register-message">{message}</p>}
 
-                            <input
-                                type="password"
-                                name="confirm_password"
-                                placeholder="Confirmar contraseña"
-                                value={formData.confirm_password}
-                                onChange={handleChange}
-                                required
-                            />
-
-                            {error && (
-                                <p className="register-error">
-                                    {error}
-                                </p>
-                            )}
-
-                            {message && (
-                                <p className="register-message">
-                                    {message}
-                                </p>
-                            )}
-
-                            <button type="submit">
-                                Registrarse
+                            <button type="submit" disabled={loading}>
+                                {loading ? "Registrando..." : "Registrarse"}
                             </button>
-
                         </form>
 
                         <div className="register-footer">
                             ¿Ya tienes una cuenta?{" "}
-                            <Link to="/login">
-                                Inicia sesión
-                            </Link>
+                            <Link to="/login">Inicia sesión</Link>
                         </div>
-
                     </div>
                 </div>
             </IonContent>

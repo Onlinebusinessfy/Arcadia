@@ -1,9 +1,18 @@
 import './Sidebar.css'
 import { NavLink, Link, useSearchParams } from 'react-router-dom'
 import {
-    FiHome, FiGrid, FiBookOpen, FiInfo,
-    FiZap, FiCompass, FiStar, FiTarget,
-    FiActivity, FiMusic, FiTruck, FiSliders,
+    FiHome,
+    FiGrid,
+    FiBookOpen,
+    FiInfo,
+    FiZap,
+    FiCompass,
+    FiStar,
+    FiTarget,
+    FiActivity,
+    FiMusic,
+    FiTruck,
+    FiSliders,
     FiChevronDown
 } from 'react-icons/fi'
 import { useState, type ReactElement } from 'react'
@@ -26,50 +35,111 @@ const categories: { icon: ReactElement; label: string }[] = [
     { icon: <FiSliders />, label: 'Simulación' },
 ]
 
-export default function Sidebar(): ReactElement {
-    const [showAll, setShowAll] = useState<boolean>(false)
-    const visibleCats = showAll ? categories : categories.slice(0, 6)
+interface SidebarProps {
+    sidebarOpen: boolean
+    setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export default function Sidebar({
+    sidebarOpen,
+    setSidebarOpen,
+}: SidebarProps): ReactElement {
+
+    const [showAll, setShowAll] = useState(false)
+
+    const visibleCats = showAll
+        ? categories
+        : categories.slice(0, 6)
+
     const [searchParams] = useSearchParams()
+
     const activeCategory = searchParams.get('categoria')
 
+    const closeSidebar = () => {
+        if (window.innerWidth <= 768) {
+            setSidebarOpen(false)
+        }
+    }
+
     return (
-        <aside className="sidebar">
+        <aside className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+
             <nav className="sidebar-nav">
+
                 {mainLinks.map(link => (
+
                     <NavLink
                         key={link.to}
                         to={link.to}
                         end={link.to === '/'}
-                        className={({ isActive }) => `sidebar-link ${isActive && !activeCategory ? 'active' : ''}`}
+                        onClick={closeSidebar}
+                        className={({ isActive }) =>
+                            `sidebar-link ${
+                                isActive && !activeCategory ? 'active' : ''
+                            }`
+                        }
                     >
-                        <span className="link-icon">{link.icon}</span>
+                        <span className="link-icon">
+                            {link.icon}
+                        </span>
+
                         <span>{link.label}</span>
+
                     </NavLink>
+
                 ))}
+
             </nav>
 
-            <div className="sidebar-section-label">CATEGORÍAS</div>
+            <div className="sidebar-section-label">
+                CATEGORÍAS
+            </div>
 
             <nav className="sidebar-cats">
+
                 {visibleCats.map(cat => (
+
                     <Link
                         key={cat.label}
                         to={`/catalogo?categoria=${encodeURIComponent(cat.label)}`}
-                        className={`sidebar-link cat-link ${activeCategory === cat.label ? 'active' : ''}`}
+                        onClick={closeSidebar}
+                        className={`sidebar-link cat-link ${
+                            activeCategory === cat.label
+                                ? 'active'
+                                : ''
+                        }`}
                     >
-                        <span className="link-icon">{cat.icon}</span>
+                        <span className="link-icon">
+                            {cat.icon}
+                        </span>
+
                         <span>{cat.label}</span>
+
                     </Link>
+
                 ))}
+
             </nav>
 
-            <button className="see-more-btn" onClick={() => setShowAll(!showAll)}>
-                <span>{showAll ? 'Ver menos' : 'Ver más'}</span>
+            <button
+                className="see-more-btn"
+                onClick={() => setShowAll(!showAll)}
+            >
+                <span>
+                    {showAll ? 'Ver menos' : 'Ver más'}
+                </span>
+
                 <FiChevronDown
                     size={14}
-                    style={{ transform: showAll ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}
+                    style={{
+                        transform: showAll
+                            ? 'rotate(180deg)'
+                            : 'none',
+                        transition: 'transform .2s'
+                    }}
                 />
             </button>
+
         </aside>
     )
 }

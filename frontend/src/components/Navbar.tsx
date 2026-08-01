@@ -6,6 +6,10 @@ import {
   FiChevronDown,
   FiX,
   FiTrash2,
+  FiMenu,
+  FiUser,
+  FiLogIn,
+  FiUserPlus,
 } from "react-icons/fi";
 
 import {
@@ -21,14 +25,21 @@ import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
 const API_URL = import.meta.env.VITE_API_URL;
-const API_HOST = new URL(API_URL).origin;
+
+const API_HOST = API_URL && API_URL.startsWith('http') 
+  ? new URL(API_URL).origin 
+  : 'http://localhost:8000';
 
 export default function Navbar({
   search,
   setSearch,
+  sidebarOpen,
+  setSidebarOpen,
 }: {
   search: string;
   setSearch: (query: string) => void;
+  sidebarOpen: boolean;
+  setSidebarOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }): ReactElement {
   const navigate = useNavigate();
 
@@ -36,9 +47,12 @@ export default function Navbar({
 
   const [cartOpen, setCartOpen] = useState<boolean>(false);
   const [userMenuOpen, setUserMenuOpen] = useState<boolean>(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState<boolean>(false);
+  const [mobileSearchOpen, setMobileSearchOpen] = useState<boolean>(false);
   
   const cartRef = useRef<HTMLDivElement>(null);
   const userRef = useRef<HTMLDivElement>(null);
+  const mobileMenuRef = useRef<HTMLDivElement>(null);
 
   const {
     items,
@@ -62,6 +76,13 @@ export default function Navbar({
       ) {
         setUserMenuOpen(false);
       }
+
+      if (
+        mobileMenuRef.current &&
+        !mobileMenuRef.current.contains(e.target as Node)
+      ) {
+        setMobileMenuOpen(false);
+      }
     }
 
     document.addEventListener("mousedown", handleClickOutside);
@@ -76,10 +97,22 @@ export default function Navbar({
   const handleLogout = () => {
     logout();
     navigate("/login");
+    setMobileMenuOpen(false);
+    setUserMenuOpen(false);
   };
 
   return (
     <nav className="navbar">
+
+      {/* Botón menú hamburguesa (solo móvil) */}
+      <button
+        className="mobile-menu-btn"
+        onClick={() => setSidebarOpen(!sidebarOpen)}
+      >
+        {sidebarOpen ? <FiX size={22} /> : <FiMenu size={22} />}
+      </button>
+
+      {/* Logo */}
       <div className="navbar-logo">
         <svg width="28" height="28" viewBox="0 0 32 32" fill="none">
           <polygon
@@ -103,34 +136,37 @@ export default function Navbar({
         <span className="navbar-brand">ARCADIA</span>
       </div>
 
-      <div className="navbar-search">
+      {/* Buscador */}
+      <div className={`navbar-search ${mobileSearchOpen ? "mobile-open" : ""}`}>
+        {mobileSearchOpen && (
+          <button
+            className="search-back-btn"
+            onClick={() => setMobileSearchOpen(false)}
+          >
+            <FiX size={22} />
+          </button>
+        )}
+
         <FiSearch className="search-icon" />
+
         <input
           type="text"
           placeholder="Buscar juegos..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          autoFocus={mobileSearchOpen}
         />
       </div>
 
+      {/* Acciones del navbar */}
       <div className="navbar-actions">
-        {!user ? (
-          <>
-            <button
-              className="nav-auth-btn"
-              onClick={() => navigate("/login")}
-            >
-              Iniciar sesión
-            </button>
-            <button
-              className="nav-auth-btn accent"
-              onClick={() => navigate("/register")}
-            >
-              Registrarse
-            </button>
-          </>
-        ) : (
-          <div className="user-menu-wrapper" ref={userRef}>
+        {/* ================================================
+            MENÚ DE USUARIO - Desktop y Móvil (Condicional)
+           ================================================ */}
+
+        {/* DESKTOP - User Pill (solo cuando está logueado) */}
+        {user && (
+          <div className="user-menu-wrapper user-menu-desktop" ref={userRef}>
             <div
               className="user-pill"
               onClick={() => setUserMenuOpen(!userMenuOpen)}
@@ -138,7 +174,7 @@ export default function Navbar({
               <div className="user-avatar">
                 {user.profile_picture ? (
                   <img
-                    src={API_HOST + user.profile_picture}
+                    src={user.profile_picture}
                     alt={user.username}
                   />
                 ) : (
@@ -146,6 +182,7 @@ export default function Navbar({
                     {user.username.charAt(0).toUpperCase()}
                   </span>
                 )}
+
                 <div className="online-dot" />
               </div>
 
@@ -167,6 +204,7 @@ export default function Navbar({
                 >
                   Ver perfil
                 </button>
+
                 <button onClick={handleLogout}>
                   Cerrar sesión
                 </button>
@@ -175,14 +213,138 @@ export default function Navbar({
           </div>
         )}
 
+        {/* DESKTOP - Botones de autenticación (solo cuando NO está logueado) */}
+        {!user && (
+          <div className="auth-buttons-desktop">
+            <button
+              className="nav-auth-btn"
+              onClick={() => navigate("/login")}
+            >
+              Iniciar sesión
+            </button>
+
+            <button
+              className="nav-auth-btn accent"
+              onClick={() => navigate("/register")}
+            >
+              Registrarse
+            </button>
+          </div>
+        )}
+
+        {/* Botón de búsqueda móvil */}
+        <button
+          className="icon-btn mobile-search-btn"
+          onClick={() => {
+            setMobileSearchOpen(true);
+            setCartOpen(false);
+            setUserMenuOpen(false);
+            setMobileMenuOpen(false);
+          }}
+        >
+          <FiSearch size={20} />
+        </button>
+
+        {/* ================================================
+            MENÚ MÓVIL - Icono de usuario (SIEMPRE visible en móvil)
+           ================================================ */}
+        <div className="mobile-menu-wrapper" ref={mobileMenuRef}>
+          <button
+            className="icon-btn mobile-auth-btn"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {user ? (
+              <div className="mobile-avatar-wrapper">
+                <div className="mobile-avatar-small">
+                  {user.profile_picture ? (
+                    <img src={user.profile_picture} alt={user.username} />
+                  ) : (
+                    <span>{user.username.charAt(0).toUpperCase()}</span>
+                  )}
+                </div>
+                {/* Puntito de estado en el avatar móvil */}
+                <span className={`mobile-status-dot ${user.status || 'online'}`}></span>
+              </div>
+            ) : (
+              <FiUser size={20} />
+            )}
+          </button>
+
+          {mobileMenuOpen && (
+            <div className="mobile-dropdown">
+              {!user ? (
+                <>
+                  <button
+                    onClick={() => {
+                      navigate("/login");
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <FiLogIn size={16} />
+                    Iniciar sesión
+                  </button>
+
+                  <button
+                    onClick={() => {
+                      navigate("/register");
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <FiUserPlus size={16} />
+                    Registrarse
+                  </button>
+                </>
+              ) : (
+                <>
+                  <div className="mobile-dropdown-user">
+                    <div className="mobile-dropdown-avatar">
+                      {user.profile_picture ? (
+                        <img src={user.profile_picture} alt={user.username} />
+                      ) : (
+                        <span>{user.username.charAt(0).toUpperCase()}</span>
+                      )}
+                    </div>
+                    <div className="mobile-dropdown-user-info">
+                      <div className="mobile-dropdown-name">{user.username}</div>
+                      <div className={`mobile-dropdown-status status-${user.status || 'online'}`}>
+                        <span className="status-dot"></span>
+                        {user.status || 'online'}
+                      </div>
+                    </div>
+                  </div>
+                  <div className="mobile-dropdown-divider" />
+                  <button
+                    onClick={() => {
+                      navigate("/perfil");
+                      setMobileMenuOpen(false);
+                    }}
+                  >
+                    <FiUser size={16} />
+                    Ver perfil
+                  </button>
+
+                  <button onClick={handleLogout}>
+                    <FiLogIn size={16} />
+                    Cerrar sesión
+                  </button>
+                </>
+              )}
+            </div>
+          )}
+        </div>
+
+        {/* Carrito */}
         <div className="cart-wrap" ref={cartRef}>
           <button
             className="icon-btn"
             onClick={() => setCartOpen(!cartOpen)}
           >
             <FiShoppingCart size={20} />
+
             {totalItems > 0 && (
-              <span className="cart-badge">{totalItems}</span>
+              <span className="cart-badge">
+                {totalItems}
+              </span>
             )}
           </button>
 
@@ -190,6 +352,7 @@ export default function Navbar({
             <div className="cart-dropdown">
               <div className="cart-header">
                 <h3>Tu carrito</h3>
+
                 <button
                   className="close-cart"
                   onClick={() => setCartOpen(false)}
@@ -207,15 +370,22 @@ export default function Navbar({
                 <>
                   <div className="cart-items">
                     {items.map((item) => (
-                      <div key={item.id} className="cart-item">
+                      <div
+                        key={item.id}
+                        className="cart-item"
+                      >
                         <div className="cart-item-img">
-                          <img src={item.img} alt={item.title} />
+                          <img
+                            src={item.img}
+                            alt={item.title}
+                          />
                         </div>
 
                         <div className="cart-item-info">
                           <p className="cart-item-title">
                             {item.title}
                           </p>
+
                           <p className="cart-item-price">
                             {item.price}
                           </p>
@@ -223,7 +393,9 @@ export default function Navbar({
 
                         <button
                           className="cart-item-remove"
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() =>
+                            removeFromCart(item.id)
+                          }
                         >
                           <FiTrash2 size={15} />
                         </button>
@@ -234,6 +406,7 @@ export default function Navbar({
                   <div className="cart-footer">
                     <div className="cart-total">
                       <span>Total</span>
+
                       <span className="cart-total-price">
                         ${totalPrice.toFixed(2)}
                       </span>
@@ -255,7 +428,8 @@ export default function Navbar({
           )}
         </div>
 
-        <button className="icon-btn">
+        {/* Botón de notificaciones */}
+        <button className="icon-btn notif-btn">
           <FiBell size={20} />
         </button>
       </div>

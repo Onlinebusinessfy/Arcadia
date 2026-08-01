@@ -129,7 +129,15 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
+
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:5173",
+    "http://127.0.0.1:5173",
+    "http://localhost:3000", 
+    "http://localhost:8100", 
+]
+
+CORS_ALLOW_CREDENTIALS = True
 
 STRIPE_SECRET_KEY = env('STRIPE_SECRET_KEY')
 STRIPE_PUBLIC_KEY = env('STRIPE_PUBLIC_KEY')
