@@ -20,28 +20,28 @@ const featuredGames: Game[] = [
     title: 'Elden Ring',
     genre: 'RPG • Acción',
     price: '$59.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg',
   },
   {
     id: 2,
     title: 'Cyberpunk 2077',
     genre: 'RPG • Acción',
     price: '$49.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/capsule_616x353.jpg',
   },
   {
     id: 3,
     title: 'Hollow Knight',
     genre: 'Aventura • Indie',
     price: '$14.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/367520/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/367520/capsule_616x353.jpg',
   },
   {
     id: 4,
     title: 'Red Dead Redemption 2',
     genre: 'Aventura • Mundo abierto',
     price: '$39.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg',
   },
 ]
 
@@ -51,49 +51,49 @@ const newReleases: Game[] = [
     title: 'Starfield',
     genre: 'RPG • Sci-Fi',
     price: '$69.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1716740/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1716740/capsule_616x353.jpg',
   },
   {
     id: 6,
     title: 'Star Wars Jedi: Survivor',
     genre: 'Acción • Aventura',
     price: '$59.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1774580/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1774580/capsule_616x353.jpg',
   },
   {
     id: 7,
     title: 'Lies of P',
     genre: 'RPG • Souls-like',
     price: '$59.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1627720/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1627720/capsule_616x353.jpg',
   },
   {
     id: 8,
     title: 'The Last of Us Part I',
     genre: 'Acción • Aventura',
     price: '$59.99',
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/capsule_616x353.jpg',
+    image: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/capsule_616x353.jpg',
   },
 ]
 
-const heroSlides: { label: string, title: string, desc: string, img: string }[] = [
+const heroSlides: { label: string, title: string, desc: string, image: string }[] = [
   {
     label: 'DESTACADO',
     title: 'Descubre tu próxima aventura',
     desc: 'Explora, compra y descarga los mejores videojuegos. Nuevos lanzamientos, ofertas exclusivas y mucho más.',
-    img: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1400',
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=1400',
   },
   {
     label: 'OFERTA ESPECIAL',
     title: 'RPGs épicos con hasta 70% OFF',
     desc: 'Semana de descuentos en los mejores juegos de rol. Solo por tiempo limitado.',
-    img: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1400',
+    image: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=1400',
   },
   {
     label: 'NUEVO LANZAMIENTO',
     title: 'La próxima generación ya está aquí',
     desc: 'Experimenta los últimos títulos con gráficos impresionantes y jugabilidad sin igual.',
-    img: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1400',
+    image: 'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=1400',
   },
 ]
 
@@ -106,7 +106,7 @@ function GameCard({ game }: { game: Game }): ReactElement {
     <div className="game-card">
       <div className="card-img-wrap">
         <img
-          src={game.img}
+          src={game.image}
           alt={game.title}
           onError={(e) => {
             e.currentTarget.style.display = 'none'
@@ -202,7 +202,7 @@ export default function Home({ search = '' }: { search: string }): ReactElement 
           <div
             className="hero"
             style={{
-              backgroundImage: `url(${heroSlides[slide].img})`,
+              backgroundImage: `url(${heroSlides[slide].image})`,
             }}
           >
             <div className="hero-overlay" />

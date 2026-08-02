@@ -24,12 +24,6 @@ import { useNavigate } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useAuth } from "../context/AuthContext";
 
-const API_URL = import.meta.env.VITE_API_URL;
-
-const API_HOST = API_URL && API_URL.startsWith('http') 
-  ? new URL(API_URL).origin 
-  : 'http://localhost:8000';
-
 export default function Navbar({
   search,
   setSearch,
@@ -376,7 +370,7 @@ export default function Navbar({
                       >
                         <div className="cart-item-img">
                           <img
-                            src={item.img}
+                            src={item.image}
                             alt={item.title}
                           />
                         </div>
