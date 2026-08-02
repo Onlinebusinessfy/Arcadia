@@ -1,0 +1,890 @@
+[
+    {
+        "id": 1,
+        "title": "Elden Ring",
+        "description": "Un RPG de acción en mundo abierto donde exploras las Tierras Intermedias enfrentando enemigos legendarios.",
+        "genre": "RPG • Acción",
+        "developer": "FromSoftware",
+        "price": "59.99",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2022-02-25",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 2,
+        "title": "Cyberpunk 2077",
+        "description": "Una aventura RPG futurista ambientada en Night City con decisiones que cambian la historia.",
+        "genre": "RPG • Acción",
+        "developer": "CD Projekt Red",
+        "price": "49.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/capsule_616x353.jpg",
+        "rating": 4.5,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2020-12-10",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 3,
+        "title": "The Witcher 3: Wild Hunt",
+        "description": "Un RPG de fantasía donde controlas a Geralt de Rivia buscando a Ciri mientras exploras un enorme mundo abierto.",
+        "genre": "RPG • Fantasía",
+        "developer": "CD Projekt Red",
+        "price": "39.99",
+        "discount": 50,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/292030/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox",
+            "Nintendo Switch"
+        ],
+        "release_date": "2015-05-18",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 4,
+        "title": "Baldur's Gate 3",
+        "description": "RPG basado en Dungeons & Dragons con combate estratégico y decisiones narrativas.",
+        "genre": "RPG • Estrategia",
+        "developer": "Larian Studios",
+        "price": "59.99",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1086940/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2023-08-03",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 5,
+        "title": "Red Dead Redemption 2",
+        "description": "Una aventura western donde sigues la historia de Arthur Morgan y la banda Van der Linde.",
+        "genre": "Aventura • Mundo abierto",
+        "developer": "Rockstar Games",
+        "price": "39.99",
+        "discount": 30,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2018-10-26",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 6,
+        "title": "Hogwarts Legacy",
+        "description": "Vive como estudiante de Hogwarts en una aventura mágica ambientada en el universo de Harry Potter.",
+        "genre": "RPG • Aventura",
+        "developer": "Avalanche Software",
+        "price": "59.99",
+        "discount": 10,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/990080/capsule_616x353.jpg",
+        "rating": 4.6,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2023-02-10",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 7,
+        "title": "Hollow Knight",
+        "description": "Un metroidvania desafiante con exploración, combates y un mundo dibujado a mano.",
+        "genre": "Indie • Metroidvania",
+        "developer": "Team Cherry",
+        "price": "14.99",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/367520/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "Nintendo Switch",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2017-02-24",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 8,
+        "title": "God of War Ragnarök",
+        "description": "Kratos y Atreus enfrentan el destino de los dioses nórdicos en una aventura épica.",
+        "genre": "Acción • Aventura",
+        "developer": "Santa Monica Studio",
+        "price": "69.99",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2322010/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation 5"
+        ],
+        "release_date": "2022-11-09",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 9,
+        "title": "The Last of Us Part I",
+        "description": "Una historia de supervivencia en un mundo devastado por una pandemia.",
+        "genre": "Acción • Terror",
+        "developer": "Naughty Dog",
+        "price": "59.99",
+        "discount": 15,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1888930/capsule_616x353.jpg",
+        "rating": 4.7,
+        "platforms": [
+            "PC",
+            "PlayStation 5"
+        ],
+        "release_date": "2022-09-02",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 10,
+        "title": "Resident Evil 4 Remake",
+        "description": "Un remake del clásico survival horror con gráficos modernos y combate renovado.",
+        "genre": "Terror • Acción",
+        "developer": "Capcom",
+        "price": "59.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2050650/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox"
+        ],
+        "release_date": "2023-03-24",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 11,
+        "title": "Grand Theft Auto V",
+        "description": "Una aventura de mundo abierto donde tres protagonistas viven historias de crimen, acción y caos en Los Santos.",
+        "genre": "Acción • Mundo abierto",
+        "developer": "Rockstar Games",
+        "price": "29.99",
+        "discount": 50,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/271590/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2015-04-14",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 12,
+        "title": "Minecraft",
+        "description": "Un juego de construcción y supervivencia donde puedes explorar mundos infinitos creados con bloques.",
+        "genre": "Supervivencia • Sandbox",
+        "developer": "Mojang Studios",
+        "price": "26.99",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1672970/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox",
+            "Nintendo Switch"
+        ],
+        "release_date": "2011-11-18",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 13,
+        "title": "Forza Horizon 5",
+        "description": "Un juego de carreras de mundo abierto ambientado en México con cientos de vehículos.",
+        "genre": "Carreras • Mundo abierto",
+        "developer": "Playground Games",
+        "price": "59.99",
+        "discount": 25,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1551360/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2021-11-09",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 14,
+        "title": "Sekiro: Shadows Die Twice",
+        "description": "Un juego de acción samurái con combates precisos desarrollado por FromSoftware.",
+        "genre": "Acción • Soulslike",
+        "developer": "FromSoftware",
+        "price": "59.99",
+        "discount": 40,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/814380/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2019-03-22",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 15,
+        "title": "Dark Souls III",
+        "description": "Un RPG de acción desafiante donde enfrentas enemigos brutales y jefes legendarios.",
+        "genre": "RPG • Acción",
+        "developer": "FromSoftware",
+        "price": "59.99",
+        "discount": 50,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/374320/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2016-04-12",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 16,
+        "title": "Death Stranding",
+        "description": "Una experiencia narrativa donde conectas ciudades en un mundo postapocalíptico.",
+        "genre": "Aventura • Acción",
+        "developer": "Kojima Productions",
+        "price": "39.99",
+        "discount": 35,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1190460/capsule_616x353.jpg",
+        "rating": 4.5,
+        "platforms": [
+            "PC",
+            "PlayStation"
+        ],
+        "release_date": "2019-11-08",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 17,
+        "title": "Hades",
+        "description": "Un roguelike de acción donde intentas escapar del inframundo griego enfrentando enemigos únicos.",
+        "genre": "Indie • Roguelike",
+        "developer": "Supergiant Games",
+        "price": "24.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1145360/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "Nintendo Switch",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2020-09-17",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 18,
+        "title": "Doom Eternal",
+        "description": "Un shooter frenético donde combates hordas de demonios con armas devastadoras.",
+        "genre": "Acción • Shooter",
+        "developer": "id Software",
+        "price": "39.99",
+        "discount": 60,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/782330/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2020-03-20",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 19,
+        "title": "Bioshock Infinite",
+        "description": "Un shooter narrativo ambientado en la ciudad flotante de Columbia.",
+        "genre": "Shooter • Aventura",
+        "developer": "Irrational Games",
+        "price": "19.99",
+        "discount": 70,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/8870/capsule_616x353.jpg",
+        "rating": 4.7,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2013-03-26",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 20,
+        "title": "Assassin's Creed Valhalla",
+        "description": "Una aventura de mundo abierto donde controlas a un guerrero vikingo durante la invasión de Inglaterra.",
+        "genre": "Acción • Aventura",
+        "developer": "Ubisoft",
+        "price": "49.99",
+        "discount": 45,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2208920/capsule_616x353.jpg",
+        "rating": 4.4,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2020-11-10",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 21,
+        "title": "Alan Wake 2",
+        "description": "Un thriller de terror psicológico donde un escritor busca resolver una misteriosa historia sobrenatural.",
+        "genre": "Terror • Acción",
+        "developer": "Remedy Entertainment",
+        "price": "49.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/108710/capsule_616x353.jpg",
+        "rating": 4.7,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2023-10-27",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 22,
+        "title": "God of War",
+        "description": "Kratos inicia una nueva aventura en tierras nórdicas junto a su hijo Atreus.",
+        "genre": "Acción • Aventura",
+        "developer": "Santa Monica Studio",
+        "price": "49.99",
+        "discount": 30,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "PlayStation"
+        ],
+        "release_date": "2018-04-20",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 23,
+        "title": "Marvel's Spider-Man Remastered",
+        "description": "Controla a Spider-Man balanceándote por Nueva York y enfrentando criminales.",
+        "genre": "Acción • Aventura",
+        "developer": "Insomniac Games",
+        "price": "59.99",
+        "discount": 25,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1817070/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation 5"
+        ],
+        "release_date": "2022-08-12",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 24,
+        "title": "Horizon Forbidden West",
+        "description": "Aloy explora un futuro postapocalíptico lleno de máquinas gigantes.",
+        "genre": "Acción • RPG",
+        "developer": "Guerrilla Games",
+        "price": "69.99",
+        "discount": 15,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2420110/capsule_616x353.jpg",
+        "rating": 4.7,
+        "platforms": [
+            "PC",
+            "PlayStation 5"
+        ],
+        "release_date": "2022-02-18",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 25,
+        "title": "Star Wars Jedi: Survivor",
+        "description": "Cal Kestis continúa su lucha contra el Imperio usando la Fuerza y su sable láser.",
+        "genre": "Acción • Aventura",
+        "developer": "Respawn Entertainment",
+        "price": "69.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1774580/capsule_616x353.jpg",
+        "rating": 4.6,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2023-04-28",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 26,
+        "title": "Call of Duty: Modern Warfare III",
+        "description": "Un shooter militar con campañas intensas y combates multijugador.",
+        "genre": "Shooter • Acción",
+        "developer": "Sledgehammer Games",
+        "price": "69.99",
+        "discount": 10,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2519060/capsule_616x353.jpg",
+        "rating": 4.2,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2023-11-10",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 27,
+        "title": "Counter-Strike 2",
+        "description": "El shooter competitivo más popular con partidas tácticas por equipos.",
+        "genre": "Shooter • Competitivo",
+        "developer": "Valve",
+        "price": "0.00",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/730/capsule_616x353.jpg",
+        "rating": 4.5,
+        "platforms": [
+            "PC"
+        ],
+        "release_date": "2023-09-27",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 28,
+        "title": "Valorant",
+        "description": "Shooter táctico con agentes únicos y habilidades especiales.",
+        "genre": "Shooter • Competitivo",
+        "developer": "Riot Games",
+        "price": "0.00",
+        "discount": 0,
+        "image": "https://upload.wikimedia.org/wikipedia/en/b/ba/Valorant_cover.jpg",
+        "rating": 4.4,
+        "platforms": [
+            "PC"
+        ],
+        "release_date": "2020-06-02",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 29,
+        "title": "The Legend of Zelda: Tears of the Kingdom",
+        "description": "Link explora Hyrule en una aventura llena de misterios y creatividad.",
+        "genre": "Aventura • RPG",
+        "developer": "Nintendo",
+        "price": "69.99",
+        "discount": 0,
+        "image": "https://upload.wikimedia.org/wikipedia/en/f/fb/The_Legend_of_Zelda_Tears_of_the_Kingdom_cover.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "Nintendo Switch"
+        ],
+        "release_date": "2023-05-12",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 30,
+        "title": "Super Mario Odyssey",
+        "description": "Mario viaja por distintos mundos para rescatar a Peach usando su gorra mágica.",
+        "genre": "Plataformas • Aventura",
+        "developer": "Nintendo",
+        "price": "59.99",
+        "discount": 10,
+        "image": "https://upload.wikimedia.org/wikipedia/en/8/8d/Super_Mario_Odyssey.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "Nintendo Switch"
+        ],
+        "release_date": "2017-10-27",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 31,
+        "title": "Cities: Skylines II",
+        "description": "Construye y administra una ciudad completa con sistemas avanzados de simulación.",
+        "genre": "Simulación • Estrategia",
+        "developer": "Colossal Order",
+        "price": "49.99",
+        "discount": 35,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/949230/capsule_616x353.jpg",
+        "rating": 4,
+        "platforms": [
+            "PC"
+        ],
+        "release_date": "2023-10-24",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 32,
+        "title": "Civilization VI",
+        "description": "Construye un imperio desde la antigüedad hasta la era moderna.",
+        "genre": "Estrategia • Simulación",
+        "developer": "Firaxis Games",
+        "price": "59.99",
+        "discount": 75,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/289070/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "Nintendo Switch",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2016-10-21",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 33,
+        "title": "EA Sports FC 24",
+        "description": "El simulador de fútbol con equipos y jugadores reales.",
+        "genre": "Deportes • Fútbol",
+        "developer": "EA Sports",
+        "price": "69.99",
+        "discount": 40,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2195250/capsule_616x353.jpg",
+        "rating": 4.2,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox",
+            "Nintendo Switch"
+        ],
+        "release_date": "2023-09-29",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 34,
+        "title": "NBA 2K25",
+        "description": "El simulador de baloncesto con modos competitivos y carrera.",
+        "genre": "Deportes • Baloncesto",
+        "developer": "Visual Concepts",
+        "price": "69.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2878980/capsule_616x353.jpg",
+        "rating": 4.1,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2024-09-06",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 35,
+        "title": "Palworld",
+        "description": "Un mundo abierto donde capturas criaturas y construyes bases.",
+        "genre": "Supervivencia • Aventura",
+        "developer": "Pocketpair",
+        "price": "29.99",
+        "discount": 15,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1623730/capsule_616x353.jpg",
+        "rating": 4.3,
+        "platforms": [
+            "PC",
+            "Xbox"
+        ],
+        "release_date": "2024-01-19",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 36,
+        "title": "Final Fantasy VII Rebirth",
+        "description": "Una aventura RPG épica donde Cloud y sus compañeros continúan su viaje para detener una amenaza que cambiará el destino del planeta.",
+        "genre": "RPG • Fantasía",
+        "developer": "Square Enix",
+        "price": "69.99",
+        "discount": 10,
+        "image": "https://image.api.playstation.com/vulcan/ap/rnd/202308/3005/537b5208a8ee42935286a44b3b981da86d976bf54899bf98.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PlayStation 5"
+        ],
+        "release_date": "2024-02-29",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 37,
+        "title": "Lies of P",
+        "description": "Un soulslike inspirado en Pinocho con combates difíciles y una oscura ciudad llena de misterios.",
+        "genre": "RPG • Soulslike",
+        "developer": "NEOWIZ",
+        "price": "59.99",
+        "discount": 25,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1627720/capsule_616x353.jpg",
+        "rating": 4.6,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2023-09-19",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 38,
+        "title": "Helldivers 2",
+        "description": "Shooter cooperativo donde luchas junto a otros jugadores para defender la galaxia.",
+        "genre": "Shooter • Cooperativo",
+        "developer": "Arrowhead Game Studios",
+        "price": "39.99",
+        "discount": 15,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/553850/capsule_616x353.jpg",
+        "rating": 4.7,
+        "platforms": [
+            "PC",
+            "PlayStation 5"
+        ],
+        "release_date": "2024-02-08",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 39,
+        "title": "Cyberpunk 2077: Phantom Liberty",
+        "description": "Expansión de Cyberpunk 2077 con una nueva historia de espionaje y acción.",
+        "genre": "RPG • Acción",
+        "developer": "CD Projekt Red",
+        "price": "29.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2138330/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2023-09-26",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 40,
+        "title": "Resident Evil Village",
+        "description": "Una aventura de terror donde Ethan Winters enfrenta criaturas y secretos en una aldea misteriosa.",
+        "genre": "Terror • Supervivencia",
+        "developer": "Capcom",
+        "price": "39.99",
+        "discount": 40,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1196590/capsule_616x353.jpg",
+        "rating": 4.7,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2021-05-07",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 41,
+        "title": "Monster Hunter World",
+        "description": "Caza monstruos gigantes en un mundo lleno de criaturas y ecosistemas únicos.",
+        "genre": "RPG • Acción",
+        "developer": "Capcom",
+        "price": "29.99",
+        "discount": 50,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/582010/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2018-01-26",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 42,
+        "title": "Terraria",
+        "description": "Un sandbox 2D con exploración, construcción, combates y cientos de objetos.",
+        "genre": "Sandbox • Aventura",
+        "developer": "Re-Logic",
+        "price": "9.99",
+        "discount": 20,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/105600/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox",
+            "Nintendo Switch"
+        ],
+        "release_date": "2011-05-16",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 43,
+        "title": "Dead Space Remake",
+        "description": "Un survival horror espacial donde Isaac Clarke lucha contra criaturas alienígenas.",
+        "genre": "Terror • Acción",
+        "developer": "Motive Studio",
+        "price": "59.99",
+        "discount": 35,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1693980/capsule_616x353.jpg",
+        "rating": 4.7,
+        "platforms": [
+            "PC",
+            "PlayStation 5",
+            "Xbox Series X/S"
+        ],
+        "release_date": "2023-01-27",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 44,
+        "title": "Apex Legends",
+        "description": "Battle royale competitivo con héroes únicos y combates rápidos.",
+        "genre": "Shooter • Battle Royale",
+        "developer": "Respawn Entertainment",
+        "price": "0.00",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1172470/capsule_616x353.jpg",
+        "rating": 4.5,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox",
+            "Nintendo Switch"
+        ],
+        "release_date": "2019-02-04",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 45,
+        "title": "Stardew Valley",
+        "description": "Un simulador de granja con exploración, relaciones y secretos por descubrir.",
+        "genre": "Simulación • RPG",
+        "developer": "ConcernedApe",
+        "price": "14.99",
+        "discount": 0,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/413150/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "Nintendo Switch",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2016-02-26",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 46,
+        "title": "Control Ultimate Edition",
+        "description": "Una aventura de acción sobrenatural donde investigas una agencia misteriosa.",
+        "genre": "Acción • Ciencia ficción",
+        "developer": "Remedy Entertainment",
+        "price": "39.99",
+        "discount": 50,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/870780/capsule_616x353.jpg",
+        "rating": 4.5,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2020-09-10",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 47,
+        "title": "NieR:Automata",
+        "description": "Un RPG de acción filosófico ambientado en una guerra entre androides y máquinas.",
+        "genre": "RPG • Acción",
+        "developer": "PlatinumGames",
+        "price": "39.99",
+        "discount": 45,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/524220/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2017-02-23",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 48,
+        "title": "F1 24",
+        "description": "Simulador oficial de Fórmula 1 con pilotos, circuitos y equipos reales.",
+        "genre": "Carreras • Deportes",
+        "developer": "Codemasters",
+        "price": "69.99",
+        "discount": 30,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/2488620/capsule_616x353.jpg",
+        "rating": 4.2,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2024-05-31",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 49,
+        "title": "DOOM",
+        "description": "Un shooter clásico moderno donde enfrentas demonios con armas brutales.",
+        "genre": "Shooter • Acción",
+        "developer": "id Software",
+        "price": "19.99",
+        "discount": 60,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/379720/capsule_616x353.jpg",
+        "rating": 4.8,
+        "platforms": [
+            "PC",
+            "PlayStation",
+            "Xbox"
+        ],
+        "release_date": "2016-05-13",
+        "created_at": "2026-08-01"
+    },
+    {
+        "id": 50,
+        "title": "Ori and the Will of the Wisps",
+        "description": "Una aventura de plataformas con exploración, arte hermoso y una historia emotiva.",
+        "genre": "Plataformas • Metroidvania",
+        "developer": "Moon Studios",
+        "price": "29.99",
+        "discount": 40,
+        "image": "https://cdn.cloudflare.steamstatic.com/steam/apps/1057090/capsule_616x353.jpg",
+        "rating": 4.9,
+        "platforms": [
+            "PC",
+            "Xbox",
+            "Nintendo Switch"
+        ],
+        "release_date": "2020-03-11",
+        "created_at": "2026-08-01"
+    }
+]

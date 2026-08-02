@@ -20,11 +20,20 @@ from django.contrib import admin
 from django.urls import include, path
 from rest_framework_simplejwt.views import TokenRefreshView
 
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
     path("api/", include("users.urls")),
+
+    path(
+    "api/games/",
+    include("games.urls")
+    ),
+
     path("api/refresh/", TokenRefreshView.as_view(), name="refresh"),
 ]
+
 
 if settings.DEBUG:
     urlpatterns += static(

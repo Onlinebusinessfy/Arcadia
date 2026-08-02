@@ -76,7 +76,7 @@ export default function Carrito(): ReactElement {
               {items.map(item => (
                 <div key={item.id} className="carrito-item">
                   <div className="carrito-item-img">
-                    <img src={item.img} alt={item.title} />
+                    <img src={item.image} alt={item.title} />
                   </div>
 
                   <div className="carrito-item-info">
