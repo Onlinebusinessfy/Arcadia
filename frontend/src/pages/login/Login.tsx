@@ -40,10 +40,12 @@ export default function Login(): ReactElement {
 
     return (
         <IonPage>
-            <IonContent 
-                className="ion-padding" 
-                scrollY={false}  // ✅ IMPORTANTE: Desactiva el scroll
+            <IonContent
+                className="ion-padding"
                 fullscreen={true} // ✅ IMPORTANTE: Ocupa toda la pantalla
+                // Se quitó scrollY={false}: bloqueaba el scroll y en pantallas
+                // pequeñas (o con el teclado abierto) el contenido quedaba
+                // cortado sin poder verse completo.
             >
                 <div className="login-page">
                     <div className="login-card">
