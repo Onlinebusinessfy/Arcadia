@@ -7,9 +7,6 @@ import "./Perfil.css";
 import { IonContent, IonPage } from '@ionic/react';
 
 const API_URL = import.meta.env.VITE_API_URL;
-const API_HOST = API_URL && API_URL.startsWith('http') 
-  ? new URL(API_URL).origin 
-  : 'http://localhost:8000';
 
 export default function Perfil(): ReactElement {
   const { user, setUser } = useAuth();
@@ -62,7 +59,7 @@ export default function Perfil(): ReactElement {
   const profileImage = user.profile_picture
     ? user.profile_picture.startsWith("http")
       ? user.profile_picture
-      : `${API_HOST}${user.profile_picture}`
+      : `${API_URL}${user.profile_picture}`
     : null;
 
   const getStatusText = (value: string) => {
