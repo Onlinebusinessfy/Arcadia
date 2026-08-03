@@ -1,45 +1,45 @@
-import type { ReactElement } from 'react'
+import { useEffect, useState, type ReactElement } from 'react'
 import './Biblioteca.css'
-import type Game from '../../types/game'
+import type { Purchase } from '../../types/purchase'
+import { getLibrary } from '../../services/gameService'
+import { useAuth } from '../../context/AuthContext'
 
 import { IonContent, IonPage } from '@ionic/react'
 
-const misJuegos: Game[] = [
-  {
-    id: 1,
-    title: 'Elden Ring',
-    genre: 'RPG • Acción',
-    price: "",
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1245620/capsule_616x353.jpg'
-  },
-  {
-    id: 2,
-    title: 'Cyberpunk 2077',
-    genre: 'RPG • Acción',
-    price: "",
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1091500/capsule_616x353.jpg'
-  },
-  {
-    id: 3,
-    title: 'Red Dead Redemption 2',
-    genre: 'Aventura • Mundo abierto',
-    price: "",
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1174180/capsule_616x353.jpg'
-  },
-  {
-    id: 4,
-    title: 'God of War',
-    genre: 'Acción • Aventura',
-    price: "",
-    img: 'https://cdn.cloudflare.steamstatic.com/steam/apps/1593500/capsule_616x353.jpg'
-  }
-]
-
 export default function Biblioteca({ search = '' }: { search: string }): ReactElement {
-  const juegosFiltrados = misJuegos.filter(
-    game =>
-      game.title.toLowerCase().includes(search.toLowerCase()) ||
-      game.genre.toLowerCase().includes(search.toLowerCase())
+  const { user } = useAuth()
+
+  const [purchases, setPurchases] = useState<Purchase[]>([])
+  const [loading, setLoading] = useState<boolean>(true)
+  const [error, setError] = useState<string>('')
+
+  useEffect(() => {
+    async function cargarBiblioteca() {
+      const access = localStorage.getItem('access')
+
+      if (!access) {
+        setLoading(false)
+        return
+      }
+
+      try {
+        const data = await getLibrary(access)
+        setPurchases(data)
+      } catch (err) {
+        console.error(err)
+        setError('No se pudo cargar tu biblioteca.')
+      } finally {
+        setLoading(false)
+      }
+    }
+
+    cargarBiblioteca()
+  }, [user])
+
+  const juegosFiltrados = purchases.filter(
+    purchase =>
+      purchase.game.title.toLowerCase().includes(search.toLowerCase()) ||
+      purchase.game.genre.toLowerCase().includes(search.toLowerCase())
   )
 
   return (
@@ -51,22 +51,39 @@ export default function Biblioteca({ search = '' }: { search: string }): ReactEl
             <p>{juegosFiltrados.length} juegos en tu colección</p>
           </div>
 
-          {juegosFiltrados.length === 0 ? (
+          {!user ? (
+            <div className="no-results">
+              <h2>Inicia sesión para ver tu biblioteca</h2>
+              <p>Los juegos que compres aparecerán aquí.</p>
+            </div>
+          ) : loading ? (
+            <div className="no-results">
+              <h2>Cargando tu biblioteca...</h2>
+            </div>
+          ) : error ? (
+            <div className="no-results">
+              <h2>{error}</h2>
+            </div>
+          ) : juegosFiltrados.length === 0 ? (
             <div className="no-results">
               <h2>No se encontraron juegos</h2>
-              <p>Intenta con otra búsqueda.</p>
+              <p>
+                {purchases.length === 0
+                  ? 'Aún no has comprado ningún juego.'
+                  : 'Intenta con otra búsqueda.'}
+              </p>
             </div>
           ) : (
             <div className="library-grid">
-              {juegosFiltrados.map(game => (
-                <div key={game.id} className="library-card">
+              {juegosFiltrados.map(purchase => (
+                <div key={purchase.id} className="library-card">
                   <div className="library-img">
-                    <img src={game.img} alt={game.title} />
+                    <img src={purchase.game.image} alt={purchase.game.title} />
                   </div>
 
                   <div className="library-info">
-                    <h3>{game.title}</h3>
-                    <p>{game.genre}</p>
+                    <h3>{purchase.game.title}</h3>
+                    <p>{purchase.game.genre}</p>
 
                     <button className="play-btn">
                       Jugar

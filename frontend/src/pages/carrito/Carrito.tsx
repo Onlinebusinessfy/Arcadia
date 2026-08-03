@@ -1,5 +1,7 @@
 import './Carrito.css'
 import { useCart } from '../../context/CartContext'
+import { useAuth } from '../../context/AuthContext'
+import { registerPurchase } from '../../services/gameService'
 import { FiTrash2, FiShoppingCart, FiArrowRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { useState, type ReactElement } from 'react'
@@ -12,6 +14,7 @@ const API_URL = import.meta.env.VITE_API_URL
 export default function Carrito(): ReactElement {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const { items, removeFromCart, clearCart, totalPrice } = useCart()
+  const { user } = useAuth()
   const navigate = useNavigate()
 
   const handleCheckout = async () => {
@@ -49,13 +52,42 @@ export default function Carrito(): ReactElement {
     }
   }
 
+  // Si el usuario no está logueado, lo mandamos a login en vez de abrir el modal de pago
+  const handleProceedToPay = () => {
+    if (!user) {
+      navigate('/login', { state: { from: '/carrito' } })
+      return
+    }
+    setIsModalOpen(true)
+  }
+
+  // Se ejecuta cuando el modal de pago termina exitosamente.
+  // Antes de vaciar el carrito, le avisamos al backend qué se compró
+  // para que aparezca en la Biblioteca.
+  const handlePaymentSuccess = async () => {
+    try {
+      const access = localStorage.getItem('access')
+      if (access) {
+        await registerPurchase(
+          access,
+          items.map(item => ({ id: item.id, qty: item.qty }))
+        )
+      }
+    } catch (error) {
+      console.error(error)
+      alert('El pago se procesó, pero no se pudo agregar a tu biblioteca. Contacta a soporte.')
+    } finally {
+      clearCart()
+    }
+  }
+
   if (items.length === 0) {
     return (
       <div className="carrito-empty">
         <FiShoppingCart size={56} />
         <h2>Tu carrito está vacío</h2>
         <p>Agrega juegos desde el catálogo para verlos aquí.</p>
-        <button className="go-catalog-btn" onClick={() => navigate('/catalogo')}>
+        <button type="button" className="go-catalog-btn" onClick={() => navigate('/catalogo')}>
           Ir al catálogo <FiArrowRight size={16} />
         </button>
       </div>
@@ -68,7 +100,7 @@ export default function Carrito(): ReactElement {
         <div className="carrito-page">
           <div className="carrito-header">
             <h1>Tu carrito</h1>
-            <button className="clear-btn" onClick={clearCart}>Vaciar carrito</button>
+            <button type="button" className="clear-btn" onClick={clearCart}>Vaciar carrito</button>
           </div>
 
           <div className="carrito-layout">
@@ -76,7 +108,7 @@ export default function Carrito(): ReactElement {
               {items.map(item => (
                 <div key={item.id} className="carrito-item">
                   <div className="carrito-item-img">
-                    <img src={item.img} alt={item.title} />
+                    <img src={item.image} alt={item.title} />
                   </div>
 
                   <div className="carrito-item-info">
@@ -88,7 +120,13 @@ export default function Carrito(): ReactElement {
                     ${parseFloat(item.price.replace('$', '')).toFixed(2)}
                   </div>
 
-                  <button className="carrito-item-remove" onClick={() => removeFromCart(item.id)}>
+                  <button
+                    type="button"
+                    className="carrito-item-remove"
+                    onClick={() => removeFromCart(item.id)}
+                    title="Eliminar del carrito"
+                    aria-label="Eliminar del carrito"
+                  >
                     <FiTrash2 size={17} />
                   </button>
                 </div>
@@ -110,7 +148,13 @@ export default function Carrito(): ReactElement {
                 <span>${(totalPrice * 1.16).toFixed(2)}</span>
               </div>
 
-              <button className="pay-btn" onClick={() => setIsModalOpen(true)}>
+              {!user && (
+                <p className="login-required-hint">
+                  Debes iniciar sesión para completar tu compra.
+                </p>
+              )}
+
+              <button type="button" className="pay-btn" onClick={handleProceedToPay}>
                 Proceder al pago
               </button>
             </div>
@@ -119,7 +163,7 @@ export default function Carrito(): ReactElement {
           <PaymentModal 
             isOpen={isModalOpen} 
             onClose={() => setIsModalOpen(false)} 
-            onSuccess={clearCart}
+            onSuccess={handlePaymentSuccess}
             totalAmount={(totalPrice * 1.16).toFixed(2)}
           />
         </div>

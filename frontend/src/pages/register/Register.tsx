@@ -80,10 +80,12 @@ export default function Register(): ReactElement {
 
     return (
         <IonPage>
-            <IonContent 
-                className="ion-padding" 
-                scrollY={false}
+            <IonContent
+                className="ion-padding"
                 fullscreen={true}
+                // Se quitó scrollY={false}: con 4 campos + mensajes de error,
+                // en pantallas chicas el formulario no cabía y quedaba
+                // cortado sin poder hacer scroll para verlo completo.
             >
                 <div className="register-page">
                     <div className="register-card">

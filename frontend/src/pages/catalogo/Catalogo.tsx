@@ -5,10 +5,9 @@ import { FiCheck, FiShoppingCart } from 'react-icons/fi'
 import { useLocation, useSearchParams } from 'react-router-dom'
 import type { ReactElement } from 'react'
 import type Game from '../../types/game'
+import { getGames } from "../../services/gameService";
 
 import { IonContent, IonPage } from '@ionic/react'
-
-const RAWG_API_KEY = import.meta.env.VITE_RAWG_API_KEY;
 
 export default function Catalogo({ search = '' }: { search: string }): ReactElement {
   const { items, addToCart } = useCart()
@@ -22,53 +21,40 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
   const location = useLocation()
   const searchTerm = location.state?.search || search;
 
-  const mapCategoryToSlug = (cat: string | null) => {
+  const normalizeCategory = (cat: string | null) => {
     if (!cat) return ''
-    const clean = cat.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase()
-    
-    switch (clean) {
-      case 'accion': return 'action'
-      case 'aventura': return 'adventure'
-      case 'estrategia': return 'strategy'
-      case 'deportes': return 'sports'
-      case 'carreras': return 'racing'
-      case 'simulacion': return 'simulation'
-      case 'indie': return 'indie'
-      case 'rpg':
-      case 'rol': return 'role-playing-games-rpg'
-      default: return clean
-    }
+
+    return cat
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
   }
 
   useEffect(() => {
     const fetchGames = async () => {
       try {
         setLoading(true)
-        
-        let url = `https://api.rawg.io/api/games?key=${RAWG_API_KEY}&page_size=40`
-        
-        const genreSlug = mapCategoryToSlug(categoria)
-        if (genreSlug) {
-          url += `&genres=${genreSlug}`
-        }
 
-        const response = await fetch(url)
-        
-        if (!response.ok) {
-          throw new Error('Error al conectar con la API de RAWG')
-        }
+        const data = await getGames(
+          categoria || undefined
+        )
 
-        const data = await response.json()
-
-        const formattedGames: Game[] = data.results.map((item: any) => ({
+        const formattedGames: Game[] = data.map((item: Game) => ({
           id: item.id,
-          title: item.name,
-          genre: item.genres.map((g: any) => g.name).join(' • ') || 'General',
-          price: `$${(item.rating * 12 || 59.99).toFixed(2)}`,
-          img: item.background_image || 'https://via.placeholder.com/616x353?text=No+Image',
+          title: item.title,
+          genre: item.genre || "General",
+          price: `$${Number(item.price).toFixed(2)}`,
+          image: item.image || "https://via.placeholder.com/616x353?text=No+Image",
+          description: item.description,
+          developer: item.developer,
+          discount: item.discount,
+          rating: item.rating,
+          platforms: item.platforms,
+          release_date: item.release_date,
+          created_at: item.created_at,
         }))
 
         setGames(formattedGames)
+
       } catch (err: any) {
         setError(err.message)
       } finally {
@@ -115,7 +101,7 @@ export default function Catalogo({ search = '' }: { search: string }): ReactElem
               return (
                 <div key={game.id} className="cat-card">
                   <div className="cat-img">
-                    <img src={game.img} alt={game.title} />
+                    <img src={game.image} alt={game.title} />
                   </div>
 
                   <div className="cat-info">

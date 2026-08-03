@@ -235,3 +235,10 @@
   background: var(--accent-hover);
 }
 
+/* Aviso cuando el usuario no ha iniciado sesión */
+.login-required-hint {
+  font-size: 0.8rem;
+  color: #f43f5e;
+  text-align: center;
+  margin: 0;
+}

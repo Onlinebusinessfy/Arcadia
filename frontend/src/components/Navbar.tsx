@@ -1,7 +1,6 @@
 import "./Navbar.css";
 import {
   FiShoppingCart,
-  FiBell,
   FiSearch,
   FiChevronDown,
   FiX,
@@ -104,6 +103,7 @@ export default function Navbar({
       <button
         className="mobile-menu-btn"
         onClick={() => setSidebarOpen(!sidebarOpen)}
+        aria-label={sidebarOpen ? "Cerrar menu" : "Abrir menu"}
       >
         {sidebarOpen ? <FiX size={22} /> : <FiMenu size={22} />}
       </button>
@@ -138,6 +138,7 @@ export default function Navbar({
           <button
             className="search-back-btn"
             onClick={() => setMobileSearchOpen(false)}
+            aria-label="Cerrar busqueda"
           >
             <FiX size={22} />
           </button>
@@ -237,6 +238,7 @@ export default function Navbar({
             setUserMenuOpen(false);
             setMobileMenuOpen(false);
           }}
+          aria-label="Abrir busqueda"
         >
           <FiSearch size={20} />
         </button>
@@ -248,6 +250,7 @@ export default function Navbar({
           <button
             className="icon-btn mobile-auth-btn"
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Abrir menu de usuario"
           >
             {user ? (
               <div className="mobile-avatar-wrapper">
@@ -334,6 +337,7 @@ export default function Navbar({
           <button
             className="icon-btn"
             onClick={() => setCartOpen(!cartOpen)}
+            aria-label="Abrir carrito"
           >
             <FiShoppingCart size={20} />
 
@@ -352,6 +356,7 @@ export default function Navbar({
                 <button
                   className="close-cart"
                   onClick={() => setCartOpen(false)}
+                  aria-label="Cerrar carrito"
                 >
                   <FiX size={16} />
                 </button>
@@ -372,7 +377,7 @@ export default function Navbar({
                       >
                         <div className="cart-item-img">
                           <img
-                            src={item.img}
+                            src={item.image}
                             alt={item.title}
                           />
                         </div>
@@ -392,6 +397,7 @@ export default function Navbar({
                           onClick={() =>
                             removeFromCart(item.id)
                           }
+                          aria-label={`Eliminar ${item.title} del carrito`}
                         >
                           <FiTrash2 size={15} />
                         </button>
@@ -423,11 +429,6 @@ export default function Navbar({
             </div>
           )}
         </div>
-
-        {/* Botón de notificaciones */}
-        <button className="icon-btn notif-btn">
-          <FiBell size={20} />
-        </button>
       </div>
     </nav>
   );
