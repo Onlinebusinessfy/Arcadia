@@ -241,21 +241,6 @@
     color: var(--text-primary);
 }
 
-.like-btn {
-    background: none;
-    color: var(--text-muted);
-    padding: 4px;
-    border-radius: 6px;
-    display: flex;
-    align-items: center;
-    transition: color 0.15s;
-}
-
-.like-btn:hover,
-.like-btn.liked {
-    color: #f43f5e;
-}
-
 /* CARD ACTIONS */
 .card-actions {
   display: flex;
