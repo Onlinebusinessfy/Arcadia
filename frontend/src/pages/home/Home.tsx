@@ -2,7 +2,6 @@ import './Home.css'
 import {
   FiChevronLeft,
   FiChevronRight,
-  FiHeart,
   FiArrowRight,
   FiPlus,
   FiCheck,
@@ -98,7 +97,6 @@ const heroSlides: { label: string, title: string, desc: string, image: string }[
 ]
 
 function GameCard({ game }: { game: Game }): ReactElement {
-  const [liked, setLiked] = useState<boolean>(false)
   const { items, addToCart } = useCart()
   const inCart = items.some(item => item.id === game.id)
 
@@ -124,13 +122,6 @@ function GameCard({ game }: { game: Game }): ReactElement {
           <span className="card-price">{game.price}</span>
 
           <div className="card-actions">
-            <button
-              className={`like-btn ${liked ? 'liked' : ''}`}
-              onClick={() => setLiked(!liked)}
-            >
-              <FiHeart size={15} />
-            </button>
-
             <button
               className={`add-cart-btn ${inCart ? 'in-cart' : ''}`}
               onClick={() => addToCart(game)}
