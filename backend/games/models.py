@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.db import models
 
 
@@ -49,3 +50,29 @@ class Game(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Purchase(models.Model):
+    """Relación entre un usuario y un juego que compró (para la Biblioteca)."""
+
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="purchases",
+    )
+
+    game = models.ForeignKey(
+        Game,
+        on_delete=models.CASCADE,
+        related_name="purchases",
+    )
+
+    quantity = models.PositiveIntegerField(default=1)
+
+    purchased_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ("user", "game")
+
+    def __str__(self):
+        return f"{self.user} -> {self.game} (x{self.quantity})"

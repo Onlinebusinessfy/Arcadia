@@ -1,6 +1,7 @@
 import './Carrito.css'
 import { useCart } from '../../context/CartContext'
 import { useAuth } from '../../context/AuthContext'
+import { registerPurchase } from '../../services/gameService'
 import { FiTrash2, FiShoppingCart, FiArrowRight } from 'react-icons/fi'
 import { useNavigate } from 'react-router-dom'
 import { useState, type ReactElement } from 'react'
@@ -58,6 +59,26 @@ export default function Carrito(): ReactElement {
       return
     }
     setIsModalOpen(true)
+  }
+
+  // Se ejecuta cuando el modal de pago termina exitosamente.
+  // Antes de vaciar el carrito, le avisamos al backend qué se compró
+  // para que aparezca en la Biblioteca.
+  const handlePaymentSuccess = async () => {
+    try {
+      const access = localStorage.getItem('access')
+      if (access) {
+        await registerPurchase(
+          access,
+          items.map(item => ({ id: item.id, qty: item.qty }))
+        )
+      }
+    } catch (error) {
+      console.error(error)
+      alert('El pago se procesó, pero no se pudo agregar a tu biblioteca. Contacta a soporte.')
+    } finally {
+      clearCart()
+    }
   }
 
   if (items.length === 0) {
@@ -142,7 +163,7 @@ export default function Carrito(): ReactElement {
           <PaymentModal 
             isOpen={isModalOpen} 
             onClose={() => setIsModalOpen(false)} 
-            onSuccess={clearCart}
+            onSuccess={handlePaymentSuccess}
             totalAmount={(totalPrice * 1.16).toFixed(2)}
           />
         </div>
