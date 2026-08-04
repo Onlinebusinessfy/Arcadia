@@ -1,6 +1,9 @@
 from django.contrib.auth import authenticate
 from rest_framework import serializers
 from rest_framework_simplejwt.tokens import RefreshToken
+from django.conf import settings
+from datetime import timedelta
+from django.utils import timezone
 
 from .models import CustomUser
 
@@ -37,18 +40,17 @@ class RegisterSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError({
                 "confirm_password": "Las contraseñas no coinciden."
             })
-
         return data
 
     def create(self, validated_data):
         validated_data.pop("confirm_password")
-
         return CustomUser.objects.create_user(
             username=validated_data["username"],
             email=validated_data["email"],
             password=validated_data["password"]
         )
-    
+
+
 class LoginSerializer(serializers.Serializer):
     username = serializers.CharField()
     password = serializers.CharField(write_only=True)
@@ -71,8 +73,11 @@ class LoginSerializer(serializers.Serializer):
             "access": str(refresh.access_token),
             "refresh": str(refresh),
         }
-    
+
+
+# serializers.py
 class UserSerializer(serializers.ModelSerializer):
+    profile_picture = serializers.SerializerMethodField()
 
     class Meta:
         model = CustomUser
@@ -87,83 +92,94 @@ class UserSerializer(serializers.ModelSerializer):
             "username_last_changed",
         ]
 
-from datetime import timedelta
-
-from django.utils import timezone
-from rest_framework import serializers
-
-from .models import CustomUser
+    def get_profile_picture(self, obj):
+        """Devuelve la URL completa de la imagen del perfil"""
+        if obj.profile_picture:
+            # ✅ Si es un objeto ImageFieldFile, usar .url
+            if hasattr(obj.profile_picture, 'url'):
+                return obj.profile_picture.url
+            # ✅ Si es un string, convertirlo
+            picture = str(obj.profile_picture)
+            if picture.startswith('http'):
+                return picture
+            if picture.startswith('/media/'):
+                return picture
+            if picture.startswith('media/'):
+                return f"/{picture}"
+            if picture.startswith('profiles/'):
+                return f"/media/{picture}"
+            return f"/media/profiles/{picture}"
+        return None
 
 
 class UpdateProfileSerializer(serializers.ModelSerializer):
-
+    # ✅ Este campo SOLO se usa para la respuesta, no para escritura
+    profile_picture = serializers.SerializerMethodField()
+    
     class Meta:
         model = CustomUser
         fields = [
             "username",
             "bio",
-            "profile_picture",
             "status",
+            "profile_picture",  # ✅ Incluido para la respuesta
         ]
+        # ✅ IMPORTANTE: profile_picture es solo lectura
+        read_only_fields = ['profile_picture']
+
+    def get_profile_picture(self, obj):
+        """Devuelve la URL correcta de la imagen del perfil"""
+        if obj.profile_picture:
+            # ✅ Si es un objeto ImageFieldFile, usar .url
+            if hasattr(obj.profile_picture, 'url'):
+                return obj.profile_picture.url
+            # ✅ Si es un string, convertirlo
+            picture = str(obj.profile_picture)
+            if picture.startswith('http'):
+                return picture
+            if picture.startswith('/media/'):
+                return picture
+            if picture.startswith('media/'):
+                return f"/{picture}"
+            if picture.startswith('profiles/'):
+                return f"/media/{picture}"
+            return f"/media/profiles/{picture}"
+        return None
 
     def validate_username(self, value):
-
         user = self.instance
-
         if value != user.username:
-
             if CustomUser.objects.filter(
                 username__iexact=value
             ).exclude(id=user.id).exists():
-
                 raise serializers.ValidationError(
                     "Ese nombre ya está en uso."
                 )
-
-
-            # Si nunca lo ha cambiado permite editarlo
+            
             if user.username_last_changed:
-
-                next_change = (
-                    user.username_last_changed +
-                    timedelta(days=30)
-                )
-
+                next_change = user.username_last_changed + timedelta(days=30)
                 if timezone.now() < next_change:
                     raise serializers.ValidationError(
                         f"Podrás cambiar tu nombre nuevamente el {next_change.date()}."
                     )
-
         return value
-
-
+    
     def update(self, instance, validated_data):
-
-        if (
-            "username" in validated_data and
-            validated_data["username"] != instance.username
-        ):
-
-            instance.username = validated_data["username"]
+        # ✅ Actualizar username si está presente
+        if 'username' in validated_data:
+            instance.username = validated_data['username']
             instance.username_last_changed = timezone.now()
-
-
-        instance.bio = validated_data.get(
-            "bio",
-            instance.bio
-        )
-
-
-        instance.status = validated_data.get(
-            "status",
-            instance.status
-        )
-
-
-        if "profile_picture" in validated_data:
-            instance.profile_picture = validated_data["profile_picture"]
-
-
+        
+        # ✅ Actualizar bio si está presente
+        if 'bio' in validated_data:
+            instance.bio = validated_data['bio']
+        
+        # ✅ Actualizar status si está presente
+        if 'status' in validated_data:
+            instance.status = validated_data['status']
+        
+        # ✅ NOTA: profile_picture NO se actualiza aquí porque es read_only
+        # La imagen se maneja en la vista con request.FILES
+        
         instance.save()
-
         return instance
