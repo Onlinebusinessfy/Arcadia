@@ -1,6 +1,6 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
-
+import os
 
 class CustomUser(AbstractUser):
     profile_picture = models.ImageField(
@@ -35,8 +35,15 @@ class CustomUser(AbstractUser):
     )
 
     def save(self, *args, **kwargs):
-        if self.profile_picture:
-            self.profile_picture.name = f"pfp_{self.id}.{self.profile_picture.name.split('.')[-1]}"
+        if self.profile_picture and hasattr(self.profile_picture, 'file'):
+            name_parts = self.profile_picture.name.split('.')
+            extension = name_parts[-1] if len(name_parts) > 1 else 'png'
+            
+            if self.id:
+                new_name = f"profiles/pfp_{self.id}.{extension}"
+                self.profile_picture.name = new_name
+            else:
+                self.profile_picture.name = f"profiles/temp_{self.profile_picture.name}"
         
         return super().save(*args, **kwargs)
 
